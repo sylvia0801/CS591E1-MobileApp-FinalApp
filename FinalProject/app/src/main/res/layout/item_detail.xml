@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <ImageView
+        android:id="@+id/Item_Image"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/ic_launcher"/>
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"
+        style="@style/TextStyle"
+        android:text="   $    1000"/>
+
+
+    <View
+        style="@style/LineStyle"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="0.3">
+
+        <ImageView
+            android:id="@+id/User_Image"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"
+            android:layout_weight="0.5"
+            android:scaleType="fitCenter"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="2">
+
+            <TextView
+                android:id="@+id/User_Name"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:text="User_name"
+                android:layout_weight="1"
+                style="@style/TextStyle"/>
+
+<!--            <RatingBar-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_weight="1"/>-->
+
+        </LinearLayout>
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="53dp"
+            android:layout_weight="0.3"
+            android:scaleType="fitCenter"
+            android:src="@drawable/chat" />
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="53dp"
+            android:layout_weight="0.3"
+            android:scaleType="fitCenter"
+            android:src="@drawable/good" />
+
+    </LinearLayout>
+
+    <View
+        style="@style/LineStyle"
+        android:layout_weight="0.01"/>
+
+    <TextView
+        android:id="@+id/Item_Description"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="Description......."
+        style="@style/TextStyle"/>
+
+    <View
+        style="@style/LineStyle"
+        android:layout_weight="0.01"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/TextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Condition : " />
+
+        <TextView
+            android:id="@+id/Item_Condition"
+            style="@style/TextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text=" Brand New" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/buy"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:gravity="center"
+        android:text="Request to buy"
+        style="@style/TextStyle"/>
+
+</LinearLayout>
