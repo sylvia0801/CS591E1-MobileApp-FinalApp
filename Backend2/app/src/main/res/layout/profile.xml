@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="Account Information"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        style="@style/TextStyle"/>
+
+    <ListView
+        android:id="@+id/Profile_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:layout_marginBottom="30dp"
+        android:fastScrollAlwaysVisible="false"
+        />
+
+    <View
+        style="@style/LineStyle"/>
+
+    <fragment
+        android:id="@+id/Profile_Buttom"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:name="com.example.backend.Fragment.buttom_fragment"/>
+
+</LinearLayout>

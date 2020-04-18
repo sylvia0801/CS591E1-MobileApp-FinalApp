@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    tools:context=".PostActivity">
+
+    <EditText
+        android:id="@+id/et_description"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_weight="1"
+        android:layout_marginTop="50dp"
+        android:ems="10"
+        android:hint="Description..."/>
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="320dp"
+        android:text="Cancel"
+        android:textSize="10dp"
+        />
+
+    <Button
+        android:id="@+id/btn_post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="320dp"
+        android:textSize="10dp"
+        android:text="Post" />
+
+    <TextView
+        android:id="@+id/tv_post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="170dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="160dp"
+        android:text="POST"
+        android:textSize="20dp" />
+
+    <ImageButton
+        android:id="@+id/ib_camera"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/camera"
+        android:layout_below="@id/et_description"
+        android:scaleType="fitCenter"/>
+
+    <ImageButton
+        android:id="@+id/ib_album"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/album"
+        android:layout_below="@id/et_description"
+        android:layout_toRightOf="@id/ib_camera"
+        android:scaleType="fitCenter"/>
+
+    <Button
+        android:id="@+id/btn_address"
+        android:layout_width="500dp"
+        android:layout_height="50dp"
+        android:text="Address"
+        android:layout_toRightOf="@id/ib_album"
+        android:layout_below="@id/et_description"/>
+
+    <TextView
+        android:id="@+id/et_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_address"
+        android:layout_toRightOf="@id/ib_album" />
+
+    <EditText
+        android:id="@+id/et_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/ib_camera"
+        android:hint="Title" />
+
+    <EditText
+        android:id="@+id/et_price"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/et_title"
+        android:hint="Price"
+        />
+
+    <Spinner
+        android:id="@+id/spinnerTag"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/et_price"/>
+
+    <ImageView
+        android:id="@+id/iv_picture"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/spinnerTag"
+        android:layout_centerInParent="true"/>
+
+
+</RelativeLayout>

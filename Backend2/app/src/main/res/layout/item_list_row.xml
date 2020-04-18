@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
+    android:gravity="center"
+    >
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/Histroy_UserImage"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@mipmap/ic_launcher"/>
+
+    <TextView
+        android:id="@+id/History_UserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/Histroy_UserImage"
+        android:text="username"
+        android:layout_marginLeft="20dp"
+        style="@style/TextStyle"/>
+
+    <ImageView
+        android:id="@+id/History_Item_Image"
+        android:layout_width="60dp"
+        android:layout_height="70dp"
+        android:layout_below="@+id/Histroy_UserImage"
+        android:layout_marginTop="20dp"
+        />
+
+    <TextView
+        android:id="@+id/History_Item_Description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/History_UserName"
+        android:layout_toRightOf="@id/History_Item_Image"
+        android:layout_alignTop="@id/History_Item_Image"
+        android:layout_marginLeft="20dp"
+        android:text="Item Decription"
+        style="@style/TextStyle"/>
+
+
+    <TextView
+        android:id="@+id/History_Price_Tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/History_Item_Image"
+        android:layout_alignLeft="@id/History_Item_Image"
+        android:layout_marginTop="20dp"
+        android:textSize="15dp"
+        android:text="Price:"/>
+
+    <TextView
+        android:id="@+id/History_Item_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/History_Item_Image"
+        android:layout_toRightOf="@id/History_Price_Tag"
+        android:layout_alignTop="@id/History_Price_Tag"
+        android:layout_marginLeft="20dp"
+        android:textSize="15dp"
+        android:text="0.00"/>
+
+    <Button
+        android:id="@+id/History_Edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/History_Item_Description"
+        android:layout_alignRight="@id/History_Item_Description"
+        android:layout_marginTop="40dp"
+        android:text="Edit"
+        android:focusable="false"
+        style="@style/TextStyle"/>
+
+    <Button
+        android:id="@+id/History_Delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/History_Edit"
+        android:layout_alignTop="@id/History_Edit"
+        android:text="Delete"
+        android:focusable="false"
+        style="@style/TextStyle"/>
+
+
+</RelativeLayout>
