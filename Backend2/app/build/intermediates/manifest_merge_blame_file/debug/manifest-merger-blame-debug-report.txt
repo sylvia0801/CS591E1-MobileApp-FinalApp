@@ -1,0 +1,246 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.backend"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="16"
+8-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="29" />
+9-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:4:5-66
+11-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:4:22-64
+12    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+12-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:5:5-80
+12-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:5:22-78
+13    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+13-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:6:5-78
+13-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:6:22-76
+14    <uses-permission android:name="android.permission.CAMERA" />
+14-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:7:5-81
+14-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:7:22-62
+15    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+15-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:8:5-97
+15-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:8:22-78
+16
+17    <!-- Although the *SdkVersion is captured in gradle build files, this is required for non gradle builds -->
+18    <!-- <uses-sdk android:minSdkVersion="14"/> -->
+19    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+19-->[com.google.firebase:firebase-database:19.2.1] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\40d203d0674822dbdfc1bb4103e3a3d4\firebase-database-19.2.1\AndroidManifest.xml:25:5-79
+19-->[com.google.firebase:firebase-database:19.2.1] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\40d203d0674822dbdfc1bb4103e3a3d4\firebase-database-19.2.1\AndroidManifest.xml:25:22-76
+20    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- Required by older versions of Google Play services to create IID tokens -->
+20-->[com.google.android.gms:play-services-measurement-api:17.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\d015501895e5cf18e1742472b225f82b\play-services-measurement-api-17.3.0\AndroidManifest.xml:24:5-68
+20-->[com.google.android.gms:play-services-measurement-api:17.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\d015501895e5cf18e1742472b225f82b\play-services-measurement-api-17.3.0\AndroidManifest.xml:24:22-65
+21    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+21-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\946a39d7756c6b05aa38a853bdffc128\firebase-iid-20.0.2\AndroidManifest.xml:26:5-82
+21-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\946a39d7756c6b05aa38a853bdffc128\firebase-iid-20.0.2\AndroidManifest.xml:26:22-79
+22    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
+22-->[com.google.android.gms:play-services-measurement:17.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\99e14a80c5e55c93e3ec9824e938ef95\play-services-measurement-17.3.0\AndroidManifest.xml:26:5-110
+22-->[com.google.android.gms:play-services-measurement:17.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\99e14a80c5e55c93e3ec9824e938ef95\play-services-measurement-17.3.0\AndroidManifest.xml:26:22-107
+23
+24    <application
+24-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:10:5-46:19
+25        android:allowBackup="true"
+25-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:11:9-35
+26        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+26-->[androidx.core:core:1.2.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\d5a97e410e2c366a50d3e0f1ca998460\core-1.2.0\AndroidManifest.xml:24:18-86
+27        android:debuggable="true"
+28        android:icon="@mipmap/ic_launcher"
+28-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:12:9-43
+29        android:label="@string/app_name"
+29-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:13:9-41
+30        android:roundIcon="@mipmap/ic_launcher_round"
+30-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:14:9-54
+31        android:supportsRtl="true"
+31-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:15:9-35
+32        android:testOnly="true"
+33        android:theme="@style/AppTheme" >
+33-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:16:9-40
+34        <activity android:name="com.example.backend.LoginActivity" >
+34-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:17:9-18:20
+34-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:17:19-48
+35        </activity>
+36        <activity android:name="com.example.backend.RegisterActivity" >
+36-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:20:9-22:20
+36-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:20:19-51
+37        </activity>
+38        <activity android:name="com.example.backend.Activity.HistoryItemActivity" >
+38-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:23:9-25:20
+38-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:23:19-63
+39        </activity>
+40        <activity android:name="com.example.backend.Activity.ItemDetailActivity" >
+40-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:26:9-28:20
+40-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:26:19-62
+41        </activity>
+42        <activity android:name="com.example.backend.Activity.ProfileActivity" >
+42-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:29:9-35:20
+42-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:29:19-59
+43            <intent-filter>
+43-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:30:13-34:29
+44                <action android:name="android.intent.action.MAIN" />
+44-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:31:17-69
+44-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:31:25-66
+45
+46                <category android:name="android.intent.category.LAUNCHER" />
+46-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:33:17-77
+46-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:33:27-74
+47            </intent-filter>
+48        </activity>
+49        <activity android:name="com.example.backend.PostActivity" >
+49-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:37:9-41:20
+49-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:37:19-47
+50        </activity>
+51        <activity android:name="com.example.backend.MainActivity" >
+51-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:43:9-45:20
+51-->C:\Users\Yuwan\Desktop\Backend2\Backend2\app\src\main\AndroidManifest.xml:43:19-47
+52        </activity>
+53
+54        <service
+54-->[com.google.firebase:firebase-database:19.2.1] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\40d203d0674822dbdfc1bb4103e3a3d4\firebase-database-19.2.1\AndroidManifest.xml:29:9-35:19
+55            android:name="com.google.firebase.components.ComponentDiscoveryService"
+55-->[com.google.firebase:firebase-database:19.2.1] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\40d203d0674822dbdfc1bb4103e3a3d4\firebase-database-19.2.1\AndroidManifest.xml:30:13-84
+56            android:directBootAware="true"
+56-->[com.google.firebase:firebase-common:19.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\3d502d37f58f7a607659f49a32fc1042\jetified-firebase-common-19.3.0\AndroidManifest.xml:34:13-43
+57            android:exported="false" >
+57-->[com.google.firebase:firebase-database:19.2.1] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\40d203d0674822dbdfc1bb4103e3a3d4\firebase-database-19.2.1\AndroidManifest.xml:31:13-37
+58            <meta-data
+58-->[com.google.firebase:firebase-database:19.2.1] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\40d203d0674822dbdfc1bb4103e3a3d4\firebase-database-19.2.1\AndroidManifest.xml:32:13-34:85
+59                android:name="com.google.firebase.components:com.google.firebase.database.DatabaseRegistrar"
+59-->[com.google.firebase:firebase-database:19.2.1] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\40d203d0674822dbdfc1bb4103e3a3d4\firebase-database-19.2.1\AndroidManifest.xml:33:17-109
+60                android:value="com.google.firebase.components.ComponentRegistrar" />
+60-->[com.google.firebase:firebase-database:19.2.1] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\40d203d0674822dbdfc1bb4103e3a3d4\firebase-database-19.2.1\AndroidManifest.xml:34:17-82
+61            <meta-data
+61-->[com.google.firebase:firebase-auth:19.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\ed58734d8eb72fcce99313c107d1e224\firebase-auth-19.3.0\AndroidManifest.xml:36:13-38:85
+62                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
+62-->[com.google.firebase:firebase-auth:19.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\ed58734d8eb72fcce99313c107d1e224\firebase-auth-19.3.0\AndroidManifest.xml:37:17-109
+63                android:value="com.google.firebase.components.ComponentRegistrar" />
+63-->[com.google.firebase:firebase-auth:19.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\ed58734d8eb72fcce99313c107d1e224\firebase-auth-19.3.0\AndroidManifest.xml:38:17-82
+64            <meta-data
+64-->[com.google.firebase:firebase-storage:19.1.1] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\d604a7210b7bd680cd94dab28f57984c\firebase-storage-19.1.1\AndroidManifest.xml:33:13-35:85
+65                android:name="com.google.firebase.components:com.google.firebase.storage.StorageRegistrar"
+65-->[com.google.firebase:firebase-storage:19.1.1] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\d604a7210b7bd680cd94dab28f57984c\firebase-storage-19.1.1\AndroidManifest.xml:34:17-107
+66                android:value="com.google.firebase.components.ComponentRegistrar" />
+66-->[com.google.firebase:firebase-storage:19.1.1] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\d604a7210b7bd680cd94dab28f57984c\firebase-storage-19.1.1\AndroidManifest.xml:35:17-82
+67            <meta-data
+67-->[com.google.android.gms:play-services-measurement-api:17.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\d015501895e5cf18e1742472b225f82b\play-services-measurement-api-17.3.0\AndroidManifest.xml:30:13-32:85
+68                android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"
+68-->[com.google.android.gms:play-services-measurement-api:17.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\d015501895e5cf18e1742472b225f82b\play-services-measurement-api-17.3.0\AndroidManifest.xml:31:17-139
+69                android:value="com.google.firebase.components.ComponentRegistrar" />
+69-->[com.google.android.gms:play-services-measurement-api:17.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\d015501895e5cf18e1742472b225f82b\play-services-measurement-api-17.3.0\AndroidManifest.xml:32:17-82
+70            <meta-data
+70-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\946a39d7756c6b05aa38a853bdffc128\firebase-iid-20.0.2\AndroidManifest.xml:32:13-34:85
+71                android:name="com.google.firebase.components:com.google.firebase.iid.Registrar"
+71-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\946a39d7756c6b05aa38a853bdffc128\firebase-iid-20.0.2\AndroidManifest.xml:33:17-96
+72                android:value="com.google.firebase.components.ComponentRegistrar" />
+72-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\946a39d7756c6b05aa38a853bdffc128\firebase-iid-20.0.2\AndroidManifest.xml:34:17-82
+73        </service>
+74
+75        <activity
+75-->[com.google.firebase:firebase-auth:19.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\ed58734d8eb72fcce99313c107d1e224\firebase-auth-19.3.0\AndroidManifest.xml:24:9-31:50
+76            android:name="com.google.firebase.auth.internal.FederatedSignInActivity"
+76-->[com.google.firebase:firebase-auth:19.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\ed58734d8eb72fcce99313c107d1e224\firebase-auth-19.3.0\AndroidManifest.xml:25:13-85
+77            android:excludeFromRecents="true"
+77-->[com.google.firebase:firebase-auth:19.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\ed58734d8eb72fcce99313c107d1e224\firebase-auth-19.3.0\AndroidManifest.xml:26:13-46
+78            android:exported="true"
+78-->[com.google.firebase:firebase-auth:19.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\ed58734d8eb72fcce99313c107d1e224\firebase-auth-19.3.0\AndroidManifest.xml:27:13-36
+79            android:launchMode="singleTask"
+79-->[com.google.firebase:firebase-auth:19.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\ed58734d8eb72fcce99313c107d1e224\firebase-auth-19.3.0\AndroidManifest.xml:28:13-44
+80            android:permission="com.google.firebase.auth.api.gms.permission.LAUNCH_FEDERATED_SIGN_IN"
+80-->[com.google.firebase:firebase-auth:19.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\ed58734d8eb72fcce99313c107d1e224\firebase-auth-19.3.0\AndroidManifest.xml:29:13-102
+81            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+81-->[com.google.firebase:firebase-auth:19.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\ed58734d8eb72fcce99313c107d1e224\firebase-auth-19.3.0\AndroidManifest.xml:30:13-72
+82
+83        <receiver
+83-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\946a39d7756c6b05aa38a853bdffc128\firebase-iid-20.0.2\AndroidManifest.xml:37:9-44:20
+84            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+84-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\946a39d7756c6b05aa38a853bdffc128\firebase-iid-20.0.2\AndroidManifest.xml:38:13-78
+85            android:exported="true"
+85-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\946a39d7756c6b05aa38a853bdffc128\firebase-iid-20.0.2\AndroidManifest.xml:39:13-36
+86            android:permission="com.google.android.c2dm.permission.SEND" >
+86-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\946a39d7756c6b05aa38a853bdffc128\firebase-iid-20.0.2\AndroidManifest.xml:40:13-73
+87            <intent-filter>
+87-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\946a39d7756c6b05aa38a853bdffc128\firebase-iid-20.0.2\AndroidManifest.xml:41:13-43:29
+88                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+88-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\946a39d7756c6b05aa38a853bdffc128\firebase-iid-20.0.2\AndroidManifest.xml:42:17-81
+88-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\946a39d7756c6b05aa38a853bdffc128\firebase-iid-20.0.2\AndroidManifest.xml:42:25-78
+89            </intent-filter>
+90        </receiver>
+91
+92        <provider
+92-->[com.google.firebase:firebase-common:19.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\3d502d37f58f7a607659f49a32fc1042\jetified-firebase-common-19.3.0\AndroidManifest.xml:26:9-30:39
+93            android:name="com.google.firebase.provider.FirebaseInitProvider"
+93-->[com.google.firebase:firebase-common:19.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\3d502d37f58f7a607659f49a32fc1042\jetified-firebase-common-19.3.0\AndroidManifest.xml:27:13-77
+94            android:authorities="com.example.backend.firebaseinitprovider"
+94-->[com.google.firebase:firebase-common:19.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\3d502d37f58f7a607659f49a32fc1042\jetified-firebase-common-19.3.0\AndroidManifest.xml:28:13-72
+95            android:exported="false"
+95-->[com.google.firebase:firebase-common:19.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\3d502d37f58f7a607659f49a32fc1042\jetified-firebase-common-19.3.0\AndroidManifest.xml:29:13-37
+96            android:initOrder="100" />
+96-->[com.google.firebase:firebase-common:19.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\3d502d37f58f7a607659f49a32fc1042\jetified-firebase-common-19.3.0\AndroidManifest.xml:30:13-36
+97
+98        <activity
+98-->[com.google.android.gms:play-services-base:17.1.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\6d206c10dfcd7e4d261b33c292c090cb\play-services-base-17.1.0\AndroidManifest.xml:23:9-26:75
+99            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+99-->[com.google.android.gms:play-services-base:17.1.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\6d206c10dfcd7e4d261b33c292c090cb\play-services-base-17.1.0\AndroidManifest.xml:24:13-79
+100            android:exported="false"
+100-->[com.google.android.gms:play-services-base:17.1.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\6d206c10dfcd7e4d261b33c292c090cb\play-services-base-17.1.0\AndroidManifest.xml:25:13-37
+101            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+101-->[com.google.android.gms:play-services-base:17.1.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\6d206c10dfcd7e4d261b33c292c090cb\play-services-base-17.1.0\AndroidManifest.xml:26:13-72
+102
+103        <receiver
+103-->[com.google.android.gms:play-services-measurement:17.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\99e14a80c5e55c93e3ec9824e938ef95\play-services-measurement-17.3.0\AndroidManifest.xml:29:9-33:20
+104            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
+104-->[com.google.android.gms:play-services-measurement:17.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\99e14a80c5e55c93e3ec9824e938ef95\play-services-measurement-17.3.0\AndroidManifest.xml:30:13-85
+105            android:enabled="true"
+105-->[com.google.android.gms:play-services-measurement:17.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\99e14a80c5e55c93e3ec9824e938ef95\play-services-measurement-17.3.0\AndroidManifest.xml:31:13-35
+106            android:exported="false" >
+106-->[com.google.android.gms:play-services-measurement:17.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\99e14a80c5e55c93e3ec9824e938ef95\play-services-measurement-17.3.0\AndroidManifest.xml:32:13-37
+107        </receiver>
+108        <receiver
+108-->[com.google.android.gms:play-services-measurement:17.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\99e14a80c5e55c93e3ec9824e938ef95\play-services-measurement-17.3.0\AndroidManifest.xml:34:9-42:20
+109            android:name="com.google.android.gms.measurement.AppMeasurementInstallReferrerReceiver"
+109-->[com.google.android.gms:play-services-measurement:17.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\99e14a80c5e55c93e3ec9824e938ef95\play-services-measurement-17.3.0\AndroidManifest.xml:35:13-100
+110            android:enabled="true"
+110-->[com.google.android.gms:play-services-measurement:17.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\99e14a80c5e55c93e3ec9824e938ef95\play-services-measurement-17.3.0\AndroidManifest.xml:36:13-35
+111            android:exported="true"
+111-->[com.google.android.gms:play-services-measurement:17.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\99e14a80c5e55c93e3ec9824e938ef95\play-services-measurement-17.3.0\AndroidManifest.xml:37:13-36
+112            android:permission="android.permission.INSTALL_PACKAGES" >
+112-->[com.google.android.gms:play-services-measurement:17.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\99e14a80c5e55c93e3ec9824e938ef95\play-services-measurement-17.3.0\AndroidManifest.xml:38:13-69
+113            <intent-filter>
+113-->[com.google.android.gms:play-services-measurement:17.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\99e14a80c5e55c93e3ec9824e938ef95\play-services-measurement-17.3.0\AndroidManifest.xml:39:13-41:29
+114                <action android:name="com.android.vending.INSTALL_REFERRER" />
+114-->[com.google.android.gms:play-services-measurement:17.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\99e14a80c5e55c93e3ec9824e938ef95\play-services-measurement-17.3.0\AndroidManifest.xml:40:17-79
+114-->[com.google.android.gms:play-services-measurement:17.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\99e14a80c5e55c93e3ec9824e938ef95\play-services-measurement-17.3.0\AndroidManifest.xml:40:25-76
+115            </intent-filter>
+116        </receiver>
+117
+118        <service
+118-->[com.google.android.gms:play-services-measurement:17.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\99e14a80c5e55c93e3ec9824e938ef95\play-services-measurement-17.3.0\AndroidManifest.xml:44:9-47:40
+119            android:name="com.google.android.gms.measurement.AppMeasurementService"
+119-->[com.google.android.gms:play-services-measurement:17.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\99e14a80c5e55c93e3ec9824e938ef95\play-services-measurement-17.3.0\AndroidManifest.xml:45:13-84
+120            android:enabled="true"
+120-->[com.google.android.gms:play-services-measurement:17.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\99e14a80c5e55c93e3ec9824e938ef95\play-services-measurement-17.3.0\AndroidManifest.xml:46:13-35
+121            android:exported="false" />
+121-->[com.google.android.gms:play-services-measurement:17.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\99e14a80c5e55c93e3ec9824e938ef95\play-services-measurement-17.3.0\AndroidManifest.xml:47:13-37
+122        <service
+122-->[com.google.android.gms:play-services-measurement:17.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\99e14a80c5e55c93e3ec9824e938ef95\play-services-measurement-17.3.0\AndroidManifest.xml:48:9-52:72
+123            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
+123-->[com.google.android.gms:play-services-measurement:17.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\99e14a80c5e55c93e3ec9824e938ef95\play-services-measurement-17.3.0\AndroidManifest.xml:49:13-87
+124            android:enabled="true"
+124-->[com.google.android.gms:play-services-measurement:17.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\99e14a80c5e55c93e3ec9824e938ef95\play-services-measurement-17.3.0\AndroidManifest.xml:50:13-35
+125            android:exported="false"
+125-->[com.google.android.gms:play-services-measurement:17.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\99e14a80c5e55c93e3ec9824e938ef95\play-services-measurement-17.3.0\AndroidManifest.xml:51:13-37
+126            android:permission="android.permission.BIND_JOB_SERVICE" />
+126-->[com.google.android.gms:play-services-measurement:17.3.0] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\99e14a80c5e55c93e3ec9824e938ef95\play-services-measurement-17.3.0\AndroidManifest.xml:52:13-69
+127
+128        <meta-data
+128-->[com.google.android.gms:play-services-basement:17.2.1] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\5c7a3dae834c3fcfb6cbed67f6354f94\jetified-play-services-basement-17.2.1\AndroidManifest.xml:23:9-25:69
+129            android:name="com.google.android.gms.version"
+129-->[com.google.android.gms:play-services-basement:17.2.1] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\5c7a3dae834c3fcfb6cbed67f6354f94\jetified-play-services-basement-17.2.1\AndroidManifest.xml:24:13-58
+130            android:value="@integer/google_play_services_version" />
+130-->[com.google.android.gms:play-services-basement:17.2.1] C:\Users\Yuwan\.gradle\caches\transforms-2\files-2.1\5c7a3dae834c3fcfb6cbed67f6354f94\jetified-play-services-basement-17.2.1\AndroidManifest.xml:25:13-66
+131    </application>
+132
+133</manifest>
