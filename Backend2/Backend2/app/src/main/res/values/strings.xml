@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">FinalProject</string>
+
+    <string-array name="ItemHistory">
+        <item>Post Items</item>
+        <item>Sold Items</item>
+        <item>Bought Items</item>
+        <item>Favorite Items</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="ItemCategory">
+        <item>Clothes</item>
+        <item>Books</item>
+        <item>Electronics</item>
+        <item>Furnitures</item>
+    </string-array>
+
+</resources>

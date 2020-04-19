@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="155dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="127dp"
+        android:layout_marginRight="127dp"
+        android:layout_marginBottom="200dp"
+        android:text="Register" />
+
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/icon"/>
+
+    <Button
+        android:id="@+id/btn_editIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_icon"
+        android:layout_centerHorizontal="true"
+        android:text="Edit Icon"/>
+
+    <EditText
+        android:id="@+id/et_email"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="130dp"
+        android:layout_marginBottom="480dp"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:text=""
+        android:textAlignment="center"
+        android:hint="E-mail"/>
+
+    <ImageView
+        android:id="@+id/iv_email"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="285dp"
+        android:layout_marginBottom="480dp"
+        android:src="@drawable/email"/>
+
+    <EditText
+        android:id="@+id/et_password"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="130dp"
+        android:layout_marginBottom="400dp"
+        android:ems="10"
+        android:text=""
+        android:textAlignment="center"
+        android:inputType="textPassword"
+        android:hint="Password"/>
+
+    <ImageView
+        android:id="@+id/iv_password"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="285dp"
+        android:layout_marginBottom="400dp"
+        android:src="@drawable/password"/>
+
+    <EditText
+        android:id="@+id/et_reenterpassword"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="130dp"
+        android:layout_marginBottom="320dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:text=""
+        android:textAlignment="center"
+        android:hint="Re-enter password"/>
+
+    <ImageView
+        android:id="@+id/iv_reenterpassword"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="285dp"
+        android:layout_marginBottom="320dp"
+        android:src="@drawable/password" />
+
+
+
+</RelativeLayout>
