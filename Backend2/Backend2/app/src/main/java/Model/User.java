@@ -7,8 +7,7 @@ public class User {
     // to be delete
     private double averageRate;
     private int ratePeopleCount;
-    //
-    private String imageurl="";
+    private String imageurl="default";
     private String status="offline";
 
 

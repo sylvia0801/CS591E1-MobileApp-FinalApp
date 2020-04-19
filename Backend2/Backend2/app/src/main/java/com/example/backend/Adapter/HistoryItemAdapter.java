@@ -108,6 +108,13 @@ public class HistoryItemAdapter extends BaseAdapter {
     }
 
     //delete the history item from the database and update listview
+
+    private class editListener implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            // to do transfer to edit post and update page
+        }
+    }
     private class deleteListener implements View.OnClickListener{
         private int position;
         public deleteListener(int position) {

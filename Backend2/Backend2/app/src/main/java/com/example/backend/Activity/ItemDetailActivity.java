@@ -15,8 +15,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.backend.MessageActivity;
 import com.example.backend.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.w3c.dom.Text;
 
@@ -37,6 +39,7 @@ public class ItemDetailActivity extends AppCompatActivity {
     private TextView username;
     private ImageButton favorite;
     private TextView descirption;
+    private ImageButton btn_chat;
     private Item item;
     private FavouriteRepoImpl favoriteService=new FavouriteRepoImpl();
     private FirebaseAuth auth=FirebaseAuth.getInstance();
@@ -51,15 +54,17 @@ public class ItemDetailActivity extends AppCompatActivity {
         username = (TextView) findViewById(R.id.Detail_User_Name);
         favorite = (ImageButton) findViewById(R.id.Detail_favorite_button);
         descirption = (TextView) findViewById(R.id.Detail_Item_Description);
+        btn_chat = (ImageButton)findViewById(R.id.btn_chat);
         favorite.setOnClickListener(new favoriteListener());
-
         //set the components' information by the item object stored in the intent;
         Intent intent = getIntent();
          item = (Item) intent.getBundleExtra("clickitem").getParcelable("clickitem");
         boolean history = intent.getBooleanExtra("history", false);
 
+        btn_chat.setOnClickListener(new chatListener());
+
         Glide.with(this).load(item.getImageUrl()).into(itemimage);
-        Log.i("mytagdetail",item.getImageUrl());
+      //  Log.i("mytagdetail",item.getImageUrl());
         price.setText("  $  " + item.getPrice());
         userimage.setImageDrawable(getResources().getDrawable(R.drawable.favorite_item));
         username.setText(item.getSellerName());
@@ -92,6 +97,21 @@ public class ItemDetailActivity extends AppCompatActivity {
             favoriteService.save(to_add);
             Toast.makeText(getApplicationContext(),"Added to My Favourite!",Toast.LENGTH_SHORT).show();
 
+        }
+    }
+
+    private class chatListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            FirebaseUser cuser = FirebaseAuth.getInstance().getCurrentUser();
+            if (cuser.getUid().equals(item.getSellerId())){
+                Toast.makeText(ItemDetailActivity.this, "You can't talk to yourself.", Toast.LENGTH_SHORT).show();
+            }else {
+                Intent intent = new Intent(ItemDetailActivity.this, MessageActivity.class);
+                intent.putExtra("userid", item.getSellerId());
+                startActivity(intent);
+            }
         }
     }
 

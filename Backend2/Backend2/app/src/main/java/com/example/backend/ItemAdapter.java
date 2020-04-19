@@ -15,19 +15,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import Model.Item;
 
-
+// show  posts as listview for one specific tag
 public class ItemAdapter extends BaseAdapter {
 
-    private List<Item> Items;
+    private List<Item> Items=new LinkedList<>();
     private Context context;
-
+String mytag="mytag";
     public ItemAdapter(List<Item> Items, Context context) {
-
         this.Items = Items;
         this.context = context;
     }
@@ -61,17 +63,12 @@ public class ItemAdapter extends BaseAdapter {
         }
 
         ImageView itemimage = (ImageView) row.findViewById(R.id.imageView);
-        TextView itemtitle = (TextView) row.findViewById(R.id.textView);
+        TextView itemtitle = (TextView) row.findViewById(R.id.titleView);
         TextView itemprice = (TextView) row.findViewById(R.id.priceView);
-
-        //Log.d("MyTag", "set desginated views");
         Item item = Items.get(position);
-        //System.out.println(item.getTitle());
-        //TODO 从database里取相应item的image然后替换掉books
-        itemimage.setImageResource(R.drawable.books);
+        Glide.with(context).load(item.getImageUrl()).into(itemimage);
         itemtitle.setText(item.getTitle());
-        itemprice.setText(item.getPrice());
-        //Log.d("MyTag", "set item details");
+        itemprice.setText("$ "+item.getPrice());
         return row;
     }
 }

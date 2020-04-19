@@ -225,10 +225,11 @@ public Item saveToAllTable (Item item){
     item.setItemId(id);
     //auth=FirebaseAuth.getInstance();
     String funame=auth.getCurrentUser().getDisplayName();
+
     String fuid=auth.getCurrentUser().getUid();
     item.setSellerId(fuid );//auth.getCurrentUser().getUid()
     item.setSellerName(funame);
-    Log.i(mytag,"display name"+funame+fuid);
+    Log.i(mytag,"display kkname"+funame+fuid);
 
     itemRef.child(id).setValue(item);
    userAllRef.child("Posted").child(funame).child(id).setValue(item);

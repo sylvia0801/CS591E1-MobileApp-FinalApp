@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
 import com.example.backend.MainActivity;
+import com.example.backend.MainPageActivity;
 import com.example.backend.PostActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -106,7 +107,7 @@ public class GeoAddressRepoImpl implements GeoAddressRepository {
                                             itemService.update(item,0);
                                             Log.i(mytag,"updated before"+item);
                                             Toast.makeText(context, "Posting...", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(context, MainActivity.class);
+                                            Intent intent = new Intent(context, MainPageActivity.class);
                                             context.startActivity(intent);
 
                                         }

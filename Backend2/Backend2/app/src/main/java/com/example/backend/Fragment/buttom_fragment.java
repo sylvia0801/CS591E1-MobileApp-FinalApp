@@ -13,7 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.example.backend.Activity.ProfileActivity;
 import com.example.backend.ChatActivity;
+import com.example.backend.MainPageActivity;
+import com.example.backend.PostActivity;
 import com.example.backend.R;
 
 
@@ -99,7 +102,8 @@ public class buttom_fragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            //to do, transfer to main page
+            Intent intent = new Intent(getContext(), MainPageActivity.class);
+            startActivity(intent);            //to do, transfer to main page
         }
     }
 
@@ -107,6 +111,8 @@ public class buttom_fragment extends Fragment {
 
         @Override
         public void onClick(View v) {
+            Intent intent = new Intent(getContext(), PostActivity.class);
+            startActivity(intent);
             //to do, transfer to post page
 
         }
@@ -125,6 +131,8 @@ public class buttom_fragment extends Fragment {
 
         @Override
         public void onClick(View v) {
+            Intent intent = new Intent(getContext(), ProfileActivity.class);
+            startActivity(intent);
             //to do, transfer to profile page
         }
     }

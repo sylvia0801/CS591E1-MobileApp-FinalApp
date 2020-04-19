@@ -8,13 +8,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.backend.Adapter.MessageAdapter;
+import com.google.android.material.internal.DescendantOffsetUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -75,16 +78,20 @@ public class MessageActivity extends AppCompatActivity {
         final String userid = intent.getStringExtra("userid");
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
+        databaseReference = FirebaseDatabase.getInstance().getReference("User").child(userid);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
+
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                username.setText(user.getUserName());
-                profile_image.setImageResource(R.mipmap.ic_launcher);
-
-                readMessage(firebaseUser.getUid(), userid, user.getImageurl());
+                    username.setText(user.getUserName());
+                    if (user.getImageurl().equals("default")){
+                        profile_image.setImageResource(R.drawable.icon);
+                    } else{
+                        Glide.with(MessageActivity.this).load(user.getImageurl()).into(profile_image);
+                    }
+                    readMessage(firebaseUser.getUid(), userid, user.getImageurl());
             }
 
             @Override

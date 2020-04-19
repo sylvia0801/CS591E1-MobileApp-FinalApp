@@ -8,15 +8,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.backend.Fragment.buttom_fragment;
 import com.example.backend.R;
 import com.example.backend.Adapter.HistoryAdapter;
-import com.example.backend.Fragment.buttom_fragment;
-
 import java.util.List;
-
 import DAO.Impl.ItemRepoImpl;
 import Model.Item;
-
 // transfer to different specific  history page
 public class ProfileActivity extends AppCompatActivity implements buttom_fragment.OnFragmentInteractionListener {
     private HistoryAdapter adapter;

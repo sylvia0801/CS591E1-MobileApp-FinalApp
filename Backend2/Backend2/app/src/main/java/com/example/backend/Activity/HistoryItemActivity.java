@@ -16,13 +16,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import DAO.Impl.ItemRepoImpl;
 import Model.Item;
 
 public class HistoryItemActivity extends AppCompatActivity {
@@ -32,14 +28,12 @@ public class HistoryItemActivity extends AppCompatActivity {
     private DatabaseReference allRef=FirebaseDatabase.getInstance().getReference("All");
     private  List<Item> res;
     private String titletext;
-    String mytag="mytag";
     private FirebaseAuth auth=FirebaseAuth.getInstance();
     private void switchType(String type,String userid){
           res=new LinkedList<>();
       allRef.child(type).child(userid).addValueEventListener(new ValueEventListener() {
           @Override
           public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-              Log.i(mytag,type+" "+userid+dataSnapshot.getChildrenCount());
               for (DataSnapshot item : dataSnapshot.getChildren()) {
                   HashMap<String, String> map = (HashMap<String, String>) item.getValue();
                   String id = map.get("itemId");
@@ -60,8 +54,6 @@ public class HistoryItemActivity extends AppCompatActivity {
 
                   Item i=new Item(id,tag,sellerId,buyerId,sellerName,buyerName,title,productName,price,description,url,address,status,postRating,rated);
                       res.add(i);
-                      Log.i(mytag,"mytag"+i.toString());
-
               }
 
 //              Collections.sort(res, new Comparator<Item>() {
@@ -82,8 +74,6 @@ public class HistoryItemActivity extends AppCompatActivity {
           }
       });
 }
-
-
 
 
     @Override

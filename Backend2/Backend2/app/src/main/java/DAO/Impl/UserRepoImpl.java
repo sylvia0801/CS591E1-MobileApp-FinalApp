@@ -8,6 +8,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import com.example.backend.LoginActivity;
 import com.example.backend.MainActivity;
+import com.example.backend.MainPageActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -133,7 +134,7 @@ public class UserRepoImpl implements UserRepository {
            public void onComplete(@NonNull Task<AuthResult> task) {
                if(task.isSuccessful()) {
                    Toast.makeText(context, "Successfully Logged In", Toast.LENGTH_LONG).show();
-                   Intent intent = new Intent(context, MainActivity.class);
+                   Intent intent = new Intent(context, MainPageActivity.class);
                    // TODO MainPageActivity
                    context.startActivity(intent);
                    context.finish();

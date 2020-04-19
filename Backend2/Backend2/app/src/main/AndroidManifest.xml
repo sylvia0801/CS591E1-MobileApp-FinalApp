@@ -16,11 +16,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".LoginActivity">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity android:name=".RegisterActivity">
 
+        </activity>
+        <activity android:name=".ItemActivity">
+
+        </activity>
+        <activity android:name=".MainPageActivity">
+
+        </activity>
+        <activity android:name=".ChatActivity">
+        </activity>
+        <activity android:name=".MessageActivity">
         </activity>
         <activity android:name=".Activity.HistoryItemActivity">
         </activity>
@@ -30,10 +43,7 @@
         </activity>
         <activity android:name=".PostActivity">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
 
 
 
