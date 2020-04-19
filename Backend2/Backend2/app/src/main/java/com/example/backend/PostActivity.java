@@ -1,15 +1,15 @@
 package com.example.backend;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.AlertDialog;
 import android.content.ContentResolver;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -21,29 +21,19 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationManager;
-import android.os.Looper;
-
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
-import java.io.ByteArrayOutputStream;
 import DAO.Impl.GeoAddressRepoImpl;
 import DAO.Impl.ItemRepoImpl;
 import Model.Item;
@@ -97,6 +87,8 @@ public class PostActivity extends AppCompatActivity {
         ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tags);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTag.setAdapter(adapter);
+        // self-get address
+        geo.getLastLocation(tv_address,item);
 
         spinnerTag.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -115,7 +107,7 @@ public class PostActivity extends AppCompatActivity {
                     item.setTagId("2");
                 }
                 else if (result.equals("Furnitures")) {
-                    item.setTagId("0");
+                    item.setTagId("3");
                 }
                 parent.setVisibility(View.VISIBLE);
             }
@@ -126,35 +118,46 @@ public class PostActivity extends AppCompatActivity {
             }
         });
 
+
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AlertDialog.Builder bld= new AlertDialog.Builder(PostActivity.this);
+                bld. setTitle("Alert");
+                bld.setMessage("Are you sure to leave this page?");
+                bld.setCancelable(true);
+                bld.setPositiveButton("Yes, I want to leave.",new DialogInterface.OnClickListener(){
+                    public void onClick(DialogInterface dialog,int which) {
+                        item=new Item();
+                        imageuri=null;
+                        finalkey="";
+                        Intent intent = new Intent(PostActivity.this, MainPageActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                bld.setNegativeButton("No",new DialogInterface.OnClickListener(){
 
-               storageRef.child(finalkey).child(picname).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-        @Override
-              public void onSuccess(Void aVoid) {
-            FirebaseAuth auth=FirebaseAuth.getInstance();
-            String username=auth.getCurrentUser().getDisplayName();
-            itemService.deleteItemByItemId(finalkey);
-            Intent intent = new Intent(PostActivity.this, MainActivity.class);
-            startActivity(intent);
-            // Success
-             }
-             }).addOnFailureListener(new OnFailureListener() {
-        @Override
-        public void onFailure(@NonNull Exception exception) {
-            // Error
-        }
-         });
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                bld.show();
 
             }
         });
+
         ib_album.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openFileChooser();
             }
         });
+
+
+
+
+
+
 
 //        ib_camera.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -173,16 +176,14 @@ public class PostActivity extends AppCompatActivity {
                 item.setDescription(description);
                 item.setPrice(price);
                 item.setTitle(title);
-                item.setSellerName(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
-                Log.i(mytag,"address::: before"+item);
-                // update address
-                geo.getLastLocation(tv_address,item,PostActivity.this);
+                FirebaseUser cuser=FirebaseAuth.getInstance().getCurrentUser();
+                item.setSellerName(cuser.getDisplayName());
+                item.setSellerId(cuser.getUid() );
+                saveItemToDatabase(imageuri);
+                Toast.makeText(PostActivity.this, "Posted!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(PostActivity.this, MainPageActivity.class);
+                startActivity(intent);
 
-
-              // update url to database
-//                itemService.update(item,0);
-//                Intent intent = new Intent(PostActivity.this, MainActivity.class);
-//                startActivity(intent);
             }
         });
     }
@@ -192,7 +193,7 @@ public class PostActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PERMISSION_ID) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                geo.getLastLocation(tv_address,null,PostActivity.this);
+                geo.getLastLocation(tv_address,null);
             }
         }
     }
@@ -216,40 +217,26 @@ public class PostActivity extends AppCompatActivity {
 //        }
         if(requestCode==album_get_code&&resultCode==RESULT_OK&&data!=null&&data.getData()!=null){
             imageuri=data.getData();
-            saveItemToDatabase(imageuri);
+            iv_picture.setImageURI(imageuri);
         }
 
 
     }
 
+
     public void saveItemToDatabase(Uri url){
       itemService.saveToAllTable(item);
-        String k=item.getItemId();
-        finalkey=k;
+        finalkey=item.getItemId();
+        Log.i(mytag,"after save to all"+finalkey);
         uploadFile(finalkey,url);
 
     }
-    public String getExtention(Uri uri){
-        ContentResolver cs=getContentResolver();
-        MimeTypeMap mime=MimeTypeMap.getSingleton();
-        return  mime.getExtensionFromMimeType(cs.getType(uri));
 
-    }
-
-
-
-    private void openFileChooser(){
-       Log.i(mytag,"open firechooser");
-        Intent i=new Intent();
-        i.setType("image/*");
-        i.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(i,album_get_code);
-    }
     public void uploadFile(String itemidxxx, Uri picurl){
         StorageTask uploasTask;
         String itemid=itemidxxx;
         if(picurl!=null){
-             picname=System.currentTimeMillis()+"."+getExtention(picurl);
+            picname=System.currentTimeMillis()+"."+getExtention(picurl);
             StorageReference picRef = storageRef.child(itemid).child(picname);
             uploasTask= picRef.putFile(picurl)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot >() {
@@ -260,10 +247,7 @@ public class PostActivity extends AppCompatActivity {
                                 public void onSuccess(Uri uri) {
                                     finalurl=uri.toString();
                                     item.setImageUrl(finalurl);
-                                    item.setItemId(finalkey);
-                                    Log.i(mytag,"imvss"+item.getImageUrl().toString());
                                     itemService.update(item,0);
-                                    Glide.with(PostActivity.this).load(item.getImageUrl()).into(iv_picture);
 
                                 }
                             });
@@ -281,6 +265,23 @@ public class PostActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    public String getExtention(Uri uri){
+        ContentResolver cs=getContentResolver();
+        MimeTypeMap mime=MimeTypeMap.getSingleton();
+        return  mime.getExtensionFromMimeType(cs.getType(uri));
+
+    }
+
+
+
+    private void openFileChooser(){
+       Log.i(mytag,"open firechooser");
+        Intent i=new Intent();
+        i.setType("image/*");
+        i.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(i,album_get_code);
     }
 //    private String getImageUri(Context context, Bitmap inImage) {
 //        ByteArrayOutputStream bytes = new ByteArrayOutputStream();

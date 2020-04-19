@@ -72,7 +72,6 @@ public class ItemRepoImpl implements ItemRepository {
         itemRef= FirebaseDatabase.getInstance().getReference("Item");
         auth=FirebaseAuth.getInstance();
 
-
     }
     @Override
     public void getItemByItemId(String itemId) {
@@ -89,7 +88,6 @@ public class ItemRepoImpl implements ItemRepository {
                     String tagId = map.get("tagId");
                     String sellerId=map.get("sellerId");
                     String buyerId=map.get("buyerId");
-                    // to do add jingweifdu
                     String sellerName=map.get("sellerName");
                     String buyerName=map.get("buyerName");
 
@@ -123,57 +121,57 @@ public class ItemRepoImpl implements ItemRepository {
        // return res;
     }
 
-    @Override
+   // @Override
     // list of posts of a tag
-    public void getItemByTagId(String tagId) {
-
-        Log.i(mytag,"inside");
-        List<Item> res = new ArrayList<>();
-        itemRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.i(mytag,"dddd"+dataSnapshot.getChildrenCount());
-                for (DataSnapshot item : dataSnapshot.getChildren()) {
-                    HashMap<String, String> map = (HashMap<String, String>) item.getValue();
-                    String id = map.get("itemId");
-                    String tag = map.get("tagId");
-                    String sellerId=map.get("sellerId");
-                    String buyerId=map.get("buyerId");
-                    String title=map.get("title");
-                    String productName=map.get("productName");
-                    String sellerName=map.get("sellerName");
-                    String buyerName=map.get("buyerName");
-                    String price=map.get("price");
-                    String description=map.get("description");
-                    String url=map.get("imageUrl");
-                    String address=map.get("address");
-                    String status=map.get("status");
-                    String postRating=map.get("postRating");
-                    String rated=map.get("rated");//"y" or "n"
-                    if(tag.equals(tagId)) {
-
-                        Item i=new Item(id,tagId,sellerId,buyerId,sellerName,buyerName,title,productName,price,description,url,address,status,postRating,rated);
-                        res.add(i);
-                        Log.i(mytag,"bytag"+i.toString());
-                    }
-                }
-
-                System.out.println("Post"+res.size());
-
-
-
-
-                // to do frontend  all  items of one tag
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-      //  return res;
-    }
+//    public void getItemByTagId(String tagId) {
+//
+//        Log.i(mytag,"inside");
+//        List<Item> res = new ArrayList<>();
+//        itemRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                Log.i(mytag,"dddd"+dataSnapshot.getChildrenCount());
+//                for (DataSnapshot item : dataSnapshot.getChildren()) {
+//                    HashMap<String, String> map = (HashMap<String, String>) item.getValue();
+//                    String id = map.get("itemId");
+//                    String tag = map.get("tagId");
+//                    String sellerId=map.get("sellerId");
+//                    String buyerId=map.get("buyerId");
+//                    String title=map.get("title");
+//                    String productName=map.get("productName");
+//                    String sellerName=map.get("sellerName");
+//                    String buyerName=map.get("buyerName");
+//                    String price=map.get("price");
+//                    String description=map.get("description");
+//                    String url=map.get("imageUrl");
+//                    String address=map.get("address");
+//                    String status=map.get("status");
+//                    String postRating=map.get("postRating");
+//                    String rated=map.get("rated");//"y" or "n"
+//                    if(tag.equals(tagId)) {
+//
+//                        Item i=new Item(id,tagId,sellerId,buyerId,sellerName,buyerName,title,productName,price,description,url,address,status,postRating,rated);
+//                        res.add(i);
+//                        Log.i(mytag,"bytag"+i.toString());
+//                    }
+//                }
+//
+//                System.out.println("Post"+res.size());
+//
+//
+//
+//
+//                // to do frontend  all  items of one tag
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//
+//      //  return res;
+//    }
 /*
     @Override
 
@@ -223,16 +221,9 @@ public class ItemRepoImpl implements ItemRepository {
 public Item saveToAllTable (Item item){
     String id = itemRef.push().getKey();
     item.setItemId(id);
-    //auth=FirebaseAuth.getInstance();
-    String funame=auth.getCurrentUser().getDisplayName();
-
-    String fuid=auth.getCurrentUser().getUid();
-    item.setSellerId(fuid );//auth.getCurrentUser().getUid()
-    item.setSellerName(funame);
-    Log.i(mytag,"display kkname"+funame+fuid);
 
     itemRef.child(id).setValue(item);
-   userAllRef.child("Posted").child(funame).child(id).setValue(item);
+   userAllRef.child("Posted").child(item.getSellerName()).child(id).setValue(item);
    return item;
 }
 // fu is current user displayname

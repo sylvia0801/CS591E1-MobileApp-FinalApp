@@ -6,5 +6,5 @@ import android.widget.TextView;
 import Model.Item;
 
 public interface GeoAddressRepository {
-     void getLastLocation(TextView tv, Item item, Activity context) ;
+     void getLastLocation(TextView tv, Item item) ;
 }

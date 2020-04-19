@@ -81,7 +81,7 @@ public class GeoAddressRepoImpl implements GeoAddressRepository {
 
 
     @SuppressLint("MissingPermission")
-    public void getLastLocation(TextView tv, Item item, Activity context) {
+    public void getLastLocation(TextView tv, Item item) {
         if (checkPermissions()) {
             if (isLocationEnabled()) {
                 mFusedLocationClient.getLastLocation().addOnCompleteListener(
@@ -92,23 +92,13 @@ public class GeoAddressRepoImpl implements GeoAddressRepository {
                                 if (location == null) {
                                     requestNewLocationData();
                                 } else {
-                                    Log.i(mytag, new Double(location.getLatitude()).toString());
-                                    Log.i(mytag, new Double(location.getLongitude()).toString());
 
                                     try {
                                         addresses = gCoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                                         if (addresses.size() != 0) {
                                             String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-
-                                            Log.i(mytag, address+"kk"+item);
                                             item.setAddress(address);
                                             tv.setText(address);
-                                            ItemRepoImpl itemService=new ItemRepoImpl();
-                                            itemService.update(item,0);
-                                            Log.i(mytag,"updated before"+item);
-                                            Toast.makeText(context, "Posting...", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(context, MainPageActivity.class);
-                                            context.startActivity(intent);
 
                                         }
                                     } catch (IOException e) {
