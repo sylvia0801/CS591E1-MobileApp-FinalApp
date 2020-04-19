@@ -1,4 +1,4 @@
-package com.example.backend;
+package com.example.backend.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
@@ -7,6 +7,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.backend.R;
+
 import DAO.Impl.UserRepoImpl;
 
 public class LoginActivity extends AppCompatActivity {

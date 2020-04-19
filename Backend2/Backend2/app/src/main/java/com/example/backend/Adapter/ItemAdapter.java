@@ -1,4 +1,4 @@
-package com.example.backend;
+package com.example.backend.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
+import com.example.backend.R;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

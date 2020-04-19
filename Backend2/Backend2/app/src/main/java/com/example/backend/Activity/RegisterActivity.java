@@ -1,4 +1,4 @@
-package com.example.backend;
+package com.example.backend.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.backend.R;
+
 import DAO.Impl.UserRepoImpl;
 
 public class RegisterActivity extends AppCompatActivity {

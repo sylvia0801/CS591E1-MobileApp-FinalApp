@@ -1,4 +1,4 @@
-package com.example.backend;
+package com.example.backend.Activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,6 +10,9 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.backend.R;
+
 import java.util.ArrayList;
 import java.util.List;
 

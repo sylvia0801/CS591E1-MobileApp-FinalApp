@@ -2,18 +2,15 @@ package DAO.Impl;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
-import com.example.backend.LoginActivity;
-import com.example.backend.MainActivity;
-import com.example.backend.MainPageActivity;
+import com.example.backend.Activity.LoginActivity;
+import com.example.backend.Activity.MainPageActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
@@ -24,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import DAO.UserRepository;
 import Model.User;
-import static com.example.backend.MainActivity.mytag;
+import static com.example.backend.Activity.MainActivity.mytag;
 
 /*
 User table:

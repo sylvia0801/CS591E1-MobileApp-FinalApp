@@ -1,10 +1,7 @@
 package DAO.Impl;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import androidx.annotation.NonNull;
-import com.example.backend.LoginActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,10 +12,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import DAO.ItemRepository;
-import Model.Favourite;
 import Model.Item;
-import Model.Picture;
-import static com.example.backend.MainActivity.mytag;
+
+import static com.example.backend.Activity.MainActivity.mytag;
 
 
 /*

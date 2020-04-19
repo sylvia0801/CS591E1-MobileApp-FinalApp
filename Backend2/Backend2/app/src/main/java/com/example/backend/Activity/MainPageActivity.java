@@ -1,4 +1,4 @@
-package com.example.backend;
+package com.example.backend.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
@@ -10,9 +10,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import com.example.backend.Fragment.buttom_fragment;
 import com.example.backend.R;
-import com.example.backend.Tag;
-import com.example.backend.TagAdapter;
-import com.example.backend.Fragment.buttom_fragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +33,7 @@ public class MainPageActivity extends AppCompatActivity implements buttom_fragme
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String s = (String) adapter.getItem(i);
-                Intent intent = new Intent(MainPageActivity.this, com.example.backend.ItemActivity.class);
+                Intent intent = new Intent(MainPageActivity.this, ItemActivity.class);
                 switch (s) {
                     case "Clothes":
                         intent.putExtra("Title", "Clothes");

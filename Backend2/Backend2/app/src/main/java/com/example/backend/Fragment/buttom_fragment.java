@@ -2,7 +2,6 @@ package com.example.backend.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -14,9 +13,9 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.example.backend.Activity.ProfileActivity;
-import com.example.backend.ChatActivity;
-import com.example.backend.MainPageActivity;
-import com.example.backend.PostActivity;
+import com.example.backend.Activity.ChatActivity;
+import com.example.backend.Activity.MainPageActivity;
+import com.example.backend.Activity.PostActivity;
 import com.example.backend.R;
 
 

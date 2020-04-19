@@ -1,4 +1,4 @@
-package com.example.backend;
+package com.example.backend.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,12 +10,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.example.backend.Activity.HistoryItemActivity;
-import com.example.backend.Activity.ItemDetailActivity;
-import com.example.backend.Adapter.HistoryItemAdapter;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.backend.Adapter.ItemAdapter;
+import com.example.backend.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,8 +25,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import Model.Item;
-
-import static com.example.backend.PostActivity.mytag;
 
 public class ItemActivity extends AppCompatActivity {
 

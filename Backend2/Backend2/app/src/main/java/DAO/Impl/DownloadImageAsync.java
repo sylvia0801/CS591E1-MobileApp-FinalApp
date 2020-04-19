@@ -12,7 +12,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
-import static com.example.backend.MainActivity.mytag;
+import static com.example.backend.Activity.MainActivity.mytag;
 
 public class DownloadImageAsync extends AsyncTask<String, Void, Bitmap> {
     ImageView imv=null;

@@ -1,8 +1,6 @@
 package com.example.backend.Activity;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,20 +13,16 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.example.backend.MessageActivity;
 import com.example.backend.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import org.w3c.dom.Text;
-
-import DAO.Impl.DownloadImageAsync;
 import DAO.Impl.FavouriteRepoImpl;
 import Model.Favourite;
 import Model.Item;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.example.backend.MainActivity.mytag;
+import static com.example.backend.Activity.MainActivity.mytag;
 
 // the page show all the item detail info
 public class ItemDetailActivity extends AppCompatActivity {

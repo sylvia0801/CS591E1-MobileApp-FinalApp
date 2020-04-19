@@ -12,16 +12,12 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Looper;
 import android.provider.Settings;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
-import com.example.backend.MainActivity;
-import com.example.backend.MainPageActivity;
-import com.example.backend.PostActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;

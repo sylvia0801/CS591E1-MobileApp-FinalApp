@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.backend.MessageActivity;
+import com.example.backend.Activity.MessageActivity;
 import com.example.backend.R;
 
 import java.util.List;
