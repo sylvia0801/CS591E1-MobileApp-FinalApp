@@ -3,9 +3,12 @@ package com.example.backend.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.backend.Fragment.buttom_fragment;
 import com.example.backend.R;
@@ -34,6 +37,25 @@ public class ProfileActivity extends AppCompatActivity implements buttom_fragmen
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu, menu);
+        System.out.println("inflate the menue");
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == R.id.logout){
+            Intent intent = new Intent(this, LoginActivity.class);
+            this.startActivity(intent);
+        }
+        return true;
     }
 
     private class profileListener implements AdapterView.OnItemClickListener{
