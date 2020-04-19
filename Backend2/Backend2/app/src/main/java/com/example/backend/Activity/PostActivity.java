@@ -2,14 +2,13 @@ package com.example.backend.Activity;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
@@ -23,7 +22,6 @@ import android.widget.TextView;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.widget.Toast;
-
 import com.example.backend.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,6 +36,7 @@ import DAO.Impl.ItemRepoImpl;
 import Model.Item;
 
 // post a new item to the platform
+
 public class PostActivity extends AppCompatActivity {
     private Button btn_cancel;
     private Button btn_post;
@@ -52,19 +51,20 @@ public class PostActivity extends AppCompatActivity {
     String description;
     String title;
     String price;
-    private ImageView imv;
     public   String finalurl;
     public String finalkey;
     Uri imageuri;
    // final int camera_get_code=111;
     final int album_get_code=999;
-    public static String mytag="mytag";
     private int PERMISSION_ID = 44;
     private GeoAddressRepoImpl geo;
     private ItemRepoImpl itemService=new ItemRepoImpl();
     private StorageReference storageRef ;
     Item item=new Item();// the newly posted item to be added to database
     private String picname; // picture name in the database;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,7 +135,6 @@ public class PostActivity extends AppCompatActivity {
                     }
                 });
                 bld.setNegativeButton("No",new DialogInterface.OnClickListener(){
-
                     public void onClick(DialogInterface dialog, int which) {
 
                     }
@@ -147,16 +146,11 @@ public class PostActivity extends AppCompatActivity {
 
         ib_album.setOnClickListener(new View.OnClickListener() {
             @Override
+            // update image uri
             public void onClick(View view) {
                 openFileChooser();
             }
         });
-
-
-
-
-
-
 
 //        ib_camera.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -169,24 +163,75 @@ public class PostActivity extends AppCompatActivity {
         btn_post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                description = et_description.getText().toString();
-                title = et_title.getText().toString();
-                price = et_price.getText().toString();
-                item.setDescription(description);
-                item.setPrice(price);
-                item.setTitle(title);
-                FirebaseUser cuser=FirebaseAuth.getInstance().getCurrentUser();
-                item.setSellerName(cuser.getDisplayName());
-                item.setSellerId(cuser.getUid() );
-                saveItemToDatabase(imageuri);
-                Toast.makeText(PostActivity.this, "Posted!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(PostActivity.this, MainPageActivity.class);
-                startActivity(intent);
+                if(validateForm()) {
+                    description = et_description.getText().toString();
+                    title = et_title.getText().toString();
+                    price = et_price.getText().toString();
+                    item.setDescription(description);
+                    item.setPrice(price);
+                    item.setTitle(title);
+                    FirebaseUser cuser = FirebaseAuth.getInstance().getCurrentUser();
+                    item.setSellerName(cuser.getDisplayName());
+                    item.setSellerId(cuser.getUid());
 
+                      if(imageuri==null){
+                        AlertDialog.Builder bld= new AlertDialog.Builder(PostActivity.this);
+                        bld. setTitle("Alert");
+                        bld.setMessage("Are you sure to post this item without image?");
+                        bld.setCancelable(true);
+                        bld.setPositiveButton("Yes, post without image.",new DialogInterface.OnClickListener(){
+                            public void onClick(DialogInterface dialog,int which) {
+
+                                // save item record  to database
+                                saveItemToDatabase(imageuri);
+                                Toast.makeText(PostActivity.this, "Posted!", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(PostActivity.this, MainPageActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+                        bld.setNegativeButton("No",new DialogInterface.OnClickListener(){
+
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        bld.show();
+                    }else{
+                          // save item record  to database
+                          saveItemToDatabase(imageuri);
+                          Toast.makeText(PostActivity.this, "Posted!", Toast.LENGTH_SHORT).show();
+                          Intent intent = new Intent(PostActivity.this, MainPageActivity.class);
+                          startActivity(intent);
+                      }
+
+
+                }
             }
         });
     }
+    private   boolean validateForm(){
+        boolean result = true;
+        if (TextUtils.isEmpty(et_description.getText().toString())) {
+            et_description.setError("Required");
+            result = false;
+        }
+        else if(TextUtils.isEmpty(et_title.getText().toString())){
+            et_title.setError("Required");
+            result = false;
+        }else  if (TextUtils.isEmpty(et_price.getText().toString())) {
+            et_price.setError("Required");
+            result = false;
+        }else {
+            try{
+                Double.parseDouble(et_price.getText().toString());
+            }catch (Exception e){
+                et_price.setError("Please enter Number!");
+                result=false;
+            }
+        }
 
+        return result;
+    }
         @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -226,7 +271,7 @@ public class PostActivity extends AppCompatActivity {
     public void saveItemToDatabase(Uri url){
       itemService.saveToAllTable(item);
         finalkey=item.getItemId();
-        Log.i(mytag,"after save to all"+finalkey);
+        // upload uri to firebase storage
         uploadFile(finalkey,url);
 
     }
@@ -246,6 +291,7 @@ public class PostActivity extends AppCompatActivity {
                                 public void onSuccess(Uri uri) {
                                     finalurl=uri.toString();
                                     item.setImageUrl(finalurl);
+                                    // update item info in database with firebase storage url
                                     itemService.update(item,0);
 
                                 }
@@ -276,7 +322,6 @@ public class PostActivity extends AppCompatActivity {
 
 
     private void openFileChooser(){
-       Log.i(mytag,"open firechooser");
         Intent i=new Intent();
         i.setType("image/*");
         i.setAction(Intent.ACTION_GET_CONTENT);

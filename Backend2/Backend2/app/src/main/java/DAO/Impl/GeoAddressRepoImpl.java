@@ -1,5 +1,4 @@
 package DAO.Impl;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -14,10 +13,8 @@ import android.os.Looper;
 import android.provider.Settings;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
-
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -25,7 +22,6 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +29,7 @@ import java.util.Locale;
 import DAO.GeoAddressRepository;
 import Model.Item;
 
+// get loation and update textview and item  address
 public class GeoAddressRepoImpl implements GeoAddressRepository {
     private  Activity context;
     public static String mytag="mytag";
@@ -115,12 +112,6 @@ public class GeoAddressRepoImpl implements GeoAddressRepository {
             requestPermissions();
         }
     }
-
-
-
-
-
-
 
     private void requestPermissions() {
         ActivityCompat.requestPermissions(

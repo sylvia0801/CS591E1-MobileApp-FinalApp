@@ -13,7 +13,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import static com.example.backend.Activity.MainActivity.mytag;
+
 
 /*
 -Favourite table:
@@ -35,8 +35,9 @@ public class FavouriteRepoImpl implements FavouriteRepository {
         Item t=favourite.getItem();
         String k=t.getItemId();
         favRef.child(favourite.getUserName()).child(k).setValue(t);
-// same will update be same
+
     }
+
     @Override
     public void deleteFav(Favourite fav){
         Item t=fav.getItem();
@@ -74,11 +75,7 @@ public class FavouriteRepoImpl implements FavouriteRepository {
                         String buyerId=map.get("buyerId");
                         Item t=new Item(id,tagId,sellerId,buyerId,sellerEmail,buyerEmail,title,productName,price,description,url,address,status,postRating,rated);
                        kk.add(t);
-                       Log.i(mytag,"favitem"+kk.size()+t);
                     }
-
-                 //  new favac(items,)
-                    // frontend show stuff here kk
 
                 }else{
                     //frontend show no favorite for this user
@@ -89,7 +86,6 @@ public class FavouriteRepoImpl implements FavouriteRepository {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-       // return re;
 
     }
 }

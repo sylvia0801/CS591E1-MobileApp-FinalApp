@@ -9,20 +9,15 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.bumptech.glide.Glide;
 import com.example.backend.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
 import DAO.Impl.FavouriteRepoImpl;
 import Model.Favourite;
 import Model.Item;
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static com.example.backend.Activity.MainActivity.mytag;
 
 // the page show all the item detail info
 public class ItemDetailActivity extends AppCompatActivity {
@@ -54,15 +49,12 @@ public class ItemDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
          item = (Item) intent.getBundleExtra("clickitem").getParcelable("clickitem");
         boolean history = intent.getBooleanExtra("history", false);
-
         btn_chat.setOnClickListener(new chatListener());
 
         Glide.with(this).load(item.getImageUrl()).into(itemimage);
-      //  Log.i("mytagdetail",item.getImageUrl());
         price.setText("  $  " + item.getPrice());
         userimage.setImageDrawable(getResources().getDrawable(R.drawable.favorite_item));
         username.setText(item.getSellerName());
-        Log.i(mytag,"usnnnn"+item.getSellerName());
         descirption.setText("  " + item.getDescription());
 
         if(history){
@@ -83,11 +75,11 @@ public class ItemDetailActivity extends AppCompatActivity {
             ItemDetailActivity.this.finish();
         }
     }
+    // add item to my fav list
     private class favoriteListener implements  View.OnClickListener{
         @Override
         public void onClick(View v) {
             Favourite to_add=new Favourite(auth.getCurrentUser().getDisplayName(),item);
-            Log.i(mytag,"add to favorite table"+to_add);
             favoriteService.save(to_add);
             Toast.makeText(getApplicationContext(),"Added to My Favourite!",Toast.LENGTH_SHORT).show();
 
@@ -95,7 +87,6 @@ public class ItemDetailActivity extends AppCompatActivity {
     }
 
     private class chatListener implements View.OnClickListener{
-
         @Override
         public void onClick(View v) {
             FirebaseUser cuser = FirebaseAuth.getInstance().getCurrentUser();

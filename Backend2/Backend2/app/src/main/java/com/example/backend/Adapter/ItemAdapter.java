@@ -1,32 +1,20 @@
 package com.example.backend.Adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import com.bumptech.glide.Glide;
 import com.example.backend.R;
-
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
 import Model.Item;
 
 // show  posts as listview for one specific tag
 public class ItemAdapter extends BaseAdapter {
-
     private List<Item> Items=new LinkedList<>();
     private Context context;
 String mytag="mytag";

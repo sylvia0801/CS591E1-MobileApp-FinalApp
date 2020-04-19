@@ -9,10 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.backend.R;
-
 import DAO.Impl.UserRepoImpl;
+
 
 public class RegisterActivity extends AppCompatActivity {
     private EditText et_email;
@@ -48,7 +47,6 @@ public class RegisterActivity extends AppCompatActivity {
         else {
             et_password.setError(null);
         }
-
         return result;
     }
     @Override

@@ -1,13 +1,19 @@
 package DAO;
-
 import android.app.Activity;
-import android.content.Context;
+// User table service
 
-import com.google.firebase.database.DataSnapshot;
+/*
+User table:
+        - userId(as key to get user unique)
+                -userId
+                -email
+                -userName
+                -averageRate(double)
+                -ratePeopleCount(int)
+                -imageurl
+                -status
 
-import Model.User;
-
-// user table service
+ */
 public interface UserRepository {
     // add auth to firebase database and save to user table
     void register( String email, String passWord,Activity context);

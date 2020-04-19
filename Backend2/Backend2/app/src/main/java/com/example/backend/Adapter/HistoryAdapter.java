@@ -1,5 +1,4 @@
 package com.example.backend.Adapter;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +57,6 @@ public class HistoryAdapter extends BaseAdapter {
         TextView text = (TextView) row.findViewById(R.id.Item_Text);
         image.setImageResource(ImageList.get(index).intValue());
         text.setText(TextArray[index]);
-
         return row;
     }
 

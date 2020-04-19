@@ -3,18 +3,17 @@ package com.example.backend.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.backend.Fragment.buttom_fragment;
 import com.example.backend.R;
 import com.example.backend.Adapter.HistoryAdapter;
 import java.util.List;
 import DAO.Impl.ItemRepoImpl;
 import Model.Item;
+
 // transfer to different specific  history page
 public class ProfileActivity extends AppCompatActivity implements buttom_fragment.OnFragmentInteractionListener {
     private HistoryAdapter adapter;
@@ -25,7 +24,6 @@ public class ProfileActivity extends AppCompatActivity implements buttom_fragmen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
-
         adapter = new HistoryAdapter(this.getBaseContext());
         ListView listveiw = (ListView) findViewById(R.id.Profile_list);
         listveiw.setAdapter(adapter);

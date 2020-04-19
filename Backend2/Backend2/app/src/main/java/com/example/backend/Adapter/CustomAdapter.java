@@ -17,7 +17,6 @@ public class CustomAdapter extends BaseAdapter {
     Context context;
     public CustomAdapter(Context aContext) {
         context = aContext;
-       // TextArray = context.getResources().getStringArray(R.array.ItemCategory);
         ImageList = new ArrayList<>();
         ImageList.add(R.drawable.clothes);
         ImageList.add(R.drawable.books);
@@ -58,10 +57,8 @@ public class CustomAdapter extends BaseAdapter {
 
         ImageView image = (ImageView) row.findViewById(R.id.leftimage);
         TextView text = (TextView) row.findViewById(R.id.Item_Text);
-
         image.setImageResource(ImageList.get(index).intValue());
         text.setText(TextArray[index]);
-
         return row;
     }
 }

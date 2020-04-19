@@ -1,11 +1,18 @@
 package DAO;
-
-import java.util.List;
 import Model.Favourite;
 
+/*
+-Favourite table:
+     -userid
+          -itemId
+               -item(as value)
 
+ */
 public interface FavouriteRepository {
+    // save to Favourite database
     void save(Favourite favourite);
-   void getFavouritesByUserId(String userId); // list of  fav items
+    // list of   my fav items
+   void getFavouritesByUserId(String userId);
+   // delete one record from Favourite table
    void deleteFav(Favourite fav);
 }

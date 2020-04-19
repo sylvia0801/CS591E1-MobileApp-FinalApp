@@ -21,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import DAO.UserRepository;
 import Model.User;
-import static com.example.backend.Activity.MainActivity.mytag;
+
 
 /*
 User table:
@@ -49,44 +49,34 @@ public class UserRepoImpl implements UserRepository {
             return email.split("@")[0];
     }
 
-
-    //User user
-
-
-
+    // register user and add to User table
     public  void register(String email,String password,Activity context){
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener( context, new OnCompleteListener<AuthResult>(){
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                Log.i(mytag,task.toString());
                 if(task.isSuccessful()){
                     Toast.makeText(context, "Successfully registered", Toast.LENGTH_LONG).show();
                     FirebaseUser cur=auth.getCurrentUser();
                     String username=getUsernameFromEmail(cur.getEmail());
-
                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                             .setDisplayName(username)
-                            //     .setPhotoUri(Uri.parse("https://example.com/jane-q-user/profile.jpg"))
                             .build();
 
                     cur.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Log.d(mytag, "User profile updated.new username"+cur.getDisplayName());
                             }
                         }
                     });
-
                     User user=new User(cur.getUid(),cur.getEmail(),username);
-                    save(user);
+                    save(user); // save to database
                     Intent intent = new Intent(context, LoginActivity.class);
                     context.startActivity(intent);
                     context.finish();
 
                 }else {
-                    Log.w(mytag, "createUserWithEmail:failure", task.getException());
-                    Toast.makeText(context, "auth Failed"+task.getException(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Register Failed! "+task.getException().getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -110,7 +100,7 @@ public class UserRepoImpl implements UserRepository {
                         updateUser.setRatePeopleCount(ppl+1);
                         updateUser.setAverageRate(nrate);
                         // key so no duplicates
-                    // update
+                       // update user
                         save(updateUser);
 
                 }
@@ -130,22 +120,20 @@ public class UserRepoImpl implements UserRepository {
            @Override
            public void onComplete(@NonNull Task<AuthResult> task) {
                if(task.isSuccessful()) {
-                   Toast.makeText(context, "Successfully Logged In", Toast.LENGTH_LONG).show();
+                   Toast.makeText(context, "Successfully Logged In! ", Toast.LENGTH_LONG).show();
                    Intent intent = new Intent(context, MainPageActivity.class);
-                   // TODO MainPageActivity
                    context.startActivity(intent);
                    context.finish();
 
                }else {
-                   Toast.makeText(context, "Login Failed"+task.getException(), Toast.LENGTH_LONG).show();
+                   Toast.makeText(context, "Login Failed! "+task.getException().getMessage(), Toast.LENGTH_LONG).show();
                }
            }
         });
 
     }
-    // current user
+    // current user save user to database
     public User save(User user){
-       // Log.i(mytag,userRef.toString()+"sss"+user);
         userRef.child(user.getUserId()).setValue(user);
           return user;
     }
@@ -173,7 +161,6 @@ public class UserRepoImpl implements UserRepository {
     }
 
     private User getUserBysnap(String id,DataSnapshot postSnapshot){
-      // userRef.child(id).add
         User user=new User(id,postSnapshot.child("email").getValue().toString(),postSnapshot.child("userName").getValue().toString(),Double.parseDouble(postSnapshot.child("averageRate").getValue().toString()),Integer.parseInt(postSnapshot.child("ratePeopleCount").getValue().toString()),postSnapshot.child("imageurl").getValue().toString(),postSnapshot.child("status").getValue().toString());
         return user;
     }

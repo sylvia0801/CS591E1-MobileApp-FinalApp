@@ -1,7 +1,5 @@
 package com.example.backend.Activity;
-
 public class Tag {
-
     private String tagName;
     private int imageId;
     public Tag(String tagName, int imageId){

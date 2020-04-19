@@ -1,7 +1,6 @@
 package com.example.backend.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -51,7 +50,6 @@ public class HistoryItemActivity extends AppCompatActivity {
                   String status=map.get("status");
                   String postRating=map.get("postRating");
                   String rated=map.get("rated");//"y" or "n"
-
                   Item i=new Item(id,tag,sellerId,buyerId,sellerName,buyerName,title,productName,price,description,url,address,status,postRating,rated);
                       res.add(i);
               }
@@ -85,7 +83,7 @@ public class HistoryItemActivity extends AppCompatActivity {
         titletext =type+" Items";
         title = (TextView) findViewById(R.id.History_Title);
         title.setText("My" + " " + titletext);
-        // to do get displayname
+        // show user's history
         switchType(type,auth.getCurrentUser().getDisplayName());
 
     }
@@ -104,10 +102,8 @@ public class HistoryItemActivity extends AppCompatActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Item clickitem = (Item) adapter.getItem(position);
             Intent intent = new Intent(HistoryItemActivity.this, ItemDetailActivity.class);
-
             Bundle bundle = new Bundle();
             bundle.putParcelable("clickitem", clickitem);
-
             intent.putExtra("clickitem", bundle);
             intent.putExtra("history", true);
 

@@ -1,6 +1,10 @@
 package com.example.backend.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +12,11 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
+import com.example.backend.Activity.MainPageActivity;
+import com.example.backend.Activity.PostActivity;
 import com.example.backend.R;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +90,7 @@ public class HistoryItemAdapter extends BaseAdapter {
             //update  the image
             Glide.with(context).load(item.getImageUrl()).into(itemimage);
             userimage.setImageResource(R.drawable.favorite_item);
-            //To do need to provide a function return the buyer or seller name
+            // return the buyer or seller name
 
             switch (category){
                 case "Posted":
@@ -123,10 +131,29 @@ public class HistoryItemAdapter extends BaseAdapter {
 
         @Override
         public void onClick(View v) {
-         Item to_remove=   Items.remove(position);
-          String itemid=to_remove.getItemId();
-            itemService.deleteFromAllTableByUsername(itemid,category);
-            notifyDataSetChanged();
+
+            AlertDialog.Builder bld= new AlertDialog.Builder(context);
+            bld. setTitle("Alert");
+            bld.setMessage("Are you sure to delete this record?");
+            bld.setCancelable(true);
+            bld.setPositiveButton("Yes, I want to delete.",new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog,int which) {
+
+                    Item to_remove=   Items.remove(position);
+                    String itemid=to_remove.getItemId();
+                    itemService.deleteFromAllTableByUsername(itemid,category);
+                    notifyDataSetChanged();
+                }
+            });
+            bld.setNegativeButton("No",new DialogInterface.OnClickListener(){
+
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            bld.show();
+
+
         }
     }
 }

@@ -2,7 +2,6 @@ package Model;
 
 public class Favourite {
     //Every Favourite record is unique
-
     private String userName;
     private Item item;
 
@@ -28,6 +27,6 @@ public class Favourite {
         this.userName = userName;
     }
     public String toString(){
-        return "username: "+userName+",iid: "+item;
+        return "username: "+userName+", item: "+item;
     }
 }

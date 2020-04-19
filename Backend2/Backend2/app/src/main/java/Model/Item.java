@@ -15,10 +15,9 @@ public class Item implements Parcelable{
     private String imageUrl="";
     private String address="";//auto getting
     private String status="0";//0:on sell, 1: wait for respond and no more request for buying, 2:sold
-    // to be delete
+    // to be delete or upgrade
     private String postRating="Null";
     private String rated="n";//"y" or "n"
-
     public Item(){
 
 
@@ -216,6 +215,6 @@ public class Item implements Parcelable{
 
     }
     public  String toString(){
-        return "itemid: "+itemId+", tagid:"+tagId+" sellerId:"+sellerName+",buyerId: "+buyerName+", price:"+price+"+ rated:"+rated+", rating:"+postRating;
+        return "itemid: "+itemId+", tagid:"+tagId+" sellerName:"+sellerName+",buyerName: "+buyerName+", price:"+price+"+ rated:"+rated+", rating:"+postRating;
     }
 }

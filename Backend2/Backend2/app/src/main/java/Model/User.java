@@ -4,12 +4,12 @@ public class User {
     private String userId;//auto assign when get auth for firebase
     private String email;//unique
     private String userName;
-    // to be delete
+    // to be delete or upgrade
     private double averageRate;
     private int ratePeopleCount;
+    //
     private String imageurl="default";
     private String status="offline";
-
 
     public User(){
     super();

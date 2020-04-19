@@ -2,7 +2,6 @@ package com.example.backend.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -10,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
 import com.example.backend.Adapter.ItemAdapter;
 import com.example.backend.R;
 import com.google.firebase.database.DataSnapshot;
@@ -18,16 +16,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-
 import Model.Item;
 
 public class ItemActivity extends AppCompatActivity {
-
     List<Item> itemList = new ArrayList<>();
 
     private Intent intent;
@@ -40,12 +35,9 @@ public class ItemActivity extends AppCompatActivity {
 
     private void switchType(String type){
         res=new LinkedList<>();
-        Log.i(MainActivity.mytag,"inside ");
-      //  List<Item> res = new ArrayList<>();
         itemRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.i(MainActivity.mytag,"dddd"+dataSnapshot.getChildrenCount());
                 for (DataSnapshot item : dataSnapshot.getChildren()) {
                     HashMap<String, String> map = (HashMap<String, String>) item.getValue();
                     String id = map.get("itemId");
@@ -68,12 +60,12 @@ public class ItemActivity extends AppCompatActivity {
                         res.add(i);
                     }
                 }
-                System.out.println("tag"+res.size());
+                //   all  items of one tag
                 adapter = new ItemAdapter(res, ItemActivity.this);
                 ListView listveiw = (ListView) findViewById(R.id.lv_items);
                 listveiw.setAdapter(adapter);
                 listveiw.setOnItemClickListener(new ItemListener());
-                // to do frontend  all  items of one tag
+
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -87,23 +79,16 @@ public class ItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
-
         intent = getIntent();
         String type= intent.getStringExtra("Type").toString();
-//        titletext =type+" Items";
-//        title = (TextView) findViewById(R.id.History_Title);
-//        title.setText("My" + " " + titletext);
-        // to do get displayname
+        // show which tag list
         switchType(type);
-
 
     }
 
     private class ItemListener implements AdapterView.OnItemClickListener{
-
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
             Item clickitem = (Item) adapter.getItem(position);
             Intent intent = new Intent(ItemActivity.this, ItemDetailActivity.class);
             Bundle bundle = new Bundle();
