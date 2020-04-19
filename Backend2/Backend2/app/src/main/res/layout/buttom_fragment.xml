@@ -18,13 +18,13 @@
         style="@style/BottomButton"/>
 
     <ImageButton
-        android:id="@+id/Profile"
-        android:src="@drawable/profile_button"
+        android:id="@+id/Chat"
+        android:src="@drawable/chatbutton"
         style="@style/BottomButton"/>
 
     <ImageButton
-        android:id="@+id/Chat"
-        android:src="@drawable/chatbutton"
+        android:id="@+id/Profile"
+        android:src="@drawable/profile_button"
         style="@style/BottomButton"/>
 
 </LinearLayout>

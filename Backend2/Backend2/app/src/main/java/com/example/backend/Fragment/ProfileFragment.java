@@ -135,7 +135,7 @@ public class ProfileFragment extends Fragment {
 
                         databaseReference = FirebaseDatabase.getInstance().getReference("User").child(firebaseUser.getUid());
                         HashMap<String, Object> map = new HashMap<>();
-                        map.put("imageURL", mUri);
+                        map.put("imageurl", mUri);
                         databaseReference.updateChildren(map);
 
                         pd.dismiss();
