@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.backend.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import DAO.Impl.UserRepoImpl;
 
@@ -41,6 +43,18 @@ public class LoginActivity extends AppCompatActivity {
             et_password.setError(null);
         }
         return result;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (firebaseUser != null) {
+            Intent intent = new Intent(LoginActivity.this, MainPageActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     @Override
