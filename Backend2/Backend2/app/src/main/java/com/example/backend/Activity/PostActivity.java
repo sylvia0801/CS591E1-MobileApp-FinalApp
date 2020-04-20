@@ -2,13 +2,28 @@ package com.example.backend.Activity;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.PermissionChecker;
+
+
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Looper;
+import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
@@ -34,9 +49,7 @@ import com.google.firebase.storage.UploadTask;
 import DAO.Impl.GeoAddressRepoImpl;
 import DAO.Impl.ItemRepoImpl;
 import Model.Item;
-
 // post a new item to the platform
-
 public class PostActivity extends AppCompatActivity {
     private Button btn_cancel;
     private Button btn_post;
@@ -48,6 +61,7 @@ public class PostActivity extends AppCompatActivity {
     private ImageButton ib_album;
     private ImageView iv_picture;
     private TextView tv_address;
+    private Button btn_address;
     String description;
     String title;
     String price;
@@ -63,9 +77,6 @@ public class PostActivity extends AppCompatActivity {
     Item item=new Item();// the newly posted item to be added to database
     private String picname; // picture name in the database;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +85,7 @@ public class PostActivity extends AppCompatActivity {
         geo=new GeoAddressRepoImpl((Activity) this);
         btn_cancel = (Button)findViewById(R.id.btn_cancel);
         btn_post = (Button)findViewById(R.id.btn_post);
+        btn_address=(Button)findViewById(R.id.btn_address);
         et_description = (EditText)findViewById(R.id.et_description);
         et_title = (EditText)findViewById(R.id.et_title);
         ib_album=(ImageButton) findViewById(R.id.ib_album);
@@ -86,16 +98,10 @@ public class PostActivity extends AppCompatActivity {
         ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tags);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTag.setAdapter(adapter);
-        // self-get address
-        geo.getLastLocation(tv_address,item);
-
         spinnerTag.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
                 String result = parent.getItemAtPosition(position).toString();
-
                 if (result.equals("Clothes")) {
                     item.setTagId("0");
                 }
@@ -110,13 +116,11 @@ public class PostActivity extends AppCompatActivity {
                 }
                 parent.setVisibility(View.VISIBLE);
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 parent.setVisibility(View.VISIBLE);
             }
         });
-
 
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,7 +177,6 @@ public class PostActivity extends AppCompatActivity {
                     FirebaseUser cuser = FirebaseAuth.getInstance().getCurrentUser();
                     item.setSellerName(cuser.getDisplayName());
                     item.setSellerId(cuser.getUid());
-
                       if(imageuri==null){
                         AlertDialog.Builder bld= new AlertDialog.Builder(PostActivity.this);
                         bld. setTitle("Alert");
@@ -181,7 +184,6 @@ public class PostActivity extends AppCompatActivity {
                         bld.setCancelable(true);
                         bld.setPositiveButton("Yes, post without image.",new DialogInterface.OnClickListener(){
                             public void onClick(DialogInterface dialog,int which) {
-
                                 // save item record  to database
                                 saveItemToDatabase(imageuri);
                                 Toast.makeText(PostActivity.this, "Posted!", Toast.LENGTH_SHORT).show();
@@ -190,7 +192,6 @@ public class PostActivity extends AppCompatActivity {
                             }
                         });
                         bld.setNegativeButton("No",new DialogInterface.OnClickListener(){
-
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
                             }
@@ -208,6 +209,20 @@ public class PostActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btn_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 if(ActivityCompat.checkSelfPermission(PostActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED){
+                     geo.requestPermissions();
+                 }
+                 else {
+                     geo.requestPermissions();
+
+                 }
+
+            }
+        });
     }
     private   boolean validateForm(){
         boolean result = true;
@@ -221,6 +236,9 @@ public class PostActivity extends AppCompatActivity {
         }else  if (TextUtils.isEmpty(et_price.getText().toString())) {
             et_price.setError("Required");
             result = false;
+        }else  if (TextUtils.isEmpty(tv_address.getText().toString())) {
+            tv_address.setError("Permisson Required");
+            result = false;
         }else {
             try{
                 Double.parseDouble(et_price.getText().toString());
@@ -232,14 +250,20 @@ public class PostActivity extends AppCompatActivity {
 
         return result;
     }
-        @Override
+
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PERMISSION_ID) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                geo.getLastLocation(tv_address,null);
+                geo.getLastLocation(tv_address,item);
+
+            }else{
+                geo.requestPermissions();
             }
         }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
     }
 
     //@Override
@@ -267,7 +291,6 @@ public class PostActivity extends AppCompatActivity {
 
     }
 
-
     public void saveItemToDatabase(Uri url){
       itemService.saveToAllTable(item);
         finalkey=item.getItemId();
@@ -275,7 +298,6 @@ public class PostActivity extends AppCompatActivity {
         uploadFile(finalkey,url);
 
     }
-
     public void uploadFile(String itemidxxx, Uri picurl){
         StorageTask uploasTask;
         String itemid=itemidxxx;
@@ -318,8 +340,6 @@ public class PostActivity extends AppCompatActivity {
         return  mime.getExtensionFromMimeType(cs.getType(uri));
 
     }
-
-
 
     private void openFileChooser(){
         Intent i=new Intent();

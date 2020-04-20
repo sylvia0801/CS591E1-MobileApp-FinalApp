@@ -33,6 +33,7 @@ public class HistoryItemActivity extends AppCompatActivity {
       allRef.child(type).child(userid).addValueEventListener(new ValueEventListener() {
           @Override
           public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+              res=new LinkedList<>();
               for (DataSnapshot item : dataSnapshot.getChildren()) {
                   HashMap<String, String> map = (HashMap<String, String>) item.getValue();
                   String id = map.get("itemId");
@@ -54,12 +55,6 @@ public class HistoryItemActivity extends AppCompatActivity {
                       res.add(i);
               }
 
-//              Collections.sort(res, new Comparator<Item>() {
-//                  @Override
-//                  public int compare(Item o1, Item o2) {
-//                      return Double.compare(Double.parseDouble(o1.getPrice()),Double.parseDouble(o2.getPrice()));
-//                  }
-//              });
               adapter = new HistoryItemAdapter(res,intent.getBooleanExtra("ShowEdit", true), type, HistoryItemActivity.this);
               ListView listveiw = (ListView) findViewById(R.id.History_Item_List);
               listveiw.setAdapter(adapter);

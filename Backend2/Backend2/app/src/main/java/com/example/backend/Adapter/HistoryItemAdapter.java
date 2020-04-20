@@ -3,8 +3,6 @@ package com.example.backend.Adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
-import com.example.backend.Activity.MainPageActivity;
-import com.example.backend.Activity.PostActivity;
 import com.example.backend.R;
 import java.util.ArrayList;
 import java.util.List;
@@ -151,7 +145,7 @@ public class HistoryItemAdapter extends BaseAdapter {
                     dialog.dismiss();
                 }
             });
-            bld.show();
+            bld.create().show();
 
 
         }

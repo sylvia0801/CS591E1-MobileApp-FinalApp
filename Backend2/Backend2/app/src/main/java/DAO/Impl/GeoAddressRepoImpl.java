@@ -2,7 +2,9 @@ package DAO.Impl;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -11,10 +13,13 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Looper;
 import android.provider.Settings;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+
+import com.example.backend.Activity.PostActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -64,19 +69,14 @@ public class GeoAddressRepoImpl implements GeoAddressRepository {
             Location mLastLocation = locationResult.getLastLocation();
         }
     };
-    private boolean checkPermissions() {
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        }
-        return false;
-    }
 
 
     @SuppressLint("MissingPermission")
     public void getLastLocation(TextView tv, Item item) {
-        if (checkPermissions()) {
+        Log.i("mytag","in getlast");
             if (isLocationEnabled()) {
+                Log.i("mytag","in loc");
+
                 mFusedLocationClient.getLastLocation().addOnCompleteListener(
                         new OnCompleteListener<Location>() {
                             @Override
@@ -87,6 +87,8 @@ public class GeoAddressRepoImpl implements GeoAddressRepository {
                                 } else {
 
                                     try {
+                                        Log.i("mytag","suuu loc");
+
                                         addresses = gCoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                                         if (addresses.size() != 0) {
                                             String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
@@ -102,23 +104,42 @@ public class GeoAddressRepoImpl implements GeoAddressRepository {
                             }
                         }
                 );
-            } else {
-                Toast.makeText(context, "Turn on location", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                context.startActivity(intent);
-              //  context.finish();
-            }
-        } else {
-            requestPermissions();
-        }
+            }//else{
+//                Log.i("mytag","kkkjj");
+//                requestPermissions();
+//            }
+
     }
 
-    private void requestPermissions() {
-        ActivityCompat.requestPermissions(
-                (Activity) context,
-                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
-                PERMISSION_ID
-        );
+    public void requestPermissions() {
+        if(ActivityCompat.shouldShowRequestPermissionRationale(context,Manifest.permission.ACCESS_FINE_LOCATION) ){
+            Log.i("mytag","get allert ");
+            new AlertDialog.Builder(context).setTitle("Permission needed!").setMessage("This Permission is needed for find posts nearby").setPositiveButton("OK",new DialogInterface.OnClickListener(){
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Log.i("mytag","onclikkk");
+                    ActivityCompat.requestPermissions(
+                            (Activity) context,
+                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                            PERMISSION_ID
+                    );
+                }
+            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+dialog.dismiss();
+                }
+            }).create().show();
+        }else {
+            Log.i("mytag","nnallert");
+
+            ActivityCompat.requestPermissions(
+                    (Activity) context,
+                    new String[]{ Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSION_ID
+            );
+        }
+
     }
 
     private boolean isLocationEnabled() {
