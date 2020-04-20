@@ -11,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
-
 import com.example.backend.Adapter.ItemAdapter;
 import com.example.backend.R;
 import com.google.firebase.database.DataSnapshot;
@@ -35,7 +34,8 @@ public class ItemActivity extends AppCompatActivity {
     private  List<Item> res;
     private String type;
     private Spinner spinnerSort;
-    String sorttype="Sort by distance";
+    String sorttype="Latest Posts First"; // default is sort by latest item posts first
+
  //  private FirebaseAuth auth=FirebaseAuth.getInstance();
     private void switchType(String type,String sorttype){
         res=new LinkedList<>();
@@ -64,28 +64,22 @@ public class ItemActivity extends AppCompatActivity {
                         res.add(i);
                     }
                 }
-                Log.i("mytag","bbb"+sorttype);
+               if(sorttype.equals("Latest Posts First")){
+                   Collections.reverse(res);
+               }
+                else if(sorttype.equals("Nearby Posts distance")){
+                   // to do  distance sort
 
-                for(Item i:res){
-                    Log.i("mytag","kk"+i.getPrice());
-                }
-
-                if(sorttype.equals("Sort by distance")){
-                    // to do
-
-                }else if(sorttype.equals("Sort by price")){
+                }else if(sorttype.equals("Less Expensive Posts First")){
                     Collections.sort(res, new Comparator<Item>() {
                   @Override
                   public int compare(Item o1, Item o2) {
                       return Double.compare(Double.parseDouble(o1.getPrice()),Double.parseDouble(o2.getPrice()));
                   }
               });
-                    Log.i("mytag","price"+sorttype);
-                    for(Item i:res){
-                        Log.i("mytag","kk"+i.getPrice());
-                    }
+
                 }
-                //   all  items of one tag
+                //   all  items of one tag with sorttype
                 adapter = new ItemAdapter(res, ItemActivity.this);
                 ListView listveiw = (ListView) findViewById(R.id.lv_items);
                 listveiw.setAdapter(adapter);
@@ -103,16 +97,21 @@ public class ItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
+        intent = getIntent();
+        String type= intent.getStringExtra("Type").toString();
         spinnerSort = (Spinner)findViewById(R.id.spinnerSort);
-        String[] sortOptions = new String[]{"Sort by distance", "Sort by price"};
+        String[] sortOptions = new String[]{"Latest Posts First","Nearby Posts distance", "Less Expensive Posts First"};
         ArrayAdapter spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, sortOptions);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSort.setAdapter(spinnerAdapter);
         spinnerSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                 sorttype = parent.getItemAtPosition(position).toString();
+                String tobeSelete=parent.getItemAtPosition(position).toString();
+                if(!tobeSelete.equals("Latest Posts First")){
+                 sorttype = tobeSelete;
+                 switchType(type,sorttype);
+                }
                 parent.setVisibility(View.VISIBLE);
             }
 
@@ -121,12 +120,8 @@ public class ItemActivity extends AppCompatActivity {
                 parent.setVisibility(View.VISIBLE);
             }
         });
-        intent = getIntent();
-        String type= intent.getStringExtra("Type").toString();
         // show which tag list
-
         switchType(type,sorttype);
-
     }
 
     private class ItemListener implements AdapterView.OnItemClickListener{
