@@ -15,6 +15,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.sql.SQLOutput;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,8 +31,8 @@ public class HistoryItemActivity extends AppCompatActivity {
     private  List<Item> res;
     private String titletext;
     private FirebaseAuth auth=FirebaseAuth.getInstance();
+
     private void switchType(String type,String userid){
-          res=new LinkedList<>();
       allRef.child(type).child(userid).addValueEventListener(new ValueEventListener() {
           @Override
           public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -53,6 +56,7 @@ public class HistoryItemActivity extends AppCompatActivity {
                   Item i=new Item(id,tag,sellerId,buyerId,sellerName,buyerName,title,productName,price,description,url,address,status,postRating,rated);
                       res.add(i);
               }
+              System.out.println("res size: " + res.size());
 
 //              Collections.sort(res, new Comparator<Item>() {
 //                  @Override
@@ -60,10 +64,13 @@ public class HistoryItemActivity extends AppCompatActivity {
 //                      return Double.compare(Double.parseDouble(o1.getPrice()),Double.parseDouble(o2.getPrice()));
 //                  }
 //              });
+              System.out.println("History activity call");
               adapter = new HistoryItemAdapter(res,intent.getBooleanExtra("ShowEdit", true), type, HistoryItemActivity.this);
               ListView listveiw = (ListView) findViewById(R.id.History_Item_List);
               listveiw.setAdapter(adapter);
+
               listveiw.setOnItemClickListener(new HistoryItemListener());
+
           }
 
           @Override

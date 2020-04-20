@@ -44,8 +44,6 @@ public class HistoryItemAdapter extends BaseAdapter {
         this.show = show;
     }
 
-
-
     @Override
     public int getCount() {
         return Items.size();
@@ -79,13 +77,12 @@ public class HistoryItemAdapter extends BaseAdapter {
         Button edit = (Button) row.findViewById(R.id.History_Edit);
         Button delete = (Button) row.findViewById(R.id.History_Delete);
         TextView price=(TextView) row.findViewById(R.id.History_Item_price);
-        delete.setOnClickListener(new deleteListener(position));
 
         if(!show){
             edit.setVisibility(View.GONE);
         }
-
         if(Items.size() > 0){
+
             Item item = Items.get(position);
             //update  the image
             Glide.with(context).load(item.getImageUrl()).into(itemimage);
@@ -112,6 +109,32 @@ public class HistoryItemAdapter extends BaseAdapter {
             imageDescription.setText(item.getDescription());
             price.setText(item.getPrice());
         }
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder bld= new AlertDialog.Builder(context);
+                bld. setTitle("Alert");
+                bld.setMessage("Are you sure to delete this record?");
+                bld.setCancelable(true);
+                bld.setPositiveButton("Yes, I want to delete.",new DialogInterface.OnClickListener(){
+                    public void onClick(DialogInterface dialog,int which) {
+                        Item remove_item = Items.remove(position);
+                        String itemid = remove_item.getItemId();
+                        itemService.deleteFromAllTableByUsername(itemid,category);
+                        notifyDataSetChanged();
+
+                    }
+                });
+                bld.setNegativeButton("No",new DialogInterface.OnClickListener(){
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                bld.show();
+            }
+        });
         return row;
     }
 
@@ -123,37 +146,14 @@ public class HistoryItemAdapter extends BaseAdapter {
             // to do transfer to edit post and update page
         }
     }
-    private class deleteListener implements View.OnClickListener{
-        private int position;
-        public deleteListener(int position) {
-            this.position = position;
-        }
-
-        @Override
-        public void onClick(View v) {
-
-            AlertDialog.Builder bld= new AlertDialog.Builder(context);
-            bld. setTitle("Alert");
-            bld.setMessage("Are you sure to delete this record?");
-            bld.setCancelable(true);
-            bld.setPositiveButton("Yes, I want to delete.",new DialogInterface.OnClickListener(){
-                public void onClick(DialogInterface dialog,int which) {
-
-                    Item to_remove=   Items.remove(position);
-                    String itemid=to_remove.getItemId();
-                    itemService.deleteFromAllTableByUsername(itemid,category);
-                    notifyDataSetChanged();
-                }
-            });
-            bld.setNegativeButton("No",new DialogInterface.OnClickListener(){
-
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            bld.show();
-
-
-        }
-    }
+//    private class deleteListener implements View.OnClickListener{
+//
+//        @Override
+//        public void onClick(View v) {
+//
+//
+//
+//
+//        }
+//    }
 }
