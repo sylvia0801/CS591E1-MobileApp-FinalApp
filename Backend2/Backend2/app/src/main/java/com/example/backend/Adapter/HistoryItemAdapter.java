@@ -3,8 +3,6 @@ package com.example.backend.Adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
-import com.example.backend.Activity.MainPageActivity;
-import com.example.backend.Activity.PostActivity;
 import com.example.backend.R;
 import java.util.ArrayList;
 import java.util.List;
@@ -146,6 +140,7 @@ public class HistoryItemAdapter extends BaseAdapter {
             // to do transfer to edit post and update page
         }
     }
+<<<<<<< HEAD
 //    private class deleteListener implements View.OnClickListener{
 //
 //        @Override
@@ -156,4 +151,39 @@ public class HistoryItemAdapter extends BaseAdapter {
 //
 //        }
 //    }
+=======
+    private class deleteListener implements View.OnClickListener{
+        private int position;
+        public deleteListener(int position) {
+            this.position = position;
+        }
+
+        @Override
+        public void onClick(View v) {
+
+            AlertDialog.Builder bld= new AlertDialog.Builder(context);
+            bld. setTitle("Alert");
+            bld.setMessage("Are you sure to delete this record?");
+            bld.setCancelable(true);
+            bld.setPositiveButton("Yes, I want to delete.",new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog,int which) {
+
+                    Item to_remove=   Items.remove(position);
+                    String itemid=to_remove.getItemId();
+                    itemService.deleteFromAllTableByUsername(itemid,category);
+                    notifyDataSetChanged();
+                }
+            });
+            bld.setNegativeButton("No",new DialogInterface.OnClickListener(){
+
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            bld.create().show();
+
+
+        }
+    }
+>>>>>>> 0e8216c93cc735e024715719dbf1c76e5aab6554
 }
