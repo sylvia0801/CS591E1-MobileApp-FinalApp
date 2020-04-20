@@ -140,18 +140,7 @@ public class HistoryItemAdapter extends BaseAdapter {
             // to do transfer to edit post and update page
         }
     }
-<<<<<<< HEAD
-//    private class deleteListener implements View.OnClickListener{
-//
-//        @Override
-//        public void onClick(View v) {
-//
-//
-//
-//
-//        }
-//    }
-=======
+
     private class deleteListener implements View.OnClickListener{
         private int position;
         public deleteListener(int position) {
@@ -185,5 +174,5 @@ public class HistoryItemAdapter extends BaseAdapter {
 
         }
     }
->>>>>>> 0e8216c93cc735e024715719dbf1c76e5aab6554
+
 }
