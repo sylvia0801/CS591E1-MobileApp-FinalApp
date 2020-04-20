@@ -7,11 +7,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.example.backend.Fragment.buttom_fragment;
 import com.example.backend.R;
 import com.example.backend.Adapter.HistoryAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.List;
 import DAO.Impl.ItemRepoImpl;
 import Model.Item;
@@ -30,6 +35,11 @@ public class ProfileActivity extends AppCompatActivity implements buttom_fragmen
         ListView listveiw = (ListView) findViewById(R.id.Profile_list);
         listveiw.setAdapter(adapter);
         listveiw.setOnItemClickListener(new profileListener());
+
+        //
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
 
     }
 
@@ -50,10 +60,14 @@ public class ProfileActivity extends AppCompatActivity implements buttom_fragmen
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if(id == R.id.logout){
-            Intent intent = new Intent(this, LoginActivity.class);
-            this.startActivity(intent);
+        switch (item.getItemId()){
+            case R.id.logout:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(ProfileActivity.this, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                return true;
         }
+
+
         return true;
     }
 
