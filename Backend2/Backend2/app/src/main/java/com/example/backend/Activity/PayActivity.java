@@ -49,7 +49,7 @@ public class PayActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_pay);
 
         //TODO Must write below code in your activity to set up initial context for PayU
         Payu.setInstance(this);
