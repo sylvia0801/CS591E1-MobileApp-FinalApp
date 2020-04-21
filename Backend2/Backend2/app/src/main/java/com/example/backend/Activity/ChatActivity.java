@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import com.example.backend.Fragment.buttom_fragment;
 import com.example.backend.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -20,6 +21,7 @@ public class ChatActivity extends AppCompatActivity implements buttom_fragment.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
     }
 
     @Override
