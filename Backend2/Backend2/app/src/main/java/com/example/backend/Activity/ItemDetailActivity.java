@@ -98,6 +98,7 @@ public class ItemDetailActivity extends AppCompatActivity {
         public void onClick(View v) {
             //To do go to the payment page
             Intent intent = new Intent(ItemDetailActivity.this, PayActivity.class);
+            startActivity(intent);
         }
     }
     // add item to my fav list
