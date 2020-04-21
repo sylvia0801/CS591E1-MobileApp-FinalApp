@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Model.Chat;
+import Model.Chatlist;
 import Model.User;
 
 public class ChatsFragment extends Fragment {
@@ -38,7 +39,7 @@ public class ChatsFragment extends Fragment {
     private FirebaseUser firebaseUser;
     private DatabaseReference databaseReference;
 
-    private List<String> usersList;
+    private List<Chatlist> usersList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,23 +55,17 @@ public class ChatsFragment extends Fragment {
 
         usersList = new ArrayList<>();
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Chats");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Chatlist").child(firebaseUser.getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 usersList.clear();
-
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Chat chat = snapshot.getValue(Chat.class);
-                    if (chat.getSender().equals(firebaseUser.getUid())){
-                        usersList.add(chat.getReceiver());
-                    }
-                    if (chat.getReceiver().equals(firebaseUser.getUid())){
-                        usersList.add(chat.getSender());
-                    }
+                    Chatlist chatlist = snapshot.getValue(Chatlist.class);
+                    usersList.add(chatlist);
                 }
 
-                readChats();
+                chatList();
             }
 
             @Override
@@ -78,32 +73,22 @@ public class ChatsFragment extends Fragment {
 
             }
         });
+
         return view;
     }
 
-    private void readChats(){
+    private void chatList(){
         mUsers = new ArrayList<>();
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("User");
-
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mUsers.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     User user = snapshot.getValue(User.class);
-
-                    for (String id : usersList){
-                        if (user.getUserId().equals(id)){
-                            if (mUsers.size() != 0){
-                                for (User user1 : mUsers){
-                                    if (!user.getUserId().equals(user1.getUserId())){
-                                        mUsers.add(user);
-                                    }
-                                }
-                            }else {
-                                mUsers.add(user);
-                            }
+                    for (Chatlist chatlist : usersList){
+                        if (user.getUserId().equals(chatlist.getId())){
+                            mUsers.add(user);
                         }
                     }
                 }
@@ -118,4 +103,5 @@ public class ChatsFragment extends Fragment {
             }
         });
     }
+
 }
