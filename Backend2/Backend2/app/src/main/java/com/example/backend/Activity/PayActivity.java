@@ -62,6 +62,7 @@ public class PayActivity extends AppCompatActivity {
 
         //Lets setup the environment spinner
         environmentSpinner = (Spinner) findViewById(R.id.spinner_environment);
+        System.out.println(environmentSpinner);
 
         //String[] environmentArray = getResources().getStringArray(R.array.environment_array);
         String[] environmentArray = new String[]{"Test", "Production"};
