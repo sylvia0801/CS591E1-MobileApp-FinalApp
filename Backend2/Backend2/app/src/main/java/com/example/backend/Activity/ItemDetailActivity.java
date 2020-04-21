@@ -64,8 +64,6 @@ public class ItemDetailActivity extends AppCompatActivity {
             buy.setOnClickListener(new buyListener());
         }
 
-
-
     }
 
     private class buyListener implements View.OnClickListener{

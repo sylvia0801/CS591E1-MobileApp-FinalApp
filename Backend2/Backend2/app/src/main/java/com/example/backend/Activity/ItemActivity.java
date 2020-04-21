@@ -70,6 +70,11 @@ public class ItemActivity extends AppCompatActivity {
                 else if(sorttype.equals("Nearby Posts distance")){
                    // to do  distance sort
 
+
+
+
+
+
                 }else if(sorttype.equals("Less Expensive Posts First")){
                     Collections.sort(res, new Comparator<Item>() {
                   @Override
