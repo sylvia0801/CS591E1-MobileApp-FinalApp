@@ -77,13 +77,15 @@
             <Button
                 android:id="@+id/btn_address"
                 android:layout_width="500dp"
-                android:layout_height="50dp"
-                android:text="Address" />
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="address"/>
 
             <TextView
                 android:id="@+id/et_address"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
         </LinearLayout>
 
     </LinearLayout>
