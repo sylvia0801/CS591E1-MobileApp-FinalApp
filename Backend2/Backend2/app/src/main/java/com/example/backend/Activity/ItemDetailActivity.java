@@ -9,14 +9,23 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.backend.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import DAO.Impl.FavouriteRepoImpl;
 import Model.Favourite;
 import Model.Item;
+import Model.User;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 // the page show all the item detail info
@@ -31,7 +40,8 @@ public class ItemDetailActivity extends AppCompatActivity {
     private ImageButton btn_chat;
     private Item item;
     private FavouriteRepoImpl favoriteService=new FavouriteRepoImpl();
-    private FirebaseAuth auth=FirebaseAuth.getInstance();
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
+    private DatabaseReference databaseReference;
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +61,24 @@ public class ItemDetailActivity extends AppCompatActivity {
         boolean history = intent.getBooleanExtra("history", false);
         btn_chat.setOnClickListener(new chatListener());
 
-        Glide.with(this).load(item.getImageUrl()).into(itemimage);
+        databaseReference = FirebaseDatabase.getInstance().getReference("User").child(item.getSellerId());
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                if (user.getImageurl().equals("default")){
+                    userimage.setImageResource(R.drawable.icon);
+                } else{
+                    Glide.with(ItemDetailActivity.this).load(user.getImageurl()).into(userimage);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        
         price.setText("  $  " + item.getPrice());
         userimage.setImageDrawable(getResources().getDrawable(R.drawable.favorite_item));
         username.setText(item.getSellerName());
