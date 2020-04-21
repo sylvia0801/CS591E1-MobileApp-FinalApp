@@ -36,6 +36,8 @@ import com.google.firebase.storage.UploadTask;
 import DAO.Impl.GeoAddressRepoImpl;
 import DAO.Impl.ItemRepoImpl;
 import Model.Item;
+import Model.PriceRecommend;
+
 // post a new item to the platform
 public class PostActivity extends AppCompatActivity {
     private Button btn_cancel;
@@ -43,6 +45,9 @@ public class PostActivity extends AppCompatActivity {
     private EditText et_description;
     private EditText et_title;
     private EditText et_price;
+    private TextView tv_priceRecommendation;
+    private TextView tv_probability;
+    private Button btn_recommendation;
     private Spinner spinnerTag;
    // private ImageButton ib_camera;
     private ImageButton ib_album;
@@ -77,6 +82,9 @@ public class PostActivity extends AppCompatActivity {
         et_title = (EditText)findViewById(R.id.et_title);
         ib_album=(ImageButton) findViewById(R.id.ib_album);
         et_price = (EditText)findViewById(R.id.et_price);
+        tv_priceRecommendation = (TextView)findViewById(R.id.tv_priceRecommendation);
+        tv_probability = (TextView)findViewById(R.id.tv_probability);
+        btn_recommendation = (Button)findViewById(R.id.btn_recommendation);
         spinnerTag = (Spinner)findViewById(R.id.spinnerTag);
         //ib_camera = (ImageButton)findViewById(R.id.ib_camera);
         iv_picture = (ImageView)findViewById(R.id.iv_picture);
@@ -210,6 +218,22 @@ public class PostActivity extends AppCompatActivity {
 
             }
         });
+
+        //TODO functions for get price recommendation and probability
+        btn_recommendation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!et_title.getText().toString().equals("") && !et_price.getText().toString().equals("")){
+                    PriceRecommend pr = new PriceRecommend(et_title.getText().toString(), PostActivity.this);
+                    pr.jsonParse(tv_priceRecommendation, tv_probability, Double.valueOf(et_price.getText().toString()));
+                    System.out.println("Success");
+                }
+                else{
+                    Toast.makeText(PostActivity.this, "Please fill the title and price", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
     private   boolean validateForm(){
         boolean result = true;

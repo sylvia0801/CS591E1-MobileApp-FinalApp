@@ -1,31 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@color/colorPrimary">
 
-
-    <Button
-        android:id="@+id/btn_register"
-        android:layout_width="155dp"
+    <ImageView
+        android:id="@+id/woohoo_logo"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="127dp"
-        android:layout_marginRight="127dp"
-        android:layout_marginBottom="50dp"
-        android:text="Register" />
+        android:src="@drawable/woohoologo"
+        android:layout_centerHorizontal="true"/>
 
     <EditText
         android:id="@+id/et_email"
         android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginBottom="250dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/woohoo_logo"
+        android:layout_marginTop="50dp"
         android:ems="10"
         android:inputType="textEmailAddress"
         android:text=""
@@ -35,13 +28,9 @@
     <EditText
         android:id="@+id/et_password"
         android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginBottom="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_email"
+        android:layout_centerHorizontal="true"
         android:ems="10"
         android:inputType="textPassword"
         android:text=""
@@ -51,13 +40,23 @@
     <Button
         android:id="@+id/btn_login"
         android:layout_width="155dp"
+        android:layout_marginTop="30dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="127dp"
-        android:layout_marginRight="127dp"
-        android:layout_marginBottom="100dp"
-        android:text="Log-in" />
+        android:layout_below="@id/et_password"
+        android:layout_centerHorizontal="true"
+        android:text="Log-in"
+        android:textColor="@android:color/white"
+        android:background="@color/colorPrimaryDark"/>
+
+    <Button
+        android:layout_marginTop="10dp"
+        android:id="@+id/btn_register"
+        android:layout_width="155dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/btn_login"
+        android:text="Register"
+        android:textColor="@android:color/white"
+        android:background="@color/colorPrimaryDark"/>
 
 </RelativeLayout>
