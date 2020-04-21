@@ -1,13 +1,11 @@
 package com.example.backend.Activity;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 import com.example.backend.R;
-
 public class Splash extends AppCompatActivity {
 
     @Override

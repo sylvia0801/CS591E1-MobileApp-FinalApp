@@ -16,7 +16,6 @@ import com.example.backend.Fragment.buttom_fragment;
 import com.example.backend.R;
 import com.example.backend.Adapter.HistoryAdapter;
 import com.google.firebase.auth.FirebaseAuth;
-
 import java.util.List;
 import DAO.Impl.ItemRepoImpl;
 import Model.Item;
@@ -52,7 +51,6 @@ public class ProfileActivity extends AppCompatActivity implements buttom_fragmen
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.menu, menu);
-        System.out.println("inflate the menue");
         return true;
     }
 
@@ -63,7 +61,12 @@ public class ProfileActivity extends AppCompatActivity implements buttom_fragmen
         switch (item.getItemId()){
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(ProfileActivity.this, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                Intent intent= new Intent(ProfileActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                finish();
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
                 return true;
         }
 

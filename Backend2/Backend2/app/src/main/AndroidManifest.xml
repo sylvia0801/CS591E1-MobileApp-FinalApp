@@ -18,15 +18,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Activity.LoginActivity">
-        </activity>
 
+        </activity>
         <activity android:name=".Activity.RegisterActivity">
         </activity>
         <activity android:name=".Activity.ItemActivity">
-
         </activity>
         <activity android:name=".Activity.MainPageActivity">
-
         </activity>
         <activity android:name=".Activity.ChatActivity"></activity>
         <activity android:name=".Activity.MessageActivity"></activity>
@@ -34,6 +32,7 @@
         <activity android:name=".Activity.ItemDetailActivity"></activity>
         <activity android:name=".Activity.ProfileActivity"></activity>
         <activity android:name=".Activity.PostActivity"></activity>
+
         <activity android:name=".Activity.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -4,15 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
 import com.example.backend.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
 import DAO.Impl.UserRepoImpl;
 
 public class LoginActivity extends AppCompatActivity {
@@ -20,7 +17,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText et_password;
     private Button btn_login;
     private Button btn_register;
-
 
     private   boolean validateForm(){
         boolean result = true;
@@ -57,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,5 +78,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
     }
 }
