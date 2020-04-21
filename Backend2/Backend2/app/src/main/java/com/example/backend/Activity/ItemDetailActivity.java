@@ -97,7 +97,7 @@ public class ItemDetailActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             //To do go to the payment page
-            ItemDetailActivity.this.finish();
+            Intent intent = new Intent(ItemDetailActivity.this, PayActivity.class);
         }
     }
     // add item to my fav list
