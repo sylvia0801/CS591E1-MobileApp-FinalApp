@@ -79,7 +79,7 @@ public class ChatsFragment extends Fragment {
 
     private void chatList(){
         mUsers = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        databaseReference = FirebaseDatabase.getInstance().getReference("User");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
