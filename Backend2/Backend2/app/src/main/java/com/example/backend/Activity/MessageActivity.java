@@ -58,7 +58,7 @@ public class MessageActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MessageActivity.this, MainPageActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                startActivity(new Intent(MessageActivity.this, ChatActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
             }
         });
 
@@ -88,7 +88,7 @@ public class MessageActivity extends AppCompatActivity {
                     if (user.getImageurl().equals("default")){
                         profile_image.setImageResource(R.drawable.icon);
                     } else{
-                        Glide.with(MessageActivity.this).load(user.getImageurl()).into(profile_image);
+                        Glide.with(getBaseContext()).load(user.getImageurl()).into(profile_image);
                     }
                     readMessage(firebaseUser.getUid(), userid, user.getImageurl());
             }
