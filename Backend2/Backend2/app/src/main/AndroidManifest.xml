@@ -32,8 +32,12 @@
         <activity android:name=".Activity.ItemDetailActivity"></activity>
         <activity android:name=".Activity.ProfileActivity"></activity>
         <activity android:name=".Activity.PostActivity"></activity>
+<<<<<<< HEAD
 
         <activity android:name=".Activity.Splash">
+=======
+        <activity android:name=".Activity.SplashActivity">
+>>>>>>> 7aef56a2c4a235c9571609a46ebca1ba9a388f7a
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
