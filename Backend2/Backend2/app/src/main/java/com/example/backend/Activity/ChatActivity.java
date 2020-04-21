@@ -28,7 +28,7 @@ public class ChatActivity extends AppCompatActivity implements buttom_fragment.O
     }
 
     private void status(String status){
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+        databaseReference = FirebaseDatabase.getInstance().getReference("User").child(firebaseUser.getUid());
 
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("status", status);
