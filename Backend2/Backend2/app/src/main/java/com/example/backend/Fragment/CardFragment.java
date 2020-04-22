@@ -105,8 +105,6 @@ public class CardFragment extends Fragment implements GetOfferStatusApiListener 
 
         view = inflater.inflate(R.layout.fragment_card, container, false);
 
-        viewpager = (ViewPager) getActivity().findViewById(R.id.pager);
-
 
         nameOnCardEditText = (EditText) view.findViewById(R.id.edit_text_name_on_card);
         cardNumberEditText = (EditText) view.findViewById(R.id.edit_text_card_number);
@@ -365,10 +363,6 @@ public class CardFragment extends Fragment implements GetOfferStatusApiListener 
 
                 if(s.length() >= cardLength-1){
                     cardValidation();
-                }else{
-                    isCardNumberValid = false;
-                    if(viewpager.getCurrentItem() == fragmentPosition)
-                        getActivity().findViewById(R.id.button_pay_now).setEnabled(false);
                 }
 
 
@@ -540,12 +534,8 @@ public class CardFragment extends Fragment implements GetOfferStatusApiListener 
 
         }
 
-        if(isCardNumberValid && isCvvValid && isExpiryYearValid && isExpiryMonthValid && fragmentPosition == viewpager.getCurrentItem()){
+        if(isCardNumberValid && isCvvValid && isExpiryYearValid && isExpiryMonthValid){
             getActivity().findViewById(R.id.button_pay_now).setEnabled(true);
-        }
-        else {
-            if(viewpager.getCurrentItem() == fragmentPosition)
-                getActivity().findViewById(R.id.button_pay_now).setEnabled(false);
         }
 
     }
