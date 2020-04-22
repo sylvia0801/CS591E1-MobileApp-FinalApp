@@ -16,11 +16,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.PayActivity"></activity>
-        <activity android:name=".Activity.LoginActivity"></activity>
-        <activity android:name=".Activity.RegisterActivity"></activity>
-        <activity android:name=".Activity.ItemActivity"></activity>
-        <activity android:name=".Activity.MainPageActivity"></activity>
+        <activity android:name=".Activity.PayBaseActivity"></activity>
+        <activity android:name=".Activity.PayActivity" />
+        <activity android:name=".Activity.LoginActivity" />
+        <activity android:name=".Activity.RegisterActivity" />
+        <activity android:name=".Activity.ItemActivity" />
+        <activity android:name=".Activity.MainPageActivity" />
         <activity android:name=".Activity.ChatActivity" />
         <activity android:name=".Activity.MessageActivity" />
         <activity android:name=".Activity.HistoryItemActivity" />

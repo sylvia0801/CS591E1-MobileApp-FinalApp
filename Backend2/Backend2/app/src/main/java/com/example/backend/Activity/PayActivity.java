@@ -317,7 +317,7 @@ public class PayActivity extends AppCompatActivity {
      */
     public void launchSdkUI(PayuHashes payuHashes) {
 
-        Intent intent = new Intent(this, MainPageActivity.class);
+        Intent intent = new Intent(this, PayBaseActivity.class);
         intent.putExtra(PayuConstants.PAYU_CONFIG, payuConfig);
         intent.putExtra(PayuConstants.PAYMENT_PARAMS, mPaymentParams);
         intent.putExtra(PayuConstants.SALT,salt);
