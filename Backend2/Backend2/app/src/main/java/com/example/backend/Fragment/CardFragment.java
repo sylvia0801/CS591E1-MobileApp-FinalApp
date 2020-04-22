@@ -49,11 +49,7 @@ import java.util.HashMap;
  * A simple {@link Fragment} subclass.
  */
 public class CardFragment extends Fragment implements GetOfferStatusApiListener {
-    @Override
-    public void onGetOfferStatusApiResponse(PayuResponse payuResponse) {
 
-    }
-/*
     private PayuHashes mPayuHashes;
     private PaymentParams mPaymentParams;
     private PayuConfig payuConfig;
@@ -206,6 +202,7 @@ public class CardFragment extends Fragment implements GetOfferStatusApiListener 
             });
 
         }
+
         cardNameEditText.setVisibility(View.GONE);
         enableOneClickPaymentCheckBox.setVisibility(View.GONE);
 
@@ -574,5 +571,4 @@ public class CardFragment extends Fragment implements GetOfferStatusApiListener 
     }
 
 
- */
 }

@@ -26,7 +26,7 @@ import com.payu.india.Payu.PayuConstants;
 import com.payu.india.Payu.PayuErrors;
 
 /**
- * This activity prepares PaymentParams, fetches hashes from server and send it to PayuBaseActivity.java.
+ * This activity prepares PaymentParams, fetches hashes from server and send it to PayBaseActivity.java.
  * <p>
  * Implement this activity with OneClickPaymentListener only if you are integrating One Tap payments.
  */
@@ -311,7 +311,7 @@ public class PayActivity extends AppCompatActivity {
         return checksum.getHash();
     }
     /**
-     * This method adds the Payuhashes and other required params to intent and launches the PayuBaseActivity.java
+     * This method adds the Payuhashes and other required params to intent and launches the PayBaseActivity.java
      *
      * @param payuHashes it contains all the hashes generated from merchant server
      */
@@ -323,6 +323,7 @@ public class PayActivity extends AppCompatActivity {
         intent.putExtra(PayuConstants.SALT,salt);
         intent.putExtra(PayuConstants.PAYU_HASHES, payuHashes);
         startActivityForResult(intent, PayuConstants.PAYU_REQUEST_CODE);
+        System.out.println("test");
     }
 
 
