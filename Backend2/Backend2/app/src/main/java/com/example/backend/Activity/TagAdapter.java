@@ -19,10 +19,10 @@ public class TagAdapter extends BaseAdapter {
         context = aContext;
         TextArray = context.getResources().getStringArray(R.array.ItemCategory);
         ImageList = new ArrayList<>();
-        ImageList.add(R.drawable.clothes);
-        ImageList.add(R.drawable.books);
-        ImageList.add(R.drawable.electronics);
-        ImageList.add(R.drawable.furnitures);
+        ImageList.add(R.drawable.clothes2);
+        ImageList.add(R.drawable.books2);
+        ImageList.add(R.drawable.electronics2);
+        ImageList.add(R.drawable.furnitures2);
 
     }
     @Override
