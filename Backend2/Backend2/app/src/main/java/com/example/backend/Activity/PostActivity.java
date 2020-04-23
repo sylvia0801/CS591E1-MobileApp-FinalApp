@@ -120,7 +120,7 @@ public class PostActivity extends AppCompatActivity {
             et_title.setText(item.getTitle());
             et_price.setText(item.getPrice());
             tv_address.setText(item.getAddress());
-            //TODO iv_picture 设置为已经存储的item picture
+            //TODO iv_picture 设置为已经存储的item picture 删除原来数据库中的item
         }
         else {
             item = item;
