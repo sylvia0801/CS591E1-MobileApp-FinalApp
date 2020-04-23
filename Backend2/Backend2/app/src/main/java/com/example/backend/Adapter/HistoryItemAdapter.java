@@ -157,10 +157,12 @@ public class HistoryItemAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Item clickitem = (Item) getItem(position);
                 Intent intent = new Intent(context, PostActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("edititem", clickitem);
-                intent.putExtra("edititem", bundle);
+                //Bundle bundle = new Bundle();
+                intent.putExtra("edititem", clickitem);
+                //intent.putExtra("edititem", bundle);
+                //intent.putExtra("edit", true);
                 intent.putExtra("edit", true);
+                //intent.putExtras(bundle);
                 context.startActivity(intent);
             }
         });
@@ -188,7 +190,7 @@ public class HistoryItemAdapter extends BaseAdapter {
         });
     }
 
-    //delete the history item from the database and update listview
+    //TODO delete the history item from the database and update listview
 
     private class editListener implements View.OnClickListener{
         @Override

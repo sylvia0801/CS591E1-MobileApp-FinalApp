@@ -73,8 +73,11 @@ public class PostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
-        //Todo get the item I pass by intent, set the components' default value according to the item I pass.
-        
+
+        //get intent if the item is passed from HistoryItemAdapter
+        Intent intent = getIntent();
+
+
         storageRef=  FirebaseStorage.getInstance().getReference("Pics");
         geo=new GeoAddressRepoImpl((Activity) this);
         btn_cancel = (Button)findViewById(R.id.btn_cancel);
@@ -95,6 +98,33 @@ public class PostActivity extends AppCompatActivity {
         ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tags);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTag.setAdapter(adapter);
+        System.out.println("get information");
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            item = bundle.getParcelable("edititem");
+            Boolean edit = bundle.getBoolean("edit");
+            if (item.getTagId() == "0") {
+                spinnerTag.setSelection(0);
+            }
+            else if (item.getTagId() == "1") {
+                spinnerTag.setSelection(1);
+            }
+            else if (item.getTagId() == "2") {
+                spinnerTag.setSelection(2);
+            }
+            else if (item.getTagId() == "3") {
+                spinnerTag.setSelection(3);
+            }
+
+            et_description.setText(item.getDescription());
+            et_title.setText(item.getTitle());
+            et_price.setText(item.getPrice());
+            tv_address.setText(item.getAddress());
+            //TODO iv_picture 设置为已经存储的item picture
+        }
+        else {
+            item = item;
+        }
         spinnerTag.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -128,9 +158,9 @@ public class PostActivity extends AppCompatActivity {
                 bld.setCancelable(true);
                 bld.setPositiveButton("Yes, I want to leave.",new DialogInterface.OnClickListener(){
                     public void onClick(DialogInterface dialog,int which) {
-                        item=new Item();
-                        imageuri=null;
-                        finalkey="";
+                        item = item;
+                        imageuri = null;
+                        finalkey = "";
                         Intent intent = new Intent(PostActivity.this, MainPageActivity.class);
                         startActivity(intent);
                     }
