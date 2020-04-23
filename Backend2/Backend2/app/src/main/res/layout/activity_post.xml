@@ -79,7 +79,7 @@
                 android:layout_width="500dp"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="address"/>
+                android:text="Address" />
 
             <TextView
                 android:id="@+id/et_address"
@@ -132,7 +132,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="probability: "
+            android:text="Probability: "
             android:layout_gravity="center"
             android:gravity="center"/>
 
