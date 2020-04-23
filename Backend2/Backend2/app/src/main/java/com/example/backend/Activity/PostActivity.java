@@ -75,7 +75,7 @@ public class PostActivity extends AppCompatActivity {
     Uri imageuri;
    // final int camera_get_code=111;
     final int album_get_code=999;
-    private int PERMISSION_ID = 44;
+    static final int PERMISSION_ID = 44;
     private GeoAddressRepoImpl geo;
     private ItemRepoImpl itemService=new ItemRepoImpl();
     private StorageReference storageRef ;
@@ -226,9 +226,7 @@ public class PostActivity extends AppCompatActivity {
                  }
                  else {
                      geo.requestPermissions();
-
                  }
-
             }
         });
 

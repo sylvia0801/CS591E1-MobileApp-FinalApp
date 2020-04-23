@@ -29,6 +29,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import DAO.GeoAddressRepository;
@@ -38,12 +39,14 @@ import Model.Item;
 public class GeoAddressRepoImpl implements GeoAddressRepository {
     private  Activity context;
     public static String mytag="mytag";
-    int PERMISSION_ID = 44;
+    static final int PERMISSION_ID = 44;
     List<Address> addresses=new ArrayList<>();
     FusedLocationProviderClient mFusedLocationClient;
     Geocoder gCoder ;
+    Location curLocation;
    public GeoAddressRepoImpl(Activity context){
         this.context=context;
+        gCoder=new Geocoder(context);
         gCoder=new Geocoder(context, Locale.getDefault());
         mFusedLocationClient=LocationServices.getFusedLocationProviderClient(context);
     }
@@ -81,15 +84,15 @@ public class GeoAddressRepoImpl implements GeoAddressRepository {
                         new OnCompleteListener<Location>() {
                             @Override
                             public void onComplete(@NonNull Task<Location> task) {
-                                Location location = task.getResult();
-                                if (location == null) {
+                                curLocation = task.getResult();
+                                if (curLocation == null) {
                                     requestNewLocationData();
                                 } else {
 
                                     try {
                                         Log.i("mytag","suuu loc");
 
-                                        addresses = gCoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                                        addresses = gCoder.getFromLocation(curLocation.getLatitude(), curLocation.getLongitude(), 1);
                                         if (addresses.size() != 0) {
                                             String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
                                             item.setAddress(address);
