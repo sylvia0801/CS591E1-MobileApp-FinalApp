@@ -3,6 +3,8 @@ package com.example.backend.Adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.example.backend.Activity.HistoryItemActivity;
+import com.example.backend.Activity.ItemDetailActivity;
+import com.example.backend.Activity.PostActivity;
 import com.example.backend.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -69,6 +74,7 @@ public class HistoryItemAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         View row;
         if (convertView == null){  //indicates this is the first time we are creating this row.
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -145,6 +151,19 @@ public class HistoryItemAdapter extends BaseAdapter {
                 bld.show();
             }
         });
+
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Item clickitem = (Item) getItem(position);
+                Intent intent = new Intent(context, PostActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("edititem", clickitem);
+                intent.putExtra("edititem", bundle);
+                intent.putExtra("edit", true);
+                context.startActivity(intent);
+            }
+        });
         return row;
     }
 
@@ -175,41 +194,9 @@ public class HistoryItemAdapter extends BaseAdapter {
         @Override
         public void onClick(View v) {
             // to do transfer to edit post and update page
-        }
-    }
-
-    private class deleteListener implements View.OnClickListener{
-        private int position;
-        public deleteListener(int position) {
-            this.position = position;
-        }
-
-        @Override
-        public void onClick(View v) {
-
-            AlertDialog.Builder bld= new AlertDialog.Builder(context);
-            bld. setTitle("Alert");
-            bld.setMessage("Are you sure to delete this record?");
-            bld.setCancelable(true);
-            bld.setPositiveButton("Yes, I want to delete.",new DialogInterface.OnClickListener(){
-                public void onClick(DialogInterface dialog,int which) {
-
-                    Item to_remove=   Items.remove(position);
-                    String itemid=to_remove.getItemId();
-                    itemService.deleteFromAllTableByUsername(itemid,category);
-                    notifyDataSetChanged();
-                }
-            });
-            bld.setNegativeButton("No",new DialogInterface.OnClickListener(){
-
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            bld.create().show();
-
 
         }
     }
+
 
 }

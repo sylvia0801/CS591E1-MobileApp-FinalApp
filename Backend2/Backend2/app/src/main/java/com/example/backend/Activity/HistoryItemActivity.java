@@ -28,6 +28,7 @@ public class HistoryItemActivity extends AppCompatActivity {
     private  List<Item> res;
     private String titletext;
     private FirebaseAuth auth=FirebaseAuth.getInstance();
+
     private void switchType(String type,String userid){
           res=new LinkedList<>();
       allRef.child(type).child(userid).addValueEventListener(new ValueEventListener() {
@@ -54,8 +55,8 @@ public class HistoryItemActivity extends AppCompatActivity {
                   Item i=new Item(id,tag,sellerId,buyerId,sellerName,buyerName,title,productName,price,description,url,address,status,postRating,rated);
                       res.add(i);
               }
-
-              adapter = new HistoryItemAdapter(res,intent.getBooleanExtra("ShowEdit", true), type, HistoryItemActivity.this);
+              System.out.println(HistoryItemActivity.this == null);
+              adapter = new HistoryItemAdapter(res,intent.getBooleanExtra("ShowEdit", true), type, getBaseContext());
               ListView listveiw = (ListView) findViewById(R.id.History_Item_List);
               listveiw.setAdapter(adapter);
               listveiw.setOnItemClickListener(new HistoryItemListener());

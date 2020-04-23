@@ -73,6 +73,8 @@ public class PostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+        //Todo get the item I pass by intent, set the components' default value according to the item I pass.
+        
         storageRef=  FirebaseStorage.getInstance().getReference("Pics");
         geo=new GeoAddressRepoImpl((Activity) this);
         btn_cancel = (Button)findViewById(R.id.btn_cancel);

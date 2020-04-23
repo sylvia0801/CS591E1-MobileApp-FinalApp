@@ -69,7 +69,7 @@ public class ItemDetailActivity extends AppCompatActivity {
                 if (user.getImageurl().equals("default")){
                     userimage.setImageResource(R.drawable.icon);
                 } else{
-                    Glide.with(ItemDetailActivity.this).load(user.getImageurl()).into(userimage);
+                    Glide.with(getBaseContext()).load(user.getImageurl()).into(userimage);
                 }
             }
 
