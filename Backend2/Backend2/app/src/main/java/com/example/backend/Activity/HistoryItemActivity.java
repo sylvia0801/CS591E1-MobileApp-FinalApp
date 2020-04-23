@@ -56,7 +56,7 @@ public class HistoryItemActivity extends AppCompatActivity {
                       res.add(i);
               }
               System.out.println(HistoryItemActivity.this == null);
-              adapter = new HistoryItemAdapter(res,intent.getBooleanExtra("ShowEdit", true), type, getBaseContext());
+              adapter = new HistoryItemAdapter(res,intent.getBooleanExtra("ShowEdit", true), type, HistoryItemActivity.this);//getBaseContext()
               ListView listveiw = (ListView) findViewById(R.id.History_Item_List);
               listveiw.setAdapter(adapter);
               listveiw.setOnItemClickListener(new HistoryItemListener());

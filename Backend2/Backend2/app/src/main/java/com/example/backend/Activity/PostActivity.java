@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
@@ -24,6 +25,8 @@ import android.widget.TextView;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 import com.example.backend.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -68,15 +71,15 @@ public class PostActivity extends AppCompatActivity {
     private StorageReference storageRef ;
     Item item=new Item();// the newly posted item to be added to database
     private String picname; // picture name in the database;
+    Boolean edit=false;
+    String type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
-
         //get intent if the item is passed from HistoryItemAdapter
         Intent intent = getIntent();
-
 
         storageRef=  FirebaseStorage.getInstance().getReference("Pics");
         geo=new GeoAddressRepoImpl((Activity) this);
@@ -98,29 +101,36 @@ public class PostActivity extends AppCompatActivity {
         ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tags);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTag.setAdapter(adapter);
-        System.out.println("get information");
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
+            btn_post.setText("UPDATE");
             item = bundle.getParcelable("edititem");
-            Boolean edit = bundle.getBoolean("edit");
+             edit = bundle.getBoolean("edit");
             if (item.getTagId() == "0") {
-                spinnerTag.setSelection(0);
+                spinnerTag.setSelection(0,true);
+                item.setTagId("0");
+
             }
             else if (item.getTagId() == "1") {
-                spinnerTag.setSelection(1);
+                spinnerTag.setSelection(1,true);
+                item.setTagId("1");
             }
             else if (item.getTagId() == "2") {
-                spinnerTag.setSelection(2);
+                spinnerTag.setSelection(2,true);
+                item.setTagId("2");
+                Log.i("mytag", "tag"+item.getTagId());
+
             }
             else if (item.getTagId() == "3") {
-                spinnerTag.setSelection(3);
+                spinnerTag.setSelection(3,true);
+                item.setTagId("3");
             }
 
             et_description.setText(item.getDescription());
             et_title.setText(item.getTitle());
             et_price.setText(item.getPrice());
             tv_address.setText(item.getAddress());
-            //TODO iv_picture 设置为已经存储的item picture 删除原来数据库中的item
+            Glide.with(PostActivity.this).load(item.getImageUrl()).into(iv_picture);
         }
         else {
             item = item;
@@ -194,6 +204,7 @@ public class PostActivity extends AppCompatActivity {
         btn_post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if(validateForm()) {
                     description = et_description.getText().toString();
                     title = et_title.getText().toString();
@@ -204,16 +215,18 @@ public class PostActivity extends AppCompatActivity {
                     FirebaseUser cuser = FirebaseAuth.getInstance().getCurrentUser();
                     item.setSellerName(cuser.getDisplayName());
                     item.setSellerId(cuser.getUid());
-                      if(imageuri==null){
+                     type="post";
+                    if(edit)  type="update";
+                      if(imageuri==null&&item.getImageUrl().equals("")){
                         AlertDialog.Builder bld= new AlertDialog.Builder(PostActivity.this);
                         bld. setTitle("Alert");
-                        bld.setMessage("Are you sure to post this item without image?");
+                        bld.setMessage("Are you sure to "+type+" this item without image?");
                         bld.setCancelable(true);
-                        bld.setPositiveButton("Yes, post without image.",new DialogInterface.OnClickListener(){
+                        bld.setPositiveButton("Yes, "+type+" without image.",new DialogInterface.OnClickListener(){
                             public void onClick(DialogInterface dialog,int which) {
                                 // save item record  to database
                                 saveItemToDatabase(imageuri);
-                                Toast.makeText(PostActivity.this, "Posted!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PostActivity.this, (type+"ed!"), Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(PostActivity.this, MainPageActivity.class);
                                 startActivity(intent);
                             }
@@ -226,10 +239,14 @@ public class PostActivity extends AppCompatActivity {
                         bld.show();
                     }else{
                           // save item record  to database
-                          saveItemToDatabase(imageuri);
-                          Toast.makeText(PostActivity.this, "Posted!", Toast.LENGTH_SHORT).show();
+
+                              saveItemToDatabase(imageuri);
+
+                          Toast.makeText(PostActivity.this, type+"ed!", Toast.LENGTH_SHORT).show();
                           Intent intent = new Intent(PostActivity.this, MainPageActivity.class);
                           startActivity(intent);
+
+
                       }
 
 
@@ -248,8 +265,7 @@ public class PostActivity extends AppCompatActivity {
                  }
             }
         });
-
-        //TODO functions for get price recommendation and probability
+// price recommendation
         btn_recommendation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -307,14 +323,7 @@ public class PostActivity extends AppCompatActivity {
 
     }
 
-    //@Override
-//    public void onResume(){
-//        super.onRescume();
-//        if (checkPermissions()) {
-//            getLastLocation();
-//        }
-//
-//    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -333,8 +342,20 @@ public class PostActivity extends AppCompatActivity {
     }
 
     public void saveItemToDatabase(Uri url){
-      itemService.saveToAllTable(item);
-        finalkey=item.getItemId();
+
+        if(edit){
+            item.setDescription(et_description.getText().toString());
+            item.setTitle(et_title.getText().toString());
+            item.setPrice(et_price.getText().toString());
+            itemService.update(item,0);
+            finalkey=item.getItemId();
+            storageRef.child(item.getItemId()).child(item.getItemId()+".jpg").delete();
+
+        }else{
+            itemService.saveToAllTable(item);
+            finalkey=item.getItemId();
+        }
+
         // upload uri to firebase storage
         uploadFile(finalkey,url);
 
@@ -343,7 +364,9 @@ public class PostActivity extends AppCompatActivity {
         StorageTask uploasTask;
         String itemid=itemidxxx;
         if(picurl!=null){
-            picname=System.currentTimeMillis()+"."+getExtention(picurl);
+//            picname=System.currentTimeMillis()+"."+getExtention(picurl);
+            picname=item.getItemId()+"."+getExtention(picurl);
+
             StorageReference picRef = storageRef.child(itemid).child(picname);
             uploasTask= picRef.putFile(picurl)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot >() {

@@ -38,7 +38,6 @@ import Model.Item;
 // get loation and update textview and item  address
 public class GeoAddressRepoImpl implements GeoAddressRepository {
     private  Activity context;
-    public static String mytag="mytag";
     static final int PERMISSION_ID = 44;
     List<Address> addresses=new ArrayList<>();
     FusedLocationProviderClient mFusedLocationClient;
@@ -76,9 +75,7 @@ public class GeoAddressRepoImpl implements GeoAddressRepository {
 
     @SuppressLint("MissingPermission")
     public void getLastLocation(TextView tv, Item item) {
-        Log.i("mytag","in getlast");
             if (isLocationEnabled()) {
-                Log.i("mytag","in loc");
 
                 mFusedLocationClient.getLastLocation().addOnCompleteListener(
                         new OnCompleteListener<Location>() {
@@ -90,8 +87,6 @@ public class GeoAddressRepoImpl implements GeoAddressRepository {
                                 } else {
 
                                     try {
-                                        Log.i("mytag","suuu loc");
-
                                         addresses = gCoder.getFromLocation(curLocation.getLatitude(), curLocation.getLongitude(), 1);
                                         if (addresses.size() != 0) {
                                             String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
@@ -108,7 +103,6 @@ public class GeoAddressRepoImpl implements GeoAddressRepository {
                         }
                 );
             }else{
-                Log.i("mytag","kkkjj");
                 requestPermissions();
             }
 
@@ -116,11 +110,9 @@ public class GeoAddressRepoImpl implements GeoAddressRepository {
 
     public void requestPermissions() {
         if(ActivityCompat.shouldShowRequestPermissionRationale(context,Manifest.permission.ACCESS_FINE_LOCATION) ){
-            Log.i("mytag","get allert ");
             new AlertDialog.Builder(context).setTitle("Permission needed!").setMessage("This Permission is needed for find posts nearby").setPositiveButton("OK",new DialogInterface.OnClickListener(){
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Log.i("mytag","onclikkk");
                     ActivityCompat.requestPermissions(
                             (Activity) context,
                             new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
@@ -134,7 +126,6 @@ dialog.dismiss();
                 }
             }).create().show();
         }else {
-            Log.i("mytag","nnallert");
 
             ActivityCompat.requestPermissions(
                     (Activity) context,

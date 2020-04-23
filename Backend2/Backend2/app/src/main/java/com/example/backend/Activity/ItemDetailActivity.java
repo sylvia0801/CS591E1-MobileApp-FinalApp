@@ -78,6 +78,8 @@ public class ItemDetailActivity extends AppCompatActivity {
 
             }
         });
+
+        Glide.with(ItemDetailActivity.this).load(item.getImageUrl()).into(itemimage);
         
         price.setText("  $  " + item.getPrice());
         userimage.setImageDrawable(getResources().getDrawable(R.drawable.favorite_item));

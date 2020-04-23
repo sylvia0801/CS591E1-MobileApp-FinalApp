@@ -1,5 +1,6 @@
 package com.example.backend.Adapter;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -34,6 +35,8 @@ import DAO.Impl.ItemRepoImpl;
 import Model.Item;
 import Model.User;
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class HistoryItemAdapter extends BaseAdapter {
     private List<Item> Items;
@@ -162,6 +165,7 @@ public class HistoryItemAdapter extends BaseAdapter {
                 //intent.putExtra("edititem", bundle);
                 //intent.putExtra("edit", true);
                 intent.putExtra("edit", true);
+                intent.setFlags( FLAG_ACTIVITY_NEW_TASK);
                 //intent.putExtras(bundle);
                 context.startActivity(intent);
             }
@@ -190,15 +194,7 @@ public class HistoryItemAdapter extends BaseAdapter {
         });
     }
 
-    //TODO delete the history item from the database and update listview
 
-    private class editListener implements View.OnClickListener{
-        @Override
-        public void onClick(View v) {
-            // to do transfer to edit post and update page
-
-        }
-    }
 
 
 }
