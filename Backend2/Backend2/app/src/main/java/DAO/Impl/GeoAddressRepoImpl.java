@@ -107,10 +107,10 @@ public class GeoAddressRepoImpl implements GeoAddressRepository {
                             }
                         }
                 );
-            }//else{
-//                Log.i("mytag","kkkjj");
-//                requestPermissions();
-//            }
+            }else{
+                Log.i("mytag","kkkjj");
+                requestPermissions();
+            }
 
     }
 

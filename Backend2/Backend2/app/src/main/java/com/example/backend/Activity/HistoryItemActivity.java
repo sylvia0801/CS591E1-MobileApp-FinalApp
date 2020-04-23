@@ -67,8 +67,6 @@ public class HistoryItemActivity extends AppCompatActivity {
           }
       });
 }
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,10 +82,8 @@ public class HistoryItemActivity extends AppCompatActivity {
     }
 
     private class histroyListener implements  AdapterView.OnItemClickListener{
-
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
         }
     }
 

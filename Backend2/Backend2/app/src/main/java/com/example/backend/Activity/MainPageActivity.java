@@ -8,12 +8,19 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import com.example.backend.Fragment.buttom_fragment;
 import com.example.backend.R;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 // four category list page
 public class MainPageActivity extends AppCompatActivity implements buttom_fragment.OnFragmentInteractionListener {
     private List<Tag> tagList = new ArrayList<>();
+    private FirebaseUser firebaseUser;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -103,7 +103,7 @@ public class ItemActivity extends AppCompatActivity {
 
                }
                 else if(sorttype.equals("Nearby Posts distance")){
-                   // to do  distance sort
+                   // to do  distance sor
                     GeolocationComparationImpl.sortItems(res,curLocation,gCoder);
                    for(Item item:res){
                        Log.i(mytag,item.getAddress().toString());

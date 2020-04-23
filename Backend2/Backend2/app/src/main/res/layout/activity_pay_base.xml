@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Activity.PayBaseActivity">
+
+    <LinearLayout
+        android:id="@+id/header_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#E6E6E6"
+        android:gravity="center"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textview_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Amount"
+            android:textColor="#302F2F"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textview_txnid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textview_amount"
+            android:gravity="center"
+            android:text="Txnid"
+            android:textColor="#302F2F"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <fragment
+        android:id="@+id/card_fragment"
+        android:name="com.example.backend.Fragment.CardFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        tools:layout="@layout/fragment_card"/>
+
+    <Button
+        android:id="@+id/button_pay_now"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/bttn_grey_disabled"
+        android:enabled="false"
+        android:gravity="center"
+        android:text="PAY NOW"
+        android:textColor="#FFFFFF"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+</LinearLayout>

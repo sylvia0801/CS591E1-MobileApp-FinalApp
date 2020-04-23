@@ -64,27 +64,28 @@
             android:textSize="15dp"
             android:text="0.00"/>
 
-        <Button
-            android:id="@+id/History_Edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/History_Price_Tag"
-            android:layout_alignTop="@id/History_Item_price"
-            android:layout_marginLeft="180dp"
-            android:text="Edit"
-            android:focusable="false"
-            style="@style/TextStyle"/>
 
         <Button
             android:id="@+id/History_Delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/History_Edit"
-            android:layout_toRightOf="@id/History_Price_Tag"
-            android:layout_marginLeft="270dp"
+            android:layout_below="@id/History_Price_Tag"
+            android:layout_alignParentRight="true"
             android:text="Delete"
             android:focusable="false"
             style="@style/TextStyle"/>
+
+        <Button
+            android:id="@+id/History_Edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/History_Delete"
+            android:layout_alignTop="@id/History_Delete"
+            android:text="Edit"
+            android:focusable="false"
+            style="@style/TextStyle"/>
+
+
 
 
 

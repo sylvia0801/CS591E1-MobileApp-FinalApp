@@ -58,7 +58,7 @@ public class MessageActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MessageActivity.this, MainPageActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                startActivity(new Intent(MessageActivity.this, ChatActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
             }
         });
 
@@ -88,7 +88,7 @@ public class MessageActivity extends AppCompatActivity {
                     if (user.getImageurl().equals("default")){
                         profile_image.setImageResource(R.drawable.icon);
                     } else{
-                        Glide.with(MessageActivity.this).load(user.getImageurl()).into(profile_image);
+                        Glide.with(getBaseContext()).load(user.getImageurl()).into(profile_image);
                     }
                     readMessage(firebaseUser.getUid(), userid, user.getImageurl());
             }
@@ -104,7 +104,7 @@ public class MessageActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String message = text_send.getText().toString();
                 if (!message.equals("")){
-                    sendMessage(firebaseUser.getUid(), userid, message);
+                    sendMessage(userid, firebaseUser.getUid(), userid, message);
                 }else {
                     Toast.makeText(MessageActivity.this, "You can't send empty message!", Toast.LENGTH_SHORT).show();
                 }
@@ -114,7 +114,7 @@ public class MessageActivity extends AppCompatActivity {
         });
     }
 
-    private void sendMessage(String sender, String receiver, String message){
+    private void sendMessage(final String userid, String sender, String receiver, String message){
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
         HashMap<String, Object> hashMap = new HashMap<>();
@@ -123,6 +123,42 @@ public class MessageActivity extends AppCompatActivity {
         hashMap.put("message", message);
 
         databaseReference.child("Chats").push().setValue(hashMap);
+
+        final DatabaseReference senderChatRef = FirebaseDatabase.getInstance().getReference("Chatlist")
+                .child(firebaseUser.getUid())
+                .child(userid);
+
+        final DatabaseReference receiverChatRef = FirebaseDatabase.getInstance().getReference("Chatlist")
+                .child(userid)
+                .child(firebaseUser.getUid());
+
+        senderChatRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.exists()){
+                    senderChatRef.child("id").setValue(userid);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        receiverChatRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.exists()){
+                    receiverChatRef.child("id").setValue(firebaseUser.getUid());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void readMessage(final String myid, final String userid, final String imageURL){
