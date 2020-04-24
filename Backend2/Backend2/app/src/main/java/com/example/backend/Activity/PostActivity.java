@@ -6,11 +6,18 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
@@ -33,13 +40,21 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Random;
+
 import DAO.Impl.GeoAddressRepoImpl;
 import DAO.Impl.ItemRepoImpl;
 import Model.Item;
 import Model.PriceRecommend;
 
 // post a new item to the platform
-public class PostActivity extends AppCompatActivity {
+public class PostActivity extends Activity {
     private Button btn_cancel;
     private Button btn_post;
     private EditText et_description;
@@ -47,10 +62,12 @@ public class PostActivity extends AppCompatActivity {
     private EditText et_price;
     private TextView tv_priceRecommendation;
     private TextView tv_probability;
+    private String mytag="mytag";
     private Button btn_recommendation;
     private Spinner spinnerTag;
    // private ImageButton ib_camera;
     private ImageButton ib_album;
+    private ImageButton ib_camera;
     private ImageView iv_picture;
     private TextView tv_address;
     private Button btn_address;
@@ -60,14 +77,17 @@ public class PostActivity extends AppCompatActivity {
     public   String finalurl;
     public String finalkey;
     Uri imageuri;
-   // final int camera_get_code=111;
+    Bitmap photo;
     final int album_get_code=999;
     static final int PERMISSION_ID = 44;
+    private static final int REQUEST = 112;
     private GeoAddressRepoImpl geo;
     private ItemRepoImpl itemService=new ItemRepoImpl();
     private StorageReference storageRef ;
     Item item=new Item();// the newly posted item to be added to database
+    private static final int CAMERA_REQUEST = 1888;
     private String picname; // picture name in the database;
+    private static final int MY_CAMERA_PERMISSION_CODE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +101,7 @@ public class PostActivity extends AppCompatActivity {
         et_description = (EditText)findViewById(R.id.et_description);
         et_title = (EditText)findViewById(R.id.et_title);
         ib_album=(ImageButton) findViewById(R.id.ib_album);
+        ib_camera=(ImageButton)findViewById(R.id.ib_camera);
         et_price = (EditText)findViewById(R.id.et_price);
         tv_priceRecommendation = (TextView)findViewById(R.id.tv_priceRecommendation);
         tv_probability = (TextView)findViewById(R.id.tv_probability);
@@ -116,7 +137,25 @@ public class PostActivity extends AppCompatActivity {
                 parent.setVisibility(View.VISIBLE);
             }
         });
-
+        ib_camera.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Log.i(mytag,"camera starting");
+                if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+                {
+                    Log.i(mytag,"camera aksing for permission");
+                    requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
+                }
+                else
+                {
+                    Log.i(mytag,"camera using");
+                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                }
+            }
+        });
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -199,8 +238,6 @@ public class PostActivity extends AppCompatActivity {
                           Intent intent = new Intent(PostActivity.this, MainPageActivity.class);
                           startActivity(intent);
                       }
-
-
                 }
             }
         });
@@ -231,7 +268,41 @@ public class PostActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == MY_CAMERA_PERMISSION_CODE)
+        {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+                Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+            }
+            else
+            {
+                Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show();
+            }
+        }
+        if (requestCode == PERMISSION_ID) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                geo.getLastLocation(tv_address,item);
 
+            }else{
+                geo.requestPermissions();
+            }
+        }
+        if(REQUEST==requestCode) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                imageuri=getImageUri(PostActivity.this,photo);
+                Log.i(mytag,imageuri==null?"null":imageuri.toString());
+            } else {
+                Toast.makeText(PostActivity.this, "The app was not allowed to write in your storage", Toast.LENGTH_LONG).show();
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
     private   boolean validateForm(){
         boolean result = true;
@@ -261,19 +332,6 @@ public class PostActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (requestCode == PERMISSION_ID) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                geo.getLastLocation(tv_address,item);
-
-            }else{
-                geo.requestPermissions();
-            }
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-    }
 
     //@Override
 //    public void onResume(){
@@ -296,16 +354,55 @@ public class PostActivity extends AppCompatActivity {
             imageuri=data.getData();
             iv_picture.setImageURI(imageuri);
         }
+        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK)
+        {
+            photo = (Bitmap) data.getExtras().get("data");
+            iv_picture.setImageBitmap(photo);
 
+            if (Build.VERSION.SDK_INT >= 23) {
+                String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                if (!hasPermissions(PostActivity.this, PERMISSIONS)) {
+                    ActivityCompat.requestPermissions(PostActivity.this, PERMISSIONS, REQUEST );
+                } else {
+                    imageuri=getImageUri(PostActivity.this,photo);
+                }
+            }
 
+            if(imageuri==null)
+                Log.i(mytag,"null");
+            else
+                Log.i(mytag,imageuri.toString());
+            //save(photo);
+        }
+    }
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+    private static boolean hasPermissions(Context context, String... permissions) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
+    public String getRealPathFromURI(Uri uri) {
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+        return cursor.getString(idx);
+    }
     public void saveItemToDatabase(Uri url){
       itemService.saveToAllTable(item);
         finalkey=item.getItemId();
         // upload uri to firebase storage
         uploadFile(finalkey,url);
-
     }
     public void uploadFile(String itemidxxx, Uri picurl){
         StorageTask uploasTask;
@@ -349,6 +446,7 @@ public class PostActivity extends AppCompatActivity {
         return  mime.getExtensionFromMimeType(cs.getType(uri));
 
     }
+
 
     private void openFileChooser(){
         Intent i=new Intent();

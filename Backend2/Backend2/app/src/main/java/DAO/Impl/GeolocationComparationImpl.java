@@ -56,16 +56,17 @@ class SortPlaces implements Comparator<Item> {
         double lon2 = 0;
         try {
             List<Address> res=gCoder.getFromLocationName(place1.getAddress(),5);
-            if(res!=null){
+            if(res!=null&&res.size()>0){
                 lat1 = res.get(0).getLatitude();
                 lon1 = res.get(0).getLongitude();
             }
             res=gCoder.getFromLocationName(place2.getAddress(),5);
-            if(res!=null){
+            if(res!=null&&res.size()>0){
                 lat2=res.get(0).getLatitude();
                 lon2=res.get(0).getLongitude();
             }
         } catch (IOException e) {
+
             e.printStackTrace();
         }
         //Log.i(mytag,""+lat1+lon1);
