@@ -105,23 +105,21 @@ public class PostActivity extends AppCompatActivity {
         if (bundle != null) {
             btn_post.setText("UPDATE");
             item = bundle.getParcelable("edititem");
-             edit = bundle.getBoolean("edit");
-            if (item.getTagId() == "0") {
+            edit = bundle.getBoolean("edit");
+            String tag = item.getTagId();
+            if (tag.equals("0")) {
                 spinnerTag.setSelection(0,true);
                 item.setTagId("0");
-
             }
-            else if (item.getTagId() == "1") {
+            else if (tag.equals("1")) {
                 spinnerTag.setSelection(1,true);
                 item.setTagId("1");
             }
-            else if (item.getTagId() == "2") {
+            else if (tag.equals("2")) {
                 spinnerTag.setSelection(2,true);
                 item.setTagId("2");
-                Log.i("mytag", "tag"+item.getTagId());
-
             }
-            else if (item.getTagId() == "3") {
+            else if (tag.equals("3")) {
                 spinnerTag.setSelection(3,true);
                 item.setTagId("3");
             }

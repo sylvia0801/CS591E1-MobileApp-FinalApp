@@ -95,14 +95,14 @@
         android:id="@+id/et_title"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5"
+        android:layout_weight="1"
         android:hint="Title" />
 
     <EditText
         android:id="@+id/et_price"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5"
+        android:layout_weight="1"
         android:hint="Price" />
 
     <LinearLayout
