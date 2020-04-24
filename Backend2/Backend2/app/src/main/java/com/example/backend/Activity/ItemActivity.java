@@ -138,7 +138,6 @@ public class ItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_item);
         intent = getIntent();
         String type= intent.getStringExtra("Type").toString();
-
         geo=new GeolocationComparationImpl();
         addresses=new ArrayList<>();
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -159,10 +158,8 @@ public class ItemActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String tobeSelete=parent.getItemAtPosition(position).toString();
-                if(!tobeSelete.equals("Latest Posts First")){
                  sorttype = tobeSelete;
                  switchType(type,sorttype);
-                }
                 parent.setVisibility(View.VISIBLE);
             }
 
@@ -171,8 +168,7 @@ public class ItemActivity extends AppCompatActivity {
                 parent.setVisibility(View.VISIBLE);
             }
         });
-        // show which tag list
-        switchType(type,sorttype);
+
     }
 
     private class ItemListener implements AdapterView.OnItemClickListener{

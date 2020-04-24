@@ -31,6 +31,8 @@ import android.widget.TextView;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 import com.example.backend.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -88,11 +90,16 @@ public class PostActivity extends Activity {
     private static final int CAMERA_REQUEST = 1888;
     private String picname; // picture name in the database;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
+    Boolean edit=false;
+    String type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+        //get intent if the item is passed from HistoryItemAdapter
+        Intent intent = getIntent();
+
         storageRef=  FirebaseStorage.getInstance().getReference("Pics");
         geo=new GeoAddressRepoImpl((Activity) this);
         btn_cancel = (Button)findViewById(R.id.btn_cancel);
@@ -114,6 +121,38 @@ public class PostActivity extends Activity {
         ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tags);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTag.setAdapter(adapter);
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            btn_post.setText("UPDATE");
+            item = bundle.getParcelable("edititem");
+            edit = bundle.getBoolean("edit");
+            String tag = item.getTagId();
+            if (tag.equals("0")) {
+                spinnerTag.setSelection(0,true);
+                item.setTagId("0");
+            }
+            else if (tag.equals("1")) {
+                spinnerTag.setSelection(1,true);
+                item.setTagId("1");
+            }
+            else if (tag.equals("2")) {
+                spinnerTag.setSelection(2,true);
+                item.setTagId("2");
+            }
+            else if (tag.equals("3")) {
+                spinnerTag.setSelection(3,true);
+                item.setTagId("3");
+            }
+
+            et_description.setText(item.getDescription());
+            et_title.setText(item.getTitle());
+            et_price.setText(item.getPrice());
+            tv_address.setText(item.getAddress());
+            Glide.with(PostActivity.this).load(item.getImageUrl()).into(iv_picture);
+        }
+        else {
+            item = item;
+        }
         spinnerTag.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -165,9 +204,9 @@ public class PostActivity extends Activity {
                 bld.setCancelable(true);
                 bld.setPositiveButton("Yes, I want to leave.",new DialogInterface.OnClickListener(){
                     public void onClick(DialogInterface dialog,int which) {
-                        item=new Item();
-                        imageuri=null;
-                        finalkey="";
+                        item = item;
+                        imageuri = null;
+                        finalkey = "";
                         Intent intent = new Intent(PostActivity.this, MainPageActivity.class);
                         startActivity(intent);
                     }
@@ -201,6 +240,7 @@ public class PostActivity extends Activity {
         btn_post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if(validateForm()) {
                     description = et_description.getText().toString();
                     title = et_title.getText().toString();
@@ -211,16 +251,18 @@ public class PostActivity extends Activity {
                     FirebaseUser cuser = FirebaseAuth.getInstance().getCurrentUser();
                     item.setSellerName(cuser.getDisplayName());
                     item.setSellerId(cuser.getUid());
-                      if(imageuri==null){
+                     type="post";
+                    if(edit)  type="update";
+                      if(imageuri==null&&item.getImageUrl().equals("")){
                         AlertDialog.Builder bld= new AlertDialog.Builder(PostActivity.this);
                         bld. setTitle("Alert");
-                        bld.setMessage("Are you sure to post this item without image?");
+                        bld.setMessage("Are you sure to "+type+" this item without image?");
                         bld.setCancelable(true);
-                        bld.setPositiveButton("Yes, post without image.",new DialogInterface.OnClickListener(){
+                        bld.setPositiveButton("Yes, "+type+" without image.",new DialogInterface.OnClickListener(){
                             public void onClick(DialogInterface dialog,int which) {
                                 // save item record  to database
                                 saveItemToDatabase(imageuri);
-                                Toast.makeText(PostActivity.this, "Posted!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PostActivity.this, (type+"ed!"), Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(PostActivity.this, MainPageActivity.class);
                                 startActivity(intent);
                             }
@@ -233,10 +275,14 @@ public class PostActivity extends Activity {
                         bld.show();
                     }else{
                           // save item record  to database
-                          saveItemToDatabase(imageuri);
-                          Toast.makeText(PostActivity.this, "Posted!", Toast.LENGTH_SHORT).show();
+
+                              saveItemToDatabase(imageuri);
+
+                          Toast.makeText(PostActivity.this, type+"ed!", Toast.LENGTH_SHORT).show();
                           Intent intent = new Intent(PostActivity.this, MainPageActivity.class);
                           startActivity(intent);
+
+
                       }
                 }
             }
@@ -253,8 +299,7 @@ public class PostActivity extends Activity {
                  }
             }
         });
-
-        //TODO functions for get price recommendation and probability
+// price recommendation
         btn_recommendation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -333,14 +378,7 @@ public class PostActivity extends Activity {
 
 
 
-    //@Override
-//    public void onResume(){
-//        super.onRescume();
-//        if (checkPermissions()) {
-//            getLastLocation();
-//        }
-//
-//    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -399,8 +437,20 @@ public class PostActivity extends Activity {
         return cursor.getString(idx);
     }
     public void saveItemToDatabase(Uri url){
-      itemService.saveToAllTable(item);
-        finalkey=item.getItemId();
+
+        if(edit){
+            item.setDescription(et_description.getText().toString());
+            item.setTitle(et_title.getText().toString());
+            item.setPrice(et_price.getText().toString());
+            itemService.update(item,0);
+            finalkey=item.getItemId();
+            storageRef.child(item.getItemId()).child(item.getItemId()+".jpg").delete();
+
+        }else{
+            itemService.saveToAllTable(item);
+            finalkey=item.getItemId();
+        }
+
         // upload uri to firebase storage
         uploadFile(finalkey,url);
     }
@@ -408,7 +458,9 @@ public class PostActivity extends Activity {
         StorageTask uploasTask;
         String itemid=itemidxxx;
         if(picurl!=null){
-            picname=System.currentTimeMillis()+"."+getExtention(picurl);
+//            picname=System.currentTimeMillis()+"."+getExtention(picurl);
+            picname=item.getItemId()+"."+getExtention(picurl);
+
             StorageReference picRef = storageRef.child(itemid).child(picname);
             uploasTask= picRef.putFile(picurl)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot >() {

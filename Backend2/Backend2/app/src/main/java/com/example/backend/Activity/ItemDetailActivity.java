@@ -69,7 +69,7 @@ public class ItemDetailActivity extends AppCompatActivity {
                 if (user.getImageurl().equals("default")){
                     userimage.setImageResource(R.drawable.icon);
                 } else{
-                    Glide.with(ItemDetailActivity.this).load(user.getImageurl()).into(userimage);
+                    Glide.with(getBaseContext()).load(user.getImageurl()).into(userimage);
                 }
             }
 
@@ -78,6 +78,8 @@ public class ItemDetailActivity extends AppCompatActivity {
 
             }
         });
+
+        Glide.with(ItemDetailActivity.this).load(item.getImageUrl()).into(itemimage);
         
         price.setText("  $  " + item.getPrice());
         userimage.setImageDrawable(getResources().getDrawable(R.drawable.favorite_item));

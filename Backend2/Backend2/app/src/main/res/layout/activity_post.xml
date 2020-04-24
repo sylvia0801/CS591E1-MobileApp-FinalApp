@@ -58,14 +58,14 @@
         <ImageButton
             android:id="@+id/ib_camera"
             android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_height="match_parent"
             android:scaleType="fitCenter"
             android:src="@drawable/camera"/>
 
         <ImageButton
             android:id="@+id/ib_album"
             android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_height="match_parent"
             android:scaleType="fitCenter"
             android:src="@drawable/album"/>
 
@@ -76,14 +76,15 @@
 
             <Button
                 android:id="@+id/btn_address"
-                android:layout_width="500dp"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="address"/>
+                android:text="Address"
+                android:gravity="center"/>
 
             <TextView
                 android:id="@+id/et_address"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
         </LinearLayout>
@@ -94,14 +95,14 @@
         android:id="@+id/et_title"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5"
+        android:layout_weight="1"
         android:hint="Title" />
 
     <EditText
         android:id="@+id/et_price"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5"
+        android:layout_weight="1"
         android:hint="Price" />
 
     <LinearLayout
@@ -132,7 +133,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="probability: "
+            android:text="Probability: "
             android:layout_gravity="center"
             android:gravity="center"/>
 
