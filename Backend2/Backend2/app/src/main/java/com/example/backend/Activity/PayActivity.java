@@ -3,11 +3,11 @@ package com.example.backend.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -42,6 +42,8 @@ public class PayActivity extends AppCompatActivity {
 
     private Spinner environmentSpinner;
 
+    private Button btnPayNow;
+
     // Used when generating hash from SDK
     private PayUChecksum checksum;
     private EditText etSalt;
@@ -57,8 +59,6 @@ public class PayActivity extends AppCompatActivity {
 
         // lets tell the people what version of sdk we are using
         PayUSdkDetails payUSdkDetails = new PayUSdkDetails();
-
-        Toast.makeText(this, "Build No: " + payUSdkDetails.getSdkBuildNumber() + "\n Build Type: " + payUSdkDetails.getSdkBuildType() + " \n Build Flavor: " + payUSdkDetails.getSdkFlavor() + "\n Application Id: " + payUSdkDetails.getSdkApplicationId() + "\n Version Code: " + payUSdkDetails.getSdkVersionCode() + "\n Version Name: " + payUSdkDetails.getSdkVersionName(), Toast.LENGTH_LONG).show();
 
         //Lets setup the environment spinner
         environmentSpinner = (Spinner) findViewById(R.id.spinner_environment);
@@ -95,6 +95,14 @@ public class PayActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+
+        btnPayNow = (Button)findViewById(R.id.btnPayNow);
+        btnPayNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigateToBaseActivity(view);
             }
         });
     }
@@ -194,8 +202,6 @@ public class PayActivity extends AppCompatActivity {
          * */
         mPaymentParams.setUserCredentials(userCredentials);
 
-        //TODO Pass this param only if using offer key
-        //mPaymentParams.setOfferKey("cardnumber@8370");
 
         //TODO Sets the payment environment in PayuConfig object
         payuConfig = new PayuConfig();
@@ -317,7 +323,7 @@ public class PayActivity extends AppCompatActivity {
      */
     public void launchSdkUI(PayuHashes payuHashes) {
 
-        Intent intent = new Intent(this, PayBaseActivity.class);
+        Intent intent = new Intent(this, CardActivity.class);
         intent.putExtra(PayuConstants.PAYU_CONFIG, payuConfig);
         intent.putExtra(PayuConstants.PAYMENT_PARAMS, mPaymentParams);
         intent.putExtra(PayuConstants.SALT,salt);

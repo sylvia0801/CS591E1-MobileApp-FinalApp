@@ -36,5 +36,8 @@
     <string name="enable_one_click_checkout">Enable one click checkout.</string>
     <string name="ok">OK</string>
     <string name="Cancel">Cancel</string>
+    <string name="click_here">Click here</string>
+    <string name="if_cvv_and_expiry_on_card"> &#160;if you have CVV and Expiry on your card</string>
+    <string name="if_dont_cvv_and_expiry_on_card"> &#160;if you don\'t have CVV and Expiry on your card</string>
 
 </resources>
