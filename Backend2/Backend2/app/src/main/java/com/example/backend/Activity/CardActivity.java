@@ -24,10 +24,12 @@ import com.payu.india.Payu.PayuErrors;
 import com.payu.india.Payu.PayuUtils;
 import com.payu.india.PostParams.PaymentPostParams;
 
+import java.util.Calendar;
+
 import DAO.Impl.ItemRepoImpl;
 import Model.Item;
 
-public class CardActivity extends AppCompatActivity implements View.OnClickListener {
+public class CardActivity extends AppCompatActivity {//implements View.OnClickListener {
 
     private Button payNowButton;
     private EditText cardNameEditText;
@@ -62,8 +64,8 @@ public class CardActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card);
 
-        (payNowButton = (Button) findViewById(R.id.button_card_make_payment)).setOnClickListener(this);
-
+       // (payNowButton = (Button) findViewById(R.id.button_card_make_payment)).setOnClickListener(this);
+        payNowButton = (Button) findViewById(R.id.button_card_make_payment);
         cardNameEditText = (EditText) findViewById(R.id.edit_text_name_on_card);
         cardNumberEditText = (EditText) findViewById(R.id.edit_text_card_number);
         cardCvvEditText = (EditText) findViewById(R.id.edit_text_card_cvv);
@@ -85,10 +87,55 @@ public class CardActivity extends AppCompatActivity implements View.OnClickListe
                 item.setStatus("1");
                 itemservice.update(item,1);
 
-                Toast.makeText(getApplicationContext(), "Payment Successful", Toast.LENGTH_SHORT).show();
-                Intent in =new Intent(CardActivity.this,MainPageActivity.class);
-                startActivity(in);
-                //TODO item return to somepage and set request to buy button as unclickable
+
+                mPaymentParams.setHash(mPayuHashes.getPaymentHash());
+                System.out.println(mPayuHashes.getPaymentHash());
+
+                // lets try to get the post params
+
+                postData = null;
+                // lets get the current card number;
+                cardNumber = String.valueOf(cardNumberEditText.getText());
+                cardName = cardNameEditText.getText().toString();
+                expiryMonth = cardExpiryMonthEditText.getText().toString();
+                expiryYear = cardExpiryYearEditText.getText().toString();
+                cvv = cardCvvEditText.getText().toString();
+
+                Log.d("mytag", cardNumber);
+                Log.d("mytag", cardName);
+                Log.d("mytag", expiryMonth);
+                Log.d("mytag", expiryYear);
+                Log.d("mytag", cvv);
+
+                // lets not worry about ui validations.
+                mPaymentParams.setCardNumber(cardNumber);
+                mPaymentParams.setCardName(cardName);
+                mPaymentParams.setNameOnCard(cardName);
+                mPaymentParams.setExpiryMonth(expiryMonth);
+                mPaymentParams.setExpiryYear(expiryYear);
+                mPaymentParams.setCvv(cvv);
+                try {
+                    postData = new PaymentPostParams(mPaymentParams, PayuConstants.CC).getPaymentPostParams();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                long longCardNumber = Long.parseLong(cardNumber);
+                boolean cardNumberValid = isValid(longCardNumber);
+                boolean cardDateValid = validateExpiryDate(expiryMonth, expiryYear);
+                boolean cvvNumberValid = cvvValid(cvv);
+
+
+                if (cardNumberValid && cardDateValid && cvvNumberValid) {
+                    Toast.makeText(getApplicationContext(), "Payment Successfully Made.", Toast.LENGTH_SHORT).show();
+                    Intent in =new Intent(CardActivity.this,MainPageActivity.class);
+                    startActivity(in);
+                }
+                else {
+                    //TODO didn't sell the item, put item back to items listview and mark it as unsold
+                    Toast.makeText(getApplicationContext(), "Incorrect Card Credentials. Please proceed again.", Toast.LENGTH_SHORT).show();
+                }
+
 
             }
         });
@@ -145,7 +192,7 @@ public class CardActivity extends AppCompatActivity implements View.OnClickListe
         });
 
     }
-
+/*
     @Override
     public void onClick(View v) {
         // Oh crap! Resource IDs cannot be used in a switch statement in Android library modules less... (Ctrl+F1)
@@ -193,12 +240,115 @@ public class CardActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+ */
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PayuConstants.PAYU_REQUEST_CODE) {
             setResult(resultCode, data);
             finish();
         }
+    }
+
+    public static boolean isValid(long number)
+    {
+        return (getSize(number) >= 13 &&
+                getSize(number) <= 16) &&
+                (prefixMatched(number, 4) ||
+                        prefixMatched(number, 5) ||
+                        prefixMatched(number, 37) ||
+                        prefixMatched(number, 6)) &&
+                ((sumOfDoubleEvenPlace(number) +
+                        sumOfOddPlace(number)) % 10 == 0);
+    }
+
+    // Get the result from Step 2
+    public static int sumOfDoubleEvenPlace(long number)
+    {
+        int sum = 0;
+        String num = number + "";
+        for (int i = getSize(number) - 2; i >= 0; i -= 2)
+            sum += getDigit(Integer.parseInt(num.charAt(i) + "") * 2);
+
+        return sum;
+    }
+
+    // Return this number if it is a single digit, otherwise,
+    // return the sum of the two digits
+    public static int getDigit(int number)
+    {
+        if (number < 9)
+            return number;
+        return number / 10 + number % 10;
+    }
+
+    // Return sum of odd-place digits in number
+    public static int sumOfOddPlace(long number)
+    {
+        int sum = 0;
+        String num = number + "";
+        for (int i = getSize(number) - 1; i >= 0; i -= 2)
+            sum += Integer.parseInt(num.charAt(i) + "");
+        return sum;
+    }
+
+    // Return true if the digit d is a prefix for number
+    public static boolean prefixMatched(long number, int d)
+    {
+        return getPrefix(number, getSize(d)) == d;
+    }
+
+    // Return the number of digits in d
+    public static int getSize(long d)
+    {
+        String num = d + "";
+        return num.length();
+    }
+
+    // Return the first k number of digits from
+    // number. If the number of digits in number
+    // is less than k, return number.
+    public static long getPrefix(long number, int k)
+    {
+        if (getSize(number) > k) {
+            String num = number + "";
+            return Long.parseLong(num.substring(0, k));
+        }
+        return number;
+    }
+
+    public static boolean validateExpiryDate(String month, String year) {
+        if (year.length() != 4 && year.length() != 2) {
+            return false;
+        }
+        int iMonth, iYear;
+        try {
+            iMonth = Integer.parseInt(month);
+            iYear = Integer.parseInt(year);
+        } catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return validateExpiryDate(iMonth, iYear);
+    }
+
+    /**
+     * Checks if the card is still valid
+     * @param month int containing the expiring month of the card
+     * @param year int containing the expiring year of the card
+     * @return boolean containing the result of the verification
+     */
+    public static boolean validateExpiryDate(int month, int year) {
+        if (month < 1 || year < 1) return false;
+        Calendar cal = Calendar.getInstance();
+        int curMonth = cal.get(Calendar.MONTH) + 1;
+        int curYear = cal.get(Calendar.YEAR);
+        if(year < 100) curYear -= 2000;
+        return (curYear == year) ? curMonth <= month : curYear < year;
+    }
+
+    public static boolean cvvValid(String cvv) {
+        return ((cvv.length() == 3) || (cvv.length() == 4));
     }
 
     private Drawable getIssuerDrawable(String issuer){
