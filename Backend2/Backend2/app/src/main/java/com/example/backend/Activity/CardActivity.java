@@ -23,6 +23,8 @@ import com.payu.india.Payu.PayuErrors;
 import com.payu.india.Payu.PayuUtils;
 import com.payu.india.PostParams.PaymentPostParams;
 
+import Model.Item;
+
 public class CardActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button payNowButton;
@@ -49,6 +51,8 @@ public class CardActivity extends AppCompatActivity implements View.OnClickListe
 
     private PayuUtils payuUtils;
 
+    Item item;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +67,19 @@ public class CardActivity extends AppCompatActivity implements View.OnClickListe
         cardExpiryMonthEditText = (EditText) findViewById(R.id.edit_text_expiry_month);
         cardExpiryYearEditText = (EditText) findViewById(R.id.edit_text_expiry_year);
 
+
+        //TODO item gets parsed to database
         bundle = getIntent().getExtras();
+        item = bundle.getParcelable("payitem");
+
+        payNowButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("CardActivity");
+                System.out.println(item);
+                Toast.makeText(getApplicationContext(), "Payment Successful", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         // lets get payment default params and hashes

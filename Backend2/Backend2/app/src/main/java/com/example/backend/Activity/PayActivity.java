@@ -25,6 +25,8 @@ import com.payu.india.Payu.Payu;
 import com.payu.india.Payu.PayuConstants;
 import com.payu.india.Payu.PayuErrors;
 
+import Model.Item;
+
 /**
  * This activity prepares PaymentParams, fetches hashes from server and send it to PayBaseActivity.java.
  * <p>
@@ -44,6 +46,8 @@ public class PayActivity extends AppCompatActivity {
 
     private Button btnPayNow;
 
+    Item item;
+
     // Used when generating hash from SDK
     private PayUChecksum checksum;
     private EditText etSalt;
@@ -53,7 +57,13 @@ public class PayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay);
 
-        //TODO Must write below code in your activity to set up initial context for PayU
+        // get item from ItemDetailActivity
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        item = bundle.getParcelable("payitem");
+
+
+
         Payu.setInstance(this);
 
 
@@ -324,12 +334,15 @@ public class PayActivity extends AppCompatActivity {
     public void launchSdkUI(PayuHashes payuHashes) {
 
         Intent intent = new Intent(this, CardActivity.class);
+        intent.putExtra("payitem", item);
         intent.putExtra(PayuConstants.PAYU_CONFIG, payuConfig);
         intent.putExtra(PayuConstants.PAYMENT_PARAMS, mPaymentParams);
         intent.putExtra(PayuConstants.SALT,salt);
         intent.putExtra(PayuConstants.PAYU_HASHES, payuHashes);
+        System.out.println("PayActivity");
+        System.out.println(item);
         startActivityForResult(intent, PayuConstants.PAYU_REQUEST_CODE);
-        System.out.println("test");
+
     }
 
 

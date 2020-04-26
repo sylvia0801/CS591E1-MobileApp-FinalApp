@@ -100,6 +100,9 @@ public class ItemDetailActivity extends AppCompatActivity {
         public void onClick(View v) {
             //To do go to the payment page
             Intent intent = new Intent(ItemDetailActivity.this, PayActivity.class);
+            intent.putExtra("payitem", item);
+            System.out.println("ItemDetailActivity");
+            System.out.println(item);
             startActivity(intent);
         }
     }
