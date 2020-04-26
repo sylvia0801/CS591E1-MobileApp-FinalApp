@@ -45,7 +45,6 @@ public class GeoAddressRepoImpl implements GeoAddressRepository {
     Location curLocation;
    public GeoAddressRepoImpl(Activity context){
         this.context=context;
-        gCoder=new Geocoder(context);
         gCoder=new Geocoder(context, Locale.getDefault());
         mFusedLocationClient=LocationServices.getFusedLocationProviderClient(context);
     }

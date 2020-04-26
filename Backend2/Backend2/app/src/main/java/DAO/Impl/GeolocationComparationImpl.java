@@ -49,7 +49,7 @@ class SortPlaces implements Comparator<Item> {
         currentLoc=location;
     }
     @Override
-    public int compare(final Item place1, final Item place2) {
+    public int compare(Item place1, Item place2) {
         double lat1 = 0;
         double lon1 = 0;
         double lat2 = 0;
@@ -69,8 +69,8 @@ class SortPlaces implements Comparator<Item> {
 
             e.printStackTrace();
         }
-        //Log.i(mytag,""+lat1+lon1);
-        //Log.i(mytag,""+lat2+lon2);
+        //Log.i(mytag,""+place1.getTitle()+lat1+lon1+place1.getAddress());
+        //Log.i(mytag,""+place2.getTitle()+lat2+lon2+place2.getAddress());
         double distanceToPlace1 = distance(currentLoc.getLatitude(), currentLoc.getLongitude(), lat1, lon1);
         double distanceToPlace2 = distance(currentLoc.getLatitude(), currentLoc.getLongitude(), lat2, lon2);
         return (int) (distanceToPlace1 - distanceToPlace2);
