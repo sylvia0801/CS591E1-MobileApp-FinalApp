@@ -55,7 +55,6 @@ public class HistoryItemActivity extends AppCompatActivity {
                   Item i=new Item(id,tag,sellerId,buyerId,sellerName,buyerName,title,productName,price,description,url,address,status,postRating,rated);
                       res.add(i);
               }
-              System.out.println(HistoryItemActivity.this == null);
               adapter = new HistoryItemAdapter(res,intent.getBooleanExtra("ShowEdit", true), type, HistoryItemActivity.this);//getBaseContext()
               ListView listveiw = (ListView) findViewById(R.id.History_Item_List);
               listveiw.setAdapter(adapter);

@@ -14,7 +14,7 @@ public class Item implements Parcelable{
     private String description="";
     private String imageUrl="";
     private String address="";//auto getting
-    private String status="0";//0:on sell, 1: wait for respond and no more request for buying, 2:sold
+    private String status="0";//0:on sell, 1: sold
     // to be delete or upgrade
     private String postRating="Null";
     private String rated="n";//"y" or "n"

@@ -2,7 +2,6 @@ package com.example.backend.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -101,8 +100,7 @@ public class ItemDetailActivity extends AppCompatActivity {
             //To do go to the payment page
             Intent intent = new Intent(ItemDetailActivity.this, PayActivity.class);
             intent.putExtra("payitem", item);
-            System.out.println("ItemDetailActivity");
-            System.out.println(item);
+
             startActivity(intent);
         }
     }

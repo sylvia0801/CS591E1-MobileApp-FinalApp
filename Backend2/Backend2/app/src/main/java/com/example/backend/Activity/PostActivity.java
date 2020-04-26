@@ -181,15 +181,12 @@ public class PostActivity extends Activity {
             @Override
             public void onClick(View v)
             {
-                Log.i(mytag,"camera starting");
-                if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+                if (ActivityCompat.checkSelfPermission(PostActivity.this,Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
                 {
-                    Log.i(mytag,"camera aksing for permission");
-                    requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
+                    ActivityCompat.requestPermissions(PostActivity.this,new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
                 }
                 else
                 {
-                    Log.i(mytag,"camera using");
                     Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(cameraIntent, CAMERA_REQUEST);
                 }
@@ -342,7 +339,6 @@ public class PostActivity extends Activity {
         if(REQUEST==requestCode) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 imageuri=getImageUri(PostActivity.this,photo);
-                Log.i(mytag,imageuri==null?"null":imageuri.toString());
             } else {
                 Toast.makeText(PostActivity.this, "The app was not allowed to write in your storage", Toast.LENGTH_LONG).show();
             }
@@ -382,12 +378,7 @@ public class PostActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        if(requestCode==camera_get_code) {
-//            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-//            iv_picture.setImageBitmap(bitmap);
-//            item.setImageUrl(getImageUri(this, bitmap));
-//            Log.i(mytag, "zzz" + item.getImageUrl());
-//        }
+
         if(requestCode==album_get_code&&resultCode==RESULT_OK&&data!=null&&data.getData()!=null){
             imageuri=data.getData();
             iv_picture.setImageURI(imageuri);
@@ -404,13 +395,10 @@ public class PostActivity extends Activity {
                 } else {
                     imageuri=getImageUri(PostActivity.this,photo);
                 }
+            }else{
+                imageuri=getImageUri(PostActivity.this,photo);
             }
 
-            if(imageuri==null)
-                Log.i(mytag,"null");
-            else
-                Log.i(mytag,imageuri.toString());
-            //save(photo);
         }
     }
     public Uri getImageUri(Context inContext, Bitmap inImage) {

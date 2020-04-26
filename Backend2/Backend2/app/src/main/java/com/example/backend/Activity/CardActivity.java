@@ -7,13 +7,14 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.backend.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.payu.india.Model.PaymentParams;
 import com.payu.india.Model.PayuConfig;
 import com.payu.india.Model.PayuHashes;
@@ -23,6 +24,7 @@ import com.payu.india.Payu.PayuErrors;
 import com.payu.india.Payu.PayuUtils;
 import com.payu.india.PostParams.PaymentPostParams;
 
+import DAO.Impl.ItemRepoImpl;
 import Model.Item;
 
 public class CardActivity extends AppCompatActivity implements View.OnClickListener {
@@ -50,6 +52,7 @@ public class CardActivity extends AppCompatActivity implements View.OnClickListe
     private PayuConfig payuConfig;
 
     private PayuUtils payuUtils;
+    private ItemRepoImpl itemservice=new ItemRepoImpl();
 
     Item item;
 
@@ -68,16 +71,23 @@ public class CardActivity extends AppCompatActivity implements View.OnClickListe
         cardExpiryYearEditText = (EditText) findViewById(R.id.edit_text_expiry_year);
 
 
-        //TODO item gets parsed to database
+
         bundle = getIntent().getExtras();
         item = bundle.getParcelable("payitem");
+         String curname = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+         String id=FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         payNowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("CardActivity");
-                System.out.println(item);
+                item.setBuyerId(id);
+                item.setBuyerName(curname);
+                item.setStatus("1");
+                itemservice.update(item,1);
+
                 Toast.makeText(getApplicationContext(), "Payment Successful", Toast.LENGTH_SHORT).show();
+                //TODO item return to somepage and set request to buy button as unclickable
+
             }
         });
 

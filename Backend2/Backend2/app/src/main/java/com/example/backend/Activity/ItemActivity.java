@@ -3,7 +3,6 @@ package com.example.backend.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -56,7 +55,6 @@ import Model.Item;
 
 public class ItemActivity extends AppCompatActivity {
     List<Item> itemList = new ArrayList<>();
-    public static String mytag="mytag";
     private Intent intent;
     private ItemAdapter adapter;
     private DatabaseReference itemRef= FirebaseDatabase.getInstance().getReference("Item");
@@ -93,7 +91,7 @@ public class ItemActivity extends AppCompatActivity {
                     String status=map.get("status");
                     String postRating=map.get("postRating");
                     String rated=map.get("rated");//"y" or "n"
-                    if(tag.equals(type)) {
+                    if(tag.equals(type)&&status.equals("0")) { // only show onsell items
                         Item i=new Item(id,tag,sellerId,buyerId,sellerName,buyerName,title,productName,price,description,url,address,status,postRating,rated);
                         res.add(i);
                     }
@@ -105,9 +103,7 @@ public class ItemActivity extends AppCompatActivity {
                 else if(sorttype.equals("Nearby Posts distance")){
                    // to do  distance sor
                     GeolocationComparationImpl.sortItems(res,curLocation,gCoder);
-                   for(Item item:res){
-                       Log.i(mytag,item.getAddress().toString());
-                   }
+
                 }else if(sorttype.equals("Less Expensive Posts First")){
                     Collections.sort(res, new Comparator<Item>() {
                   @Override
@@ -195,8 +191,7 @@ public class ItemActivity extends AppCompatActivity {
                                     requestNewLocationData();
                                 } else {
                                     curLocation=location;
-                                    Log.i(mytag, new Double(location.getLatitude()).toString());
-                                    Log.i(mytag, new Double(location.getLongitude()).toString());
+
                                 }
                             }
                         }
