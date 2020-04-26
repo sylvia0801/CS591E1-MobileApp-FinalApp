@@ -86,6 +86,8 @@ public class CardActivity extends AppCompatActivity implements View.OnClickListe
                 itemservice.update(item,1);
 
                 Toast.makeText(getApplicationContext(), "Payment Successful", Toast.LENGTH_SHORT).show();
+                Intent in =new Intent(CardActivity.this,MainPageActivity.class);
+                startActivity(in);
                 //TODO item return to somepage and set request to buy button as unclickable
 
             }

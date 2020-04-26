@@ -126,7 +126,7 @@ public class HistoryItemAdapter extends BaseAdapter {
                     break;
             }
             imageDescription.setText(item.getDescription());
-            price.setText(item.getPrice());
+            price.setText("$"+item.getPrice());
         }
 
         delete.setOnClickListener(new View.OnClickListener() {
