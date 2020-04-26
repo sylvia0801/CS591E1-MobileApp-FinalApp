@@ -2,15 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:descendantFocusability="blocksDescendants">
-
+    android:descendantFocusability="blocksDescendants"
+    android:background="@drawable/background_item">
 
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/Histroy_UserImage"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="8dp"
             android:layout_alignParentLeft="true"
             android:src="@mipmap/ic_launcher"
             />
@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/Histroy_UserImage"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="8dp"
             android:text="username"
             style="@style/TextStyle"/>
 
@@ -30,7 +30,7 @@
             android:layout_height="50dp"
             android:layout_below="@id/Histroy_UserImage"
             android:layout_marginTop="5dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="8dp"
             android:scaleType="fitCenter"
             android:src="@mipmap/ic_launcher"/>
 
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/History_Item_Image"
             android:layout_below="@id/Histroy_UserImage"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="8dp"
             android:text="Description"
             style="@style/TextStyle"/>
 
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/History_Item_Image"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="8dp"
             android:text="Price:"/>
 
         <TextView
@@ -60,7 +60,7 @@
             android:layout_below="@id/History_Item_Image"
             android:layout_toRightOf="@id/History_Price_Tag"
             android:layout_alignTop="@id/History_Price_Tag"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="8dp"
             android:textSize="15dp"
             android:text="0.00"/>
 
