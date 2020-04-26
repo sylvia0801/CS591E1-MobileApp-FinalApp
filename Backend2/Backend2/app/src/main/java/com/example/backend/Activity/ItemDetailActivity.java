@@ -8,7 +8,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
@@ -115,11 +114,18 @@ public class ItemDetailActivity extends AppCompatActivity {
     private class buyListener implements View.OnClickListener{
         @Override
         public void onClick(View v) {
-            //Todo when you click the buy buttom, you need to determine whether the buyer is the seller himself
-            Intent intent = new Intent(ItemDetailActivity.this, PayActivity.class);
-            intent.putExtra("payitem", item);
+            // when you click the buy buttom, you need to determine whether the buyer is the seller himself
+          if(  FirebaseAuth.getInstance().getCurrentUser().getUid().equals(item.getSellerId())){
+              Toast.makeText(ItemDetailActivity.this,"You can not buy your self-posted item!",Toast.LENGTH_SHORT).show();
+          }else{
+              Intent intent = new Intent(ItemDetailActivity.this, PayActivity.class);
+              intent.putExtra("payitem", item);
+              startActivity(intent);
 
-            startActivity(intent);
+          }
+
+
+
         }
     }
     // add item to my fav list

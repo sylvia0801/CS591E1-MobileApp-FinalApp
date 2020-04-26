@@ -259,7 +259,7 @@ public class PostActivity extends Activity {
                             public void onClick(DialogInterface dialog,int which) {
                                 // save item record  to database
                                 saveItemToDatabase(imageuri);
-                                Toast.makeText(PostActivity.this, (type+"ed!"), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PostActivity.this, (type+"d!"), Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(PostActivity.this, MainPageActivity.class);
                                 startActivity(intent);
                             }
