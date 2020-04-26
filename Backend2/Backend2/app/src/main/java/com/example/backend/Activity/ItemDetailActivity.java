@@ -85,6 +85,13 @@ public class ItemDetailActivity extends AppCompatActivity {
         username.setText(item.getSellerName());
         descirption.setText("  " + item.getDescription());
 
+        //determine whether the item is sold
+        if(item.getStatus() == "1"){
+            System.out.println("Here is status" + item.getStatus());
+            buy.setText("Sold");
+            buy.setEnabled(false);
+        }
+
         if(history){
             buy.setVisibility(View.GONE);
         }
