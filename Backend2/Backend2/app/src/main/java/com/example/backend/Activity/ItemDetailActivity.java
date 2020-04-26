@@ -58,6 +58,12 @@ public class ItemDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
          item = (Item) intent.getBundleExtra("clickitem").getParcelable("clickitem");
         boolean history = intent.getBooleanExtra("history", false);
+        String title = intent.getStringExtra("title");
+
+        if(title == null){
+            title = "Item List";
+        }
+
         btn_chat.setOnClickListener(new chatListener());
 
         databaseReference = FirebaseDatabase.getInstance().getReference("User").child(item.getSellerId());
@@ -68,7 +74,7 @@ public class ItemDetailActivity extends AppCompatActivity {
                 if (user.getImageurl().equals("default")){
                     userimage.setImageResource(R.drawable.icon);
                 } else{
-                    Glide.with(getBaseContext()).load(user.getImageurl()).into(userimage);
+                    Glide.with(getApplicationContext()).load(user.getImageurl()).into(userimage);
                 }
             }
 
@@ -85,26 +91,31 @@ public class ItemDetailActivity extends AppCompatActivity {
         username.setText(item.getSellerName());
         descirption.setText("  " + item.getDescription());
 
-        //determine whether the item is sold
-        if(item.getStatus() == "1"){
-            System.out.println("Here is status" + item.getStatus());
-            buy.setText("Sold");
-            buy.setEnabled(false);
-        }
-
-        if(history){
+        //determine the item is sold or not
+        if(history && !title.equals("Favourite Items")){
             buy.setVisibility(View.GONE);
         }
         else{
             buy.setOnClickListener(new buyListener());
+            System.out.println("Here is the title" + title);
+            if(title.equals("Favourite Items")){
+                System.out.println("Here is the status" + item.getStatus());
+                if(item.getStatus().equals("1")){
+                    System.out.println("Here is status" + item.getStatus());
+                    buy.setText("Sold");
+                    buy.setEnabled(false);
+                }
+            }
         }
+
+
 
     }
 
     private class buyListener implements View.OnClickListener{
         @Override
         public void onClick(View v) {
-            //To do go to the payment page
+            //Todo when you click the buy buttom, you need to determine whether the buyer is the seller himself
             Intent intent = new Intent(ItemDetailActivity.this, PayActivity.class);
             intent.putExtra("payitem", item);
 

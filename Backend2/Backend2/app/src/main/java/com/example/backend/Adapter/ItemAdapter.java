@@ -55,7 +55,7 @@ String mytag="mytag";
         TextView itemtitle = (TextView) row.findViewById(R.id.titleView);
         TextView itemprice = (TextView) row.findViewById(R.id.priceView);
         Item item = Items.get(position);
-        Glide.with(context).load(item.getImageUrl()).into(itemimage);
+        Glide.with(context.getApplicationContext()).load(item.getImageUrl()).into(itemimage);
         itemtitle.setText(item.getTitle());
         itemprice.setText("$ "+item.getPrice());
         return row;

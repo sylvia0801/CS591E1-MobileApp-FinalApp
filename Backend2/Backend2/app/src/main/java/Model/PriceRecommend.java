@@ -16,7 +16,7 @@ import java.text.DecimalFormat;
 public class PriceRecommend {
     private String url = "https://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords";
     private String SERVICE_VERSION = "1.0.0";
-    private String SECURITY_APPNAME = "";
+    private String SECURITY_APPNAME = "TianDing-secondha-PRD-61973ae8a-e7eab068";
     private String RESPONSE_DATA_FORMAT= "JSON";
     private String keyword;
     private RequestQueue rq;
@@ -32,7 +32,7 @@ public class PriceRecommend {
         rq = Volley.newRequestQueue(context);
     }
 
-    public void jsonParse(TextView pricetext, TextView probability, double price){
+    public void jsonParse(TextView pricetext, TextView probability, double price, boolean setProbability){
         url = url+ "&SERVICE-VERSION=" + SERVICE_VERSION + "&SECURITY-APPNAME=" + SECURITY_APPNAME + "&RESPONSE-DATA-FORMAT=" + RESPONSE_DATA_FORMAT + "&REST-PAYLOAD" + "&keywords=" + keyword;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -74,23 +74,27 @@ public class PriceRecommend {
                     //Compute Probability
                     double MaxMinDif = MaxPrice - MinPrice;
 
-                    if(price > MaxPrice){
-                        probability.setText("Low");
-                    }
-                    if(price < MinPrice){
-                        probability.setText("High");
-                    }
+                    if(setProbability){
+                        if(price > MaxPrice){
+                            probability.setText("Low");
+                        }
+                        if(price < MinPrice){
+                            probability.setText("High");
+                        }
 
-                    double probablity = 1 - ((price - MinPrice) / MaxMinDif);
+                        double probablity = 1 - ((price - MinPrice) / MaxMinDif);
 
-                    if(probablity > 0.8){
-                        probability.setText("High");
-                    }
-                    else if(probablity > 0.5){
-                        probability.setText("Median");
-                    }
-                    else{
-                        probability.setText("Low");
+
+                        if(probablity > 0.8){
+                            probability.setText("High");
+                        }
+                        else if(probablity > 0.5){
+                            probability.setText("Median");
+                        }
+                        else{
+                            probability.setText("Low");
+                        }
+
                     }
 
                 } catch (JSONException e) {

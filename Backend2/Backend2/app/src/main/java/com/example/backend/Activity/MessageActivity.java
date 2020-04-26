@@ -88,7 +88,7 @@ public class MessageActivity extends AppCompatActivity {
                     if (user.getImageurl().equals("default")){
                         profile_image.setImageResource(R.drawable.icon);
                     } else{
-                        Glide.with(getBaseContext()).load(user.getImageurl()).into(profile_image);
+                        Glide.with(getApplicationContext()).load(user.getImageurl()).into(profile_image);
                     }
                     readMessage(firebaseUser.getUid(), userid, user.getImageurl());
             }

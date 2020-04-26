@@ -81,12 +81,6 @@ public class HistoryItemActivity extends AppCompatActivity {
 
     }
 
-    private class histroyListener implements  AdapterView.OnItemClickListener{
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        }
-    }
-
     private class HistoryItemListener implements AdapterView.OnItemClickListener{
 
         @Override
@@ -97,6 +91,8 @@ public class HistoryItemActivity extends AppCompatActivity {
             bundle.putParcelable("clickitem", clickitem);
             intent.putExtra("clickitem", bundle);
             intent.putExtra("history", true);
+            intent.putExtra("title", titletext);
+
 
             HistoryItemActivity.this.startActivity(intent);
         }

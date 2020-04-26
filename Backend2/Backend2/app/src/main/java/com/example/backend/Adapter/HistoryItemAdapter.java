@@ -183,7 +183,7 @@ public class HistoryItemAdapter extends BaseAdapter {
                 if (user.getImageurl().equals("default")){
                     userimage.setImageResource(R.drawable.icon);
                 }else {
-                    Glide.with(context).load(user.getImageurl()).into(userimage);
+                    Glide.with(context.getApplicationContext()).load(user.getImageurl()).into(userimage);
                 }
             }
 

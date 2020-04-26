@@ -300,9 +300,13 @@ public class PostActivity extends Activity {
         btn_recommendation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                PriceRecommend pr = new PriceRecommend(et_title.getText().toString(), PostActivity.this);
                 if(!et_title.getText().toString().equals("") && !et_price.getText().toString().equals("")){
-                    PriceRecommend pr = new PriceRecommend(et_title.getText().toString(), PostActivity.this);
-                    pr.jsonParse(tv_priceRecommendation, tv_probability, Double.valueOf(et_price.getText().toString()));
+                    pr.jsonParse(tv_priceRecommendation, tv_probability, Double.valueOf(et_price.getText().toString()), true);
+                    System.out.println("Success");
+                }
+                else if(!et_title.getText().toString().equals("")){
+                    pr.jsonParse(tv_priceRecommendation, tv_probability, 0.00, false);
                     System.out.println("Success");
                 }
                 else{
