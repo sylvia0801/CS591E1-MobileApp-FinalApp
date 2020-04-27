@@ -140,7 +140,15 @@ public class HistoryItemAdapter extends BaseAdapter {
                     public void onClick(DialogInterface dialog,int which) {
                         Item remove_item = Items.remove(position);
                         String itemid = remove_item.getItemId();
-                        itemService.deleteFromAllTableByUsername(itemid,category);
+                        if(category.equals("Posted")){
+                            // delete from market and deep delete from posted and fav and pic
+                            itemService.deleteItemByItemId(itemid);
+
+                        }else{
+                            // only delete my record , not affecting other
+                            itemService.deleteFromAllTableByUsername(itemid,category);
+
+                        }
                         notifyDataSetChanged();
 
                     }

@@ -6,6 +6,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -113,11 +116,35 @@ public Item saveToAllTable (Item item){
    return item;
 }
 // fu is current user displayname
-    // delete from item table and posted table
+    // delete from market,  item table and posted table and fav table(not availble) and pic delete deep delete
 public void deleteItemByItemId(String itemid){
     String fromUsername=auth.getCurrentUser().getDisplayName();
     itemRef.child(itemid).removeValue();
     userAllRef.child("Posted").child(fromUsername).child(itemid).removeValue();
+    StorageReference storageRef=  FirebaseStorage.getInstance().getReference("Pics");
+    storageRef.child(itemid).child(itemid+".jpg").delete();
+
+    DatabaseReference ref=userAllRef.child("Favourite");
+
+    ref.addListenerForSingleValueEvent(new ValueEventListener() {
+
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            for(DataSnapshot uu:dataSnapshot.getChildren()){
+                if( uu.child(itemid).exists()){
+                    ref.child(uu.getKey()).child(itemid).removeValue();
+
+                }
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    });
+
+
 
 }
     @Override
@@ -162,6 +189,9 @@ public void update(Item item,int type){
         userAllRef.child("Sold").child(fu).child(k).setValue(item);
         userAllRef.child("Posted").child(fu).child(k).removeValue();
         userAllRef.child("Bought").child(tu).child(k).setValue(item);
+        itemRef.child(item.getItemId()).removeValue();
+
+
     }
 }
 

@@ -76,20 +76,16 @@ public class CardActivity extends AppCompatActivity {//implements View.OnClickLi
 
         bundle = getIntent().getExtras();
         item = bundle.getParcelable("payitem");
-         String curname = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-         String id=FirebaseAuth.getInstance().getCurrentUser().getUid();
+
 
         payNowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                item.setBuyerId(id);
-                item.setBuyerName(curname);
-                item.setStatus("1");
-                itemservice.update(item,1);
+
 
 
                 mPaymentParams.setHash(mPayuHashes.getPaymentHash());
-                System.out.println(mPayuHashes.getPaymentHash());
+//                System.out.println(mPayuHashes.getPaymentHash());
 
                 // lets try to get the post params
 
@@ -101,11 +97,11 @@ public class CardActivity extends AppCompatActivity {//implements View.OnClickLi
                 expiryYear = cardExpiryYearEditText.getText().toString();
                 cvv = cardCvvEditText.getText().toString();
 
-                Log.d("mytag", cardNumber);
-                Log.d("mytag", cardName);
-                Log.d("mytag", expiryMonth);
-                Log.d("mytag", expiryYear);
-                Log.d("mytag", cvv);
+//                Log.d("mytag", cardNumber);
+//                Log.d("mytag", cardName);
+//                Log.d("mytag", expiryMonth);
+//                Log.d("mytag", expiryYear);
+//                Log.d("mytag", cvv);
 
                 // lets not worry about ui validations.
                 mPaymentParams.setCardNumber(cardNumber);
@@ -127,12 +123,19 @@ public class CardActivity extends AppCompatActivity {//implements View.OnClickLi
 
 
                 if (cardNumberValid && cardDateValid && cvvNumberValid) {
+                    String curname = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+                    String id=FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    item.setBuyerId(id);
+                    item.setBuyerName(curname);
+                    item.setStatus("1");
+                    itemservice.update(item,1);
+
                     Toast.makeText(getApplicationContext(), "Payment Successfully Made.", Toast.LENGTH_SHORT).show();
                     Intent in =new Intent(CardActivity.this,MainPageActivity.class);
                     startActivity(in);
                 }
                 else {
-                    //TODO didn't sell the item, put item back to items listview and mark it as unsold
+                    // didn't sell the item, put item back to items listview and mark it as unsold
                     Toast.makeText(getApplicationContext(), "Incorrect Card Credentials. Please proceed again.", Toast.LENGTH_SHORT).show();
                 }
 
