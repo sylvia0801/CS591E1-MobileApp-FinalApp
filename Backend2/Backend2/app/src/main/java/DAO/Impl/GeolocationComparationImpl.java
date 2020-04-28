@@ -69,8 +69,8 @@ class SortPlaces implements Comparator<Item> {
 
             e.printStackTrace();
         }
-        //Log.i(mytag,""+place1.getTitle()+lat1+lon1+place1.getAddress());
-        //Log.i(mytag,""+place2.getTitle()+lat2+lon2+place2.getAddress());
+        Log.i(mytag,""+place1.getTitle()+lat1+lon1+place1.getAddress());
+        Log.i(mytag,""+place2.getTitle()+lat2+lon2+place2.getAddress());
         double distanceToPlace1 = distance(currentLoc.getLatitude(), currentLoc.getLongitude(), lat1, lon1);
         double distanceToPlace2 = distance(currentLoc.getLatitude(), currentLoc.getLongitude(), lat2, lon2);
         return (int) (distanceToPlace1 - distanceToPlace2);
