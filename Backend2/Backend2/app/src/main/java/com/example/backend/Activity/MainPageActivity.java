@@ -26,6 +26,7 @@ public class MainPageActivity extends AppCompatActivity implements buttom_fragme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
+        //render tags and its images to be chosen by the user later
         final TagAdapter adapter = new TagAdapter(MainPageActivity.this);
         ListView listView = (ListView)findViewById(R.id.lv_tags);
         listView.setAdapter(adapter);
@@ -34,6 +35,7 @@ public class MainPageActivity extends AppCompatActivity implements buttom_fragme
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String s = (String) adapter.getItem(i);
+                // open specific tag page containing all items under such tag
                 Intent intent = new Intent(MainPageActivity.this, ItemActivity.class);
                 switch (s) {
                     case "Clothes":

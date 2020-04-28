@@ -73,6 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
                 }
+                // if password and re-enter password doesn't match, error and won't register
                 else if (!et_password.getText().toString().equals(et_reenterpassword.getText().toString())) {
                     Toast.makeText(getApplicationContext(), "Your password entries don't match. Please verify again.", Toast.LENGTH_SHORT).show();
                 }

@@ -33,6 +33,10 @@ import com.payu.india.Model.PayuConfig;
 import com.payu.india.Payu.PayuConstants;
 
 
+
+// the activity gets called if connected to payU, associated with the commented parts in CardActivity
+
+
 public class PaymentsActivity extends AppCompatActivity {
 
     Bundle bundle;

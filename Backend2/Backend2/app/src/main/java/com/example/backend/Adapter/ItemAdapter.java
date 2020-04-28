@@ -19,6 +19,7 @@ public class ItemAdapter extends BaseAdapter {
     private Context context;
 String mytag="mytag";
     public ItemAdapter(List<Item> Items, Context context) {
+        // Get item list for display for the current tag
         this.Items = Items;
         this.context = context;
     }
@@ -51,6 +52,7 @@ String mytag="mytag";
             row = convertView;
         }
 
+        // Get images stored in the database and its designated item title and price for display
         ImageView itemimage = (ImageView) row.findViewById(R.id.imageView);
         TextView itemtitle = (TextView) row.findViewById(R.id.titleView);
         TextView itemprice = (TextView) row.findViewById(R.id.priceView);

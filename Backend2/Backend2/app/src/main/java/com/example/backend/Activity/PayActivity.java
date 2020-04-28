@@ -65,6 +65,7 @@ public class PayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay);
+
         amount=(TextView) findViewById(R.id.editTextAmount);
         merkey=(EditText) findViewById(R.id.editTextMerchantKey);
 
@@ -74,7 +75,7 @@ public class PayActivity extends AppCompatActivity {
 
 
 
-        // get item from ItemDetailActivity
+        // Get item from ItemDetailActivity
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         item = bundle.getParcelable("payitem");
@@ -140,6 +141,7 @@ public class PayActivity extends AppCompatActivity {
     }
 
 
+    // Validate and sanitize inputs
     private   boolean validateForm(){
         boolean result = true;
         if(TextUtils.isEmpty(merkey.getText().toString())){

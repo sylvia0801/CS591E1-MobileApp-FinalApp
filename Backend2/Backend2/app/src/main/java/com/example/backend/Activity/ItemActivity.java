@@ -112,6 +112,9 @@ public class ItemActivity extends AppCompatActivity {
 
 
                 }
+
+                // sort items by specific requirements
+
                if(sorttype.equals("Latest Posts First")){
                    Collections.reverse(res);
 
@@ -132,13 +135,12 @@ public class ItemActivity extends AppCompatActivity {
 
                 btn_search = (Button)findViewById(R.id.btn_search);
                 et_search = (EditText)findViewById(R.id.et_search);
-                // search
+                // search fuction for keywords
                 btn_search.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         String keywords_search = et_search.getText().toString();
                         search = keywords_search.trim().toLowerCase();
-                        //TODO
                         switchType();
                     }
                 });
@@ -203,6 +205,7 @@ public class ItemActivity extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Item clickitem = (Item) adapter.getItem(position);
+            // open item detail page for an item chosen
             Intent intent = new Intent(ItemActivity.this, ItemDetailActivity.class);
             Bundle bundle = new Bundle();
             bundle.putParcelable("clickitem", (Parcelable) clickitem);
