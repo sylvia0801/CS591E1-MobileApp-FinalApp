@@ -21,6 +21,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -61,6 +63,8 @@ public class ItemActivity extends AppCompatActivity {
     private  List<Item> res;
     private String type;
     private Spinner spinnerSort;
+    private EditText et_search;
+    private Button btn_search;
     private GeolocationComparationImpl geo;
     FusedLocationProviderClient mFusedLocationClient;
     Geocoder gCoder;
@@ -68,6 +72,8 @@ public class ItemActivity extends AppCompatActivity {
     List<Address> addresses;
     String sorttype="Latest Posts First"; // default is sort by latest item posts first
     static final int PERMISSION_ID = 44;
+
+    
  //  private FirebaseAuth auth=FirebaseAuth.getInstance();
     private void switchType(String type,String sorttype){
         res=new LinkedList<>();
@@ -113,11 +119,25 @@ public class ItemActivity extends AppCompatActivity {
               });
 
                 }
+
+                btn_search = (Button)findViewById(R.id.btn_search);
+                et_search = (EditText)findViewById(R.id.et_search);
+                // search
+                btn_search.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String keywords_search = et_search.getText().toString();
+                        keywords_search = keywords_search.trim().toLowerCase();
+                        //TODO
+                    }
+                });
+
+
                 //   all  items of one tag with sorttype
                 adapter = new ItemAdapter(res, ItemActivity.this);
-                ListView listveiw = (ListView) findViewById(R.id.lv_items);
-                listveiw.setAdapter(adapter);
-                listveiw.setOnItemClickListener(new ItemListener());
+                ListView listview = (ListView) findViewById(R.id.lv_items);
+                listview.setAdapter(adapter);
+                listview.setOnItemClickListener(new ItemListener());
 
             }
             @Override
