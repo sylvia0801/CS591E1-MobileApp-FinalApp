@@ -33,9 +33,9 @@ public class ItemDetailActivity extends AppCompatActivity {
     private TextView price;
     private ImageView userimage;
     private TextView username;
-    private ImageButton favorite;
+    private ImageView favorite;
     private TextView descirption;
-    private ImageButton btn_chat;
+    private ImageView btn_chat;
     private Item item;
     private FavouriteRepoImpl favoriteService=new FavouriteRepoImpl();
     private FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -49,9 +49,9 @@ public class ItemDetailActivity extends AppCompatActivity {
         price = (TextView) findViewById(R.id.Detail_price);
         userimage = (CircleImageView) findViewById(R.id.Detail_User_Image);
         username = (TextView) findViewById(R.id.Detail_User_Name);
-        favorite = (ImageButton) findViewById(R.id.Detail_favorite_button);
+        favorite = (ImageView) findViewById(R.id.Detail_favorite_button);
         descirption = (TextView) findViewById(R.id.Detail_Item_Description);
-        btn_chat = (ImageButton)findViewById(R.id.btn_chat);
+        btn_chat = (ImageView)findViewById(R.id.btn_chat);
         favorite.setOnClickListener(new favoriteListener());
         //set the components' information by the item object stored in the intent;
         Intent intent = getIntent();
