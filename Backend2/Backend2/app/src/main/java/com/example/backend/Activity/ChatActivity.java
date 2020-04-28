@@ -12,6 +12,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 
+// ChatActivity is consist of two fragment (chat fragment and bottom fragment)
 public class ChatActivity extends AppCompatActivity implements buttom_fragment.OnFragmentInteractionListener {
 
     private FirebaseUser firebaseUser;
@@ -30,6 +31,7 @@ public class ChatActivity extends AppCompatActivity implements buttom_fragment.O
     }
 
     private void status(String status){
+        // get current user
         databaseReference = FirebaseDatabase.getInstance().getReference("User").child(firebaseUser.getUid());
 
         HashMap<String, Object> hashMap = new HashMap<>();

@@ -55,12 +55,17 @@ public class ChatsFragment extends Fragment {
 
         usersList = new ArrayList<>();
 
+        // get all users'ID that current have chatted with previously
         databaseReference = FirebaseDatabase.getInstance().getReference("Chatlist").child(firebaseUser.getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 usersList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    /*
+                    * although it is named chatlist, it's not a collection
+                    * more details are in Model.Chatlist
+                    * */
                     Chatlist chatlist = snapshot.getValue(Chatlist.class);
                     usersList.add(chatlist);
                 }
@@ -79,6 +84,7 @@ public class ChatsFragment extends Fragment {
 
     private void chatList(){
         mUsers = new ArrayList<>();
+        // get all users that are in our database
         databaseReference = FirebaseDatabase.getInstance().getReference("User");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -86,6 +92,12 @@ public class ChatsFragment extends Fragment {
                 mUsers.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     User user = snapshot.getValue(User.class);
+                    /*
+                    * iterate chat list which is updated by onCreate()
+                    * if the id of users in database is match one of the id in chat list
+                    * we add this user to the user list
+                    * and then send user list into userAdapter
+                    * */
                     for (Chatlist chatlist : usersList){
                         if (user.getUserId().equals(chatlist.getId())){
                             mUsers.add(user);
