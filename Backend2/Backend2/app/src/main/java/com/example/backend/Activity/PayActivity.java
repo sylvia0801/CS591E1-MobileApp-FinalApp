@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,8 @@ import com.payu.india.Model.PostData;
 import com.payu.india.Payu.Payu;
 import com.payu.india.Payu.PayuConstants;
 import com.payu.india.Payu.PayuErrors;
+
+import org.w3c.dom.Text;
 
 import Model.Item;
 
@@ -42,7 +45,7 @@ public class PayActivity extends AppCompatActivity {
 
     // This sets the configuration
     private PayuConfig payuConfig;
-    private EditText amount;
+    private TextView amount;
     private EditText merkey;
     private EditText mersalt;
     private EditText email;
@@ -62,7 +65,7 @@ public class PayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay);
-        amount=(EditText) findViewById(R.id.editTextAmount);
+        amount=(TextView) findViewById(R.id.editTextAmount);
         merkey=(EditText) findViewById(R.id.editTextMerchantKey);
 
         mersalt=(EditText) findViewById(R.id.editTextMerchantSalt);
@@ -76,6 +79,7 @@ public class PayActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         item = bundle.getParcelable("payitem");
 
+        amount.setText(" $" + item.getPrice());
 
 
         Payu.setInstance(this);
@@ -138,11 +142,7 @@ public class PayActivity extends AppCompatActivity {
 
     private   boolean validateForm(){
         boolean result = true;
-        if (TextUtils.isEmpty(amount.getText().toString())) {
-            amount.setError("Required");
-            result = false;
-        }
-        else if(TextUtils.isEmpty(merkey.getText().toString())){
+        if(TextUtils.isEmpty(merkey.getText().toString())){
             merkey.setError("Required");
             result = false;
         }else  if (TextUtils.isEmpty(mersalt.getText().toString())) {
@@ -155,15 +155,7 @@ public class PayActivity extends AppCompatActivity {
             email.setError( "Invalid Email Address!");
             result = false;
 
-        }else {
-            try{
-                Double.parseDouble(amount.getText().toString());
-            }catch (Exception e){
-                amount.setError("Please enter Number!");
-                result=false;
-            }
         }
-
         return result;
     }
 
@@ -205,7 +197,6 @@ public class PayActivity extends AppCompatActivity {
         // merchantKey="";
         merchantKey = ((EditText) findViewById(R.id.editTextMerchantKey)).getText().toString();
         etSalt = ((EditText) findViewById(R.id.editTextMerchantSalt));
-        String amount = ((EditText) findViewById(R.id.editTextAmount)).getText().toString();
         String email = ((EditText) findViewById(R.id.editTextEmail)).getText().toString();
 
         String value = environmentSpinner.getSelectedItem().toString();
@@ -225,7 +216,7 @@ public class PayActivity extends AppCompatActivity {
 
          */
         mPaymentParams.setKey(merchantKey);
-        mPaymentParams.setAmount(amount);
+        mPaymentParams.setAmount(item.getPrice());
         mPaymentParams.setProductInfo("product_info");
         mPaymentParams.setFirstName("firstname");
         mPaymentParams.setEmail("test@gmail.com");
