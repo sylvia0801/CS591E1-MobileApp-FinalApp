@@ -34,20 +34,24 @@ import java.util.List;
 import java.util.Locale;
 import DAO.GeoAddressRepository;
 import Model.Item;
-
+/*
+the class implement the function to get current address
+ */
 // get loation and update textview and item  address
 public class GeoAddressRepoImpl implements GeoAddressRepository {
     private  Activity context;
-    static final int PERMISSION_ID = 44;
+    static final int PERMISSION_ID = 44;//permission code
     List<Address> addresses=new ArrayList<>();
     FusedLocationProviderClient mFusedLocationClient;
     Geocoder gCoder ;
     Location curLocation;
+
    public GeoAddressRepoImpl(Activity context){
         this.context=context;
         gCoder=new Geocoder(context, Locale.getDefault());
         mFusedLocationClient=LocationServices.getFusedLocationProviderClient(context);
     }
+    //update the latest location data
     @SuppressLint("MissingPermission")
     private void requestNewLocationData(){
         LocationRequest mLocationRequest = new LocationRequest();
@@ -71,7 +75,7 @@ public class GeoAddressRepoImpl implements GeoAddressRepository {
         }
     };
 
-
+    //get the latest location
     @SuppressLint("MissingPermission")
     public void getLastLocation(TextView tv, Item item) {
             if (isLocationEnabled()) {
@@ -106,7 +110,7 @@ public class GeoAddressRepoImpl implements GeoAddressRepository {
             }
 
     }
-
+    //request permission from user to access the location
     public void requestPermissions() {
         if(ActivityCompat.shouldShowRequestPermissionRationale(context,Manifest.permission.ACCESS_FINE_LOCATION) ){
             new AlertDialog.Builder(context).setTitle("Permission needed!").setMessage("This Permission is needed for find posts nearby").setPositiveButton("OK",new DialogInterface.OnClickListener(){
@@ -134,7 +138,7 @@ dialog.dismiss();
         }
 
     }
-
+    //check is the location access is enabled
     private boolean isLocationEnabled() {
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
