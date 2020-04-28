@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Activity.ItemActivity">
+    tools:context=".Activity.ItemActivity"
+    android:background="#dcdcdc">
 
     <Spinner
         android:id="@+id/spinnerSort"
@@ -26,5 +27,5 @@
         android:layout_weight="15"
         android:dividerHeight="8dp"
         android:layout_margin="8dp"
-        android:divider="@android:color/white"/>
+        android:divider="#dcdcdc"/>
 </LinearLayout>
