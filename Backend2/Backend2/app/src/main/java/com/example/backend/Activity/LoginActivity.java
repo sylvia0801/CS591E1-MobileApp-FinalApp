@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
 
-        if (firebaseUser != null) {
+        if (firebaseUser != null&&firebaseUser.isEmailVerified()) {
             Intent intent = new Intent(LoginActivity.this, MainPageActivity.class);
             startActivity(intent);
             finish();

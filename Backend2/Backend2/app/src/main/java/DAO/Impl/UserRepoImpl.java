@@ -2,7 +2,6 @@ package DAO.Impl;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import com.example.backend.Activity.LoginActivity;
@@ -38,13 +37,12 @@ User table:
 
 // user table service impl
 public class UserRepoImpl implements UserRepository {
-   public static DatabaseReference userRef; //  refer to table of the user
-    public static FirebaseAuth auth;
+    private  DatabaseReference userRef; //  refer to table of the user
+    private  FirebaseAuth auth;
     public UserRepoImpl(){
         userRef =FirebaseDatabase.getInstance().getReference("User");
-      auth=FirebaseAuth.getInstance();
+        auth=FirebaseAuth.getInstance();
     }
-
     private String getUsernameFromEmail(String email) {
             return email.split("@")[0];
     }
@@ -55,28 +53,42 @@ public class UserRepoImpl implements UserRepository {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(context, "Successfully registered", Toast.LENGTH_LONG).show();
                     FirebaseUser cur=auth.getCurrentUser();
-                    String username=getUsernameFromEmail(cur.getEmail());
-                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                            .setDisplayName(username)
-                            .build();
-
-                    cur.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    cur.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
+
+                            if(task.isSuccessful()){
+                                Toast.makeText(context, "Successfully registered, Please check your email", Toast.LENGTH_LONG).show();
+                                String username=getUsernameFromEmail(cur.getEmail());
+                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                        .setDisplayName(username)
+                                        .build();
+
+                                cur.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                        }
+                                    }
+                                });
+                                User user=new User(cur.getUid(),cur.getEmail(),username);
+                                save(user); // save to database
+                                Intent intent = new Intent(context, LoginActivity.class);
+                                context.startActivity(intent);
+                                context.finish();
+
+                            }else{
+                                Toast.makeText(context, "Register Failed! "+task.getException().getMessage(), Toast.LENGTH_LONG).show();
+
                             }
                         }
                     });
-                    User user=new User(cur.getUid(),cur.getEmail(),username);
-                    save(user); // save to database
-                    Intent intent = new Intent(context, LoginActivity.class);
-                    context.startActivity(intent);
-                    context.finish();
+
 
                 }else {
                     Toast.makeText(context, "Register Failed! "+task.getException().getMessage(), Toast.LENGTH_LONG).show();
+
                 }
             }
 
@@ -120,10 +132,16 @@ public class UserRepoImpl implements UserRepository {
            @Override
            public void onComplete(@NonNull Task<AuthResult> task) {
                if(task.isSuccessful()) {
-                   Toast.makeText(context, "Successfully Logged In! ", Toast.LENGTH_LONG).show();
-                   Intent intent = new Intent(context, MainPageActivity.class);
-                   context.startActivity(intent);
-                   context.finish();
+                   if(FirebaseAuth.getInstance().getCurrentUser().isEmailVerified()){
+                       Toast.makeText(context, "Successfully Logged In! ", Toast.LENGTH_LONG).show();
+                       Intent intent = new Intent(context, MainPageActivity.class);
+                       context.startActivity(intent);
+                       context.finish();
+                   }else{
+                       Toast.makeText(context, "Please Verify your email address! ", Toast.LENGTH_LONG).show();
+
+                   }
+
 
                }else {
                    Toast.makeText(context, "Login Failed! "+task.getException().getMessage(), Toast.LENGTH_LONG).show();

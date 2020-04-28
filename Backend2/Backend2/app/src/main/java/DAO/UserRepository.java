@@ -14,6 +14,7 @@ User table:
                 -status
 
  */
+// the class to provide user service
 public interface UserRepository {
     // add auth to firebase database and save to user table
     void register( String email, String passWord,Activity context);

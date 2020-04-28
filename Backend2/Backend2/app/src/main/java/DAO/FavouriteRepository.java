@@ -15,7 +15,7 @@ public interface FavouriteRepository {
     // save to Favourite database
     void save(Favourite favourite);
     // list of   my fav items
-   void getFavouritesByUserId(String userId);
+  // void getFavouritesByUserId(String userId);
    // delete one record from Favourite table
-   void deleteFav(Favourite fav);
+  // void deleteFav(Favourite fav);
 }

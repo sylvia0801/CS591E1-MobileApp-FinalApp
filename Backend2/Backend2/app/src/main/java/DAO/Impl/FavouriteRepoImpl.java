@@ -24,7 +24,7 @@ import com.google.firebase.database.ValueEventListener;
  */
 
 public class FavouriteRepoImpl implements FavouriteRepository {
-    public static DatabaseReference favRef;
+    private  DatabaseReference favRef;
     public FavouriteRepoImpl(){
         favRef =FirebaseDatabase.getInstance().getReference("All").child("Favourite");
     }
@@ -38,14 +38,14 @@ public class FavouriteRepoImpl implements FavouriteRepository {
 
     }
 
-    @Override
+  //  @Override
     public void deleteFav(Favourite fav){
         Item t=fav.getItem();
         String k=t.getItemId();
         favRef.child(fav.getUserName()).child(k).removeValue();
     }
 
-    @Override
+  //  @Override
     // get list of favs posts by useremail(key)
 
     public void getFavouritesByUserId(String userId) {

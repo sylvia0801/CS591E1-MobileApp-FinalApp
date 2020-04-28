@@ -45,9 +45,9 @@ import Model.Item;
 
 
  */
+// the class to provide item service
 public interface ItemRepository {
 
-   // void getItemByItemId(String itemId); // show item details page
     // save item to item and my Posted table
     Item saveToAllTable(Item item);
 

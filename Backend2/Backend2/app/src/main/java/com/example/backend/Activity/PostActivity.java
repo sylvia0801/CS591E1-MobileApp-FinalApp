@@ -227,13 +227,6 @@ public class PostActivity extends Activity {
             }
         });
 
-//        ib_camera.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                startActivityForResult(intent, camera_get_code);
-//            }
-//        });
 
         btn_post.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -456,7 +449,6 @@ public class PostActivity extends Activity {
         StorageTask uploasTask;
         String itemid=itemidxxx;
         if(picurl!=null){
-//            picname=System.currentTimeMillis()+"."+getExtention(picurl);
             picname=item.getItemId()+"."+getExtention(picurl);
 
             StorageReference picRef = storageRef.child(itemid).child(picname);
@@ -504,10 +496,5 @@ public class PostActivity extends Activity {
         i.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(i,album_get_code);
     }
-//    private String getImageUri(Context context, Bitmap inImage) {
-//        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-//        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-//        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, "Title", null);
-//        return path;
-//    }
+
 }

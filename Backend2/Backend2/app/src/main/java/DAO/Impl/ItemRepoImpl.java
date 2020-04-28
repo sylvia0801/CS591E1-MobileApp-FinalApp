@@ -8,10 +8,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import DAO.ItemRepository;
 import Model.Item;
 
@@ -55,8 +51,8 @@ import Model.Item;
  */
 
 public class ItemRepoImpl implements ItemRepository {
-    public DatabaseReference itemRef;
-    public DatabaseReference userAllRef;
+    private DatabaseReference itemRef;
+    private DatabaseReference userAllRef;
     private FirebaseAuth auth;
     public ItemRepoImpl(){
          userAllRef= FirebaseDatabase.getInstance().getReference("All");
@@ -64,48 +60,7 @@ public class ItemRepoImpl implements ItemRepository {
         auth=FirebaseAuth.getInstance();
 
     }
-//    @Override
-//    public void getItemByItemId(String itemId) {
-//       List<Item> re = new ArrayList<>();
-//        itemRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                for (DataSnapshot item : dataSnapshot.getChildren()) {
-//                    // do something with the individual "issues"
-//                    HashMap<String, String> map = (HashMap<String, String>) item.getValue();
-//                    String id = map.get("itemId");
-//                    String tagId = map.get("tagId");
-//                    String sellerId=map.get("sellerId");
-//                    String buyerId=map.get("buyerId");
-//                    String sellerName=map.get("sellerName");
-//                    String buyerName=map.get("buyerName");
-//                    String title=map.get("title");
-//                    String productName=map.get("productName");
-//                    String price=map.get("price");
-//                    String description=map.get("description");
-//                    String address=map.get("address");
-//                    String status=map.get("status");
-//                    String url=map.get("imageUrl");
-//                    String postRating=map.get("postRating");
-//                    String rated=map.get("rated");//"y" or "n"
-//                    Item i=new Item(id,tagId,sellerId,buyerId,sellerName,buyerName,title,productName,price,description,url,address,status,postRating,rated);
-//                    re.add(i);
-//                }
-//              if(re.size()>0){
-//                  Item item=re.get(0);
-//                  // to do item to do somthing
-//              }else {
-//                  // no such item
-//              }
-//
-//
-//            }
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
+
 
 // add to item table and my Posted table
 public Item saveToAllTable (Item item){
