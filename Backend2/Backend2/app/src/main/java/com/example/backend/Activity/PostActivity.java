@@ -92,6 +92,7 @@ public class PostActivity extends Activity {
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
     Boolean edit=false;
     String type;
+    String msg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -249,7 +250,11 @@ public class PostActivity extends Activity {
                     item.setSellerName(cuser.getDisplayName());
                     item.setSellerId(cuser.getUid());
                      type="post";
-                    if(edit)  type="update";
+                      msg="posted";
+                    if(edit) {
+                        type="update";
+                        msg="updated";
+                    }
                       if(imageuri==null&&item.getImageUrl().equals("")){
                         AlertDialog.Builder bld= new AlertDialog.Builder(PostActivity.this);
                         bld. setTitle("Alert");
@@ -259,7 +264,8 @@ public class PostActivity extends Activity {
                             public void onClick(DialogInterface dialog,int which) {
                                 // save item record  to database
                                 saveItemToDatabase(imageuri);
-                                Toast.makeText(PostActivity.this, (type+"d!"), Toast.LENGTH_SHORT).show();
+
+                                Toast.makeText(PostActivity.this,msg, Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(PostActivity.this, MainPageActivity.class);
                                 startActivity(intent);
                             }
@@ -275,7 +281,7 @@ public class PostActivity extends Activity {
 
                               saveItemToDatabase(imageuri);
 
-                          Toast.makeText(PostActivity.this, type+"ed!", Toast.LENGTH_SHORT).show();
+                          Toast.makeText(PostActivity.this, msg, Toast.LENGTH_SHORT).show();
                           Intent intent = new Intent(PostActivity.this, MainPageActivity.class);
                           startActivity(intent);
 
