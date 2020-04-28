@@ -16,7 +16,7 @@ import java.text.DecimalFormat;
 public class PriceRecommend {
     private String url = "https://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords";
     private String SERVICE_VERSION = "1.0.0";
-    private String SECURITY_APPNAME = "";
+    private String SECURITY_APPNAME = "TianDing-secondha-PRD-61973ae8a-e7eab068";
     private String RESPONSE_DATA_FORMAT= "JSON";
     private String keyword;
     private RequestQueue rq;
@@ -99,6 +99,8 @@ public class PriceRecommend {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    pricetext.setText("Not Available");
+                    probability.setText("Not Available");
                 }
             }
         }, new Response.ErrorListener() {

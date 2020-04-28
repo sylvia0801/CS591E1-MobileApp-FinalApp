@@ -90,7 +90,7 @@ public class HistoryItemAdapter extends BaseAdapter {
         CircleImageView  userimage = (CircleImageView) row.findViewById(R.id.Histroy_UserImage);
         ImageView itemimage = (ImageView) row.findViewById(R.id.History_Item_Image);
         TextView username = (TextView) row.findViewById(R.id.History_UserName);
-        TextView imageDescription = (TextView) row.findViewById(R.id.History_Item_Description);
+        TextView imageTitle = (TextView) row.findViewById(R.id.History_Item_Title);
         Button edit = (Button) row.findViewById(R.id.History_Edit);
         Button delete = (Button) row.findViewById(R.id.History_Delete);
         TextView price=(TextView) row.findViewById(R.id.History_Item_price);
@@ -125,7 +125,7 @@ public class HistoryItemAdapter extends BaseAdapter {
                     setImage(item.getSellerId(), userimage);
                     break;
             }
-            imageDescription.setText(item.getDescription());
+            imageTitle.setText(item.getTitle());
             price.setText("$"+item.getPrice());
         }
 
