@@ -314,6 +314,7 @@ public class PostActivity extends Activity {
             }
         });
     }
+    //get the camera access
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
     {
@@ -377,7 +378,7 @@ public class PostActivity extends Activity {
 
 
 
-
+    //access the camera and get the picture
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -404,12 +405,14 @@ public class PostActivity extends Activity {
 
         }
     }
+    //insert the image to phone and get its URI
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
         return Uri.parse(path);
     }
+    //check if it has permission
     private static boolean hasPermissions(Context context, String... permissions) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
             for (String permission : permissions) {
@@ -421,12 +424,7 @@ public class PostActivity extends Activity {
         return true;
     }
 
-    public String getRealPathFromURI(Uri uri) {
-        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-        cursor.moveToFirst();
-        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-        return cursor.getString(idx);
-    }
+    //save the picture to database
     public void saveItemToDatabase(Uri url){
 
         if(edit){

@@ -210,6 +210,7 @@ public class ItemActivity extends AppCompatActivity {
             ItemActivity.this.startActivity(intent);
         }
     }
+    //get the latest location
     @SuppressLint("MissingPermission")
     private void getLastLocation() {
         if (checkPermissions()) {
@@ -238,7 +239,7 @@ public class ItemActivity extends AppCompatActivity {
         }
     }
 
-
+    //update the location data
     @SuppressLint("MissingPermission")
     private void requestNewLocationData(){
 
@@ -262,7 +263,7 @@ public class ItemActivity extends AppCompatActivity {
             Location mLastLocation = locationResult.getLastLocation();
         }
     };
-
+    //check location access is permitted
     private boolean checkPermissions() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -270,7 +271,7 @@ public class ItemActivity extends AppCompatActivity {
         }
         return false;
     }
-
+    //request permission
     private void requestPermissions() {
         ActivityCompat.requestPermissions(
                 this,
@@ -278,14 +279,14 @@ public class ItemActivity extends AppCompatActivity {
                 PERMISSION_ID
         );
     }
-
+    //check location access is permitted
     private boolean isLocationEnabled() {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
                 LocationManager.NETWORK_PROVIDER
         );
     }
-
+    //what we do is the location access is enabled
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
