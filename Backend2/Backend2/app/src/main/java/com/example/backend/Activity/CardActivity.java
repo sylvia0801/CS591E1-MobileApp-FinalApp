@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -82,7 +83,7 @@ public class CardActivity extends AppCompatActivity {//implements View.OnClickLi
             @Override
             public void onClick(View view) {
 
-
+                if (validateForm()) {
 
                 mPaymentParams.setHash(mPayuHashes.getPaymentHash());
 //                System.out.println(mPayuHashes.getPaymentHash());
@@ -122,23 +123,22 @@ public class CardActivity extends AppCompatActivity {//implements View.OnClickLi
                 boolean cvvNumberValid = cvvValid(cvv);
 
 
-                if (cardNumberValid && cardDateValid && cvvNumberValid) {
+                  if (cardNumberValid && cardDateValid && cvvNumberValid) {
                     String curname = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-                    String id=FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     item.setBuyerId(id);
                     item.setBuyerName(curname);
                     item.setStatus("1");
-                    itemservice.update(item,1);
+                    itemservice.update(item, 1);
 
                     Toast.makeText(getApplicationContext(), "Payment Successfully Made.", Toast.LENGTH_SHORT).show();
-                    Intent in =new Intent(CardActivity.this,MainPageActivity.class);
+                    Intent in = new Intent(CardActivity.this, MainPageActivity.class);
                     startActivity(in);
-                }
-                else {
+                } else {
                     // didn't sell the item, put item back to items listview and mark it as unsold
                     Toast.makeText(getApplicationContext(), "Incorrect Card Credentials. Please proceed again.", Toast.LENGTH_SHORT).show();
                 }
-
+            }
 
             }
         });
@@ -195,6 +195,31 @@ public class CardActivity extends AppCompatActivity {//implements View.OnClickLi
         });
 
     }
+
+    private   boolean validateForm(){
+        boolean result = true;
+        if (TextUtils.isEmpty(cardNumberEditText.getText().toString())) {
+            cardNumberEditText.setError("Required");
+            result = false;
+        }
+        else if(TextUtils.isEmpty(cardNameEditText.getText().toString())){
+            cardNameEditText.setError("Required");
+            result = false;
+        }else  if (TextUtils.isEmpty(cardExpiryMonthEditText.getText().toString())) {
+            cardExpiryMonthEditText.setError("Required");
+            result = false;
+        }else  if (TextUtils.isEmpty(cardExpiryYearEditText.getText().toString())) {
+            cardExpiryYearEditText.setError("Required");
+            result = false;
+        }else if(TextUtils.isEmpty(cardCvvEditText.getText().toString())) {
+            cardCvvEditText.setError("Required");
+            result = false;
+
+        }
+
+        return result;
+    }
+
 /*
     @Override
     public void onClick(View v) {

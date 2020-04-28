@@ -46,12 +46,17 @@ import Model.Item;
 
  */
 public interface ItemRepository {
+
    // void getItemByItemId(String itemId); // show item details page
     // save item to item and my Posted table
     Item saveToAllTable(Item item);
+
     // delete one history record, tabletype: historytype
    void  deleteFromAllTableByUsername(String itemid, String tabletype);
+
+   // deep delete from market and fav table and pic storage
      void deleteItemByItemId(String itemid);
+
     // when type==1, the buyer has set so, need also update the bought, sold table
     // type=0, only update Item table and my Posted table and favorite table, item info
     void update(Item item,int type);
