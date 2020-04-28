@@ -72,10 +72,11 @@ public class ItemActivity extends AppCompatActivity {
     List<Address> addresses;
     String sorttype="Latest Posts First"; // default is sort by latest item posts first
     static final int PERMISSION_ID = 44;
+    private  String search;
 
     
  //  private FirebaseAuth auth=FirebaseAuth.getInstance();
-    private void switchType(String type,String sorttype){
+    private void switchType(){
         res=new LinkedList<>();
         itemRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -97,10 +98,20 @@ public class ItemActivity extends AppCompatActivity {
                     String status=map.get("status");
                     String postRating=map.get("postRating");
                     String rated=map.get("rated");//"y" or "n"
-                    if(tag.equals(type)&&status.equals("0")) { // only show onsell items
-                        Item i=new Item(id,tag,sellerId,buyerId,sellerName,buyerName,title,productName,price,description,url,address,status,postRating,rated);
-                        res.add(i);
+                    String tt=title.trim().toLowerCase();
+                    if(search==null||search.equals("")){
+                        if(tag.equals(type)&&status.equals("0")) { // only show onsell items
+                            Item i=new Item(id,tag,sellerId,buyerId,sellerName,buyerName,title,productName,price,description,url,address,status,postRating,rated);
+                            res.add(i);
+                        }
+                    }else{
+                        if(tag.equals(type)&&status.equals("0")&&tt.contains(search)) { // only show onsell items
+                            Item i=new Item(id,tag,sellerId,buyerId,sellerName,buyerName,title,productName,price,description,url,address,status,postRating,rated);
+                            res.add(i);
+                        }
                     }
+
+
                 }
                if(sorttype.equals("Latest Posts First")){
                    Collections.reverse(res);
@@ -127,8 +138,9 @@ public class ItemActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         String keywords_search = et_search.getText().toString();
-                        keywords_search = keywords_search.trim().toLowerCase();
+                        search = keywords_search.trim().toLowerCase();
                         //TODO
+                        switchType();
                     }
                 });
 
@@ -153,7 +165,7 @@ public class ItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
         intent = getIntent();
-        String type= intent.getStringExtra("Type").toString();
+         type= intent.getStringExtra("Type").toString();
         geo=new GeolocationComparationImpl();
         addresses=new ArrayList<>();
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -175,7 +187,8 @@ public class ItemActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String tobeSelete=parent.getItemAtPosition(position).toString();
                  sorttype = tobeSelete;
-                 switchType(type,sorttype);
+
+                 switchType();
                 parent.setVisibility(View.VISIBLE);
             }
 
