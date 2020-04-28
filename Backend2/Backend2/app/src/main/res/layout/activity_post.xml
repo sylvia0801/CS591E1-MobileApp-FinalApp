@@ -45,7 +45,7 @@
         android:id="@+id/et_description"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3"
+        android:layout_weight="1.5"
         android:ems="10"
         android:hint="Description..." />
 
@@ -95,14 +95,14 @@
         android:id="@+id/et_title"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="0.5"
         android:hint="Title" />
 
     <EditText
         android:id="@+id/et_price"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="0.5"
         android:hint="Price" />
 
     <LinearLayout
@@ -125,7 +125,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Suggested Price"
+            android:text=""
             android:layout_gravity="center"
             android:gravity="center"/>
 
@@ -142,7 +142,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Sell Chance"
+            android:text=""
             android:layout_gravity="center"
             android:gravity="center"/>
     </LinearLayout>

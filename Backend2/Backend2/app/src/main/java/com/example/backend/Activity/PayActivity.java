@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -41,6 +42,11 @@ public class PayActivity extends AppCompatActivity {
 
     // This sets the configuration
     private PayuConfig payuConfig;
+    private EditText amount;
+    private EditText merkey;
+    private EditText mersalt;
+    private EditText email;
+
 
     private Spinner environmentSpinner;
 
@@ -56,6 +62,14 @@ public class PayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay);
+        amount=(EditText) findViewById(R.id.editTextAmount);
+        merkey=(EditText) findViewById(R.id.editTextMerchantKey);
+
+        mersalt=(EditText) findViewById(R.id.editTextMerchantSalt);
+
+        email=(EditText) findViewById(R.id.editTextEmail);
+
+
 
         // get item from ItemDetailActivity
         Intent intent = getIntent();
@@ -108,13 +122,49 @@ public class PayActivity extends AppCompatActivity {
             }
         });
 
+
+
         btnPayNow = (Button)findViewById(R.id.btnPayNow);
         btnPayNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navigateToBaseActivity(view);
+                if(validateForm()) {
+                    navigateToBaseActivity(view);
+                }
             }
         });
+    }
+
+
+    private   boolean validateForm(){
+        boolean result = true;
+        if (TextUtils.isEmpty(amount.getText().toString())) {
+            amount.setError("Required");
+            result = false;
+        }
+        else if(TextUtils.isEmpty(merkey.getText().toString())){
+            merkey.setError("Required");
+            result = false;
+        }else  if (TextUtils.isEmpty(mersalt.getText().toString())) {
+            mersalt.setError("Required");
+            result = false;
+        }else  if (TextUtils.isEmpty(email.getText().toString())) {
+            email.setError("Required");
+            result = false;
+        }else if(!email.getText().toString().contains("@")) {
+            email.setError( "Invalid Email Address!");
+            result = false;
+
+        }else {
+            try{
+                Double.parseDouble(amount.getText().toString());
+            }catch (Exception e){
+                amount.setError("Please enter Number!");
+                result=false;
+            }
+        }
+
+        return result;
     }
 
     @Override
@@ -144,6 +194,7 @@ public class PayActivity extends AppCompatActivity {
             }
         }
     }
+
 
     /**
      * This method prepares all the payments params to be sent to PayuBaseActivity.java

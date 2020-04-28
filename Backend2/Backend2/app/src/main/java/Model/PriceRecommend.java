@@ -99,6 +99,8 @@ public class PriceRecommend {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    pricetext.setText("Not Available");
+                    probability.setText("Not Available");
                 }
             }
         }, new Response.ErrorListener() {
