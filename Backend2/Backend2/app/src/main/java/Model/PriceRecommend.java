@@ -69,33 +69,38 @@ public class PriceRecommend {
                     }
                     //Compute Average
                     DecimalFormat df = new DecimalFormat("#.00");
-                    pricetext.setText( df.format(average / count));
-
-                    //Compute Probability
-                    double MaxMinDif = MaxPrice - MinPrice;
-
-                    if(setProbability){
-                        if(price > MaxPrice){
-                            probability.setText("Low");
-                        }
-                        if(price < MinPrice){
-                            probability.setText("High");
-                        }
-
-                        double probablity = 1 - ((price - MinPrice) / MaxMinDif);
-
-
-                        if(probablity > 0.8){
-                            probability.setText("High");
-                        }
-                        else if(probablity > 0.5){
-                            probability.setText("Median");
-                        }
-                        else{
-                            probability.setText("Low");
-                        }
-
+                    if(Double.isNaN(Double.valueOf(df.format(average / count)))){
+                        pricetext.setText("Not Available");
                     }
+                    else{
+                        pricetext.setText( df.format(average / count));
+                        //Compute Probability
+                        double MaxMinDif = MaxPrice - MinPrice;
+
+                        if(setProbability){
+                            if(price > MaxPrice){
+                                probability.setText("Low");
+                            }
+                            if(price < MinPrice){
+                                probability.setText("High");
+                            }
+
+                            double probablity = 1 - ((price - MinPrice) / MaxMinDif);
+
+
+                            if(probablity > 0.8){
+                                probability.setText("High");
+                            }
+                            else if(probablity > 0.5){
+                                probability.setText("Median");
+                            }
+                            else{
+                                probability.setText("Low");
+                            }
+
+                        }
+                    }
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();

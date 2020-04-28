@@ -7,7 +7,9 @@
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
     android:orientation="vertical"
-    tools:context=".Activity.PostActivity">
+    tools:context=".Activity.PostActivity"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,8 +47,9 @@
         android:id="@+id/et_description"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.5"
-        android:ems="10"
+        android:layout_weight="1"
+        android:background="@null"
+        android:gravity="top"
         android:hint="Description..." />
 
     <LinearLayout
@@ -60,6 +63,7 @@
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:scaleType="fitCenter"
+            android:layout_weight="1"
             android:src="@drawable/camera"/>
 
         <ImageButton
@@ -67,27 +71,40 @@
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:scaleType="fitCenter"
+            android:layout_weight="1"
             android:src="@drawable/album"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/iv_picture"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_gravity="center"
+            android:layout_weight="15"/>
 
-            <Button
-                android:id="@+id/btn_address"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="Address"
-                android:gravity="center"/>
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/et_address"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
-        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btn_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Address"
+            android:layout_marginRight="5dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/et_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"/>
 
     </LinearLayout>
 
@@ -125,7 +142,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=""
+            android:hint="Price"
             android:layout_gravity="center"
             android:gravity="center"/>
 
@@ -133,7 +150,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Probability: "
+            android:text="Sell Probability: "
             android:layout_gravity="center"
             android:gravity="center"/>
 
@@ -141,7 +158,7 @@
             android:id="@+id/tv_probability"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             android:text=""
             android:layout_gravity="center"
             android:gravity="center"/>
@@ -151,14 +168,13 @@
         android:id="@+id/spinnerTag"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5"/>
+        android:layout_weight="0.3"/>
 
     <ImageView
-        android:id="@+id/iv_picture"
-        android:layout_width="100dp"
+        android:layout_width="150dp"
         android:layout_height="0dp"
-        android:layout_weight="1.1"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:layout_weight="1" />
 
 
 </LinearLayout>
