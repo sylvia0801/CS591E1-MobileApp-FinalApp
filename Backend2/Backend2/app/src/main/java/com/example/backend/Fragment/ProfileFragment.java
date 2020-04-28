@@ -73,7 +73,7 @@ public class ProfileFragment extends Fragment {
                 User user = dataSnapshot.getValue(User.class);
                 username.setText(user.getUserName());
                 if (user.getImageurl().equals("default")){
-                    profile_image.setImageResource(R.mipmap.ic_launcher);
+                    profile_image.setImageResource(R.drawable.icon);
                 }else {
                     if (getActivity() == null){
                         return;
