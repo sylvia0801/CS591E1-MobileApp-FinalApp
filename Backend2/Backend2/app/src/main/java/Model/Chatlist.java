@@ -1,5 +1,6 @@
 package Model;
 
+// this class just to save the history of chat of certain user
 public class Chatlist {
     private String id;
 

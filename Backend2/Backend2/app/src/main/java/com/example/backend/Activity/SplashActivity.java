@@ -10,6 +10,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        // create a handler and let this splash page last for 1.5 second
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
