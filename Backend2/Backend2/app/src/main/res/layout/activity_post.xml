@@ -141,7 +141,7 @@
             android:id="@+id/tv_priceRecommendation"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             android:hint="Price"
             android:layout_gravity="center"
             android:gravity="center"/>

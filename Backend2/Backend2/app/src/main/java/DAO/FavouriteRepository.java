@@ -1,5 +1,8 @@
 package DAO;
+import android.widget.ImageView;
+
 import Model.Favourite;
+import Model.Item;
 
 /*
 -Favourite table:

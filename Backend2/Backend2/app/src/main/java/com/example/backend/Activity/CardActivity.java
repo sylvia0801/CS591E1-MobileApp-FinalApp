@@ -69,11 +69,10 @@ public class CardActivity extends AppCompatActivity {//implements View.OnClickLi
         payNowButton = (Button) findViewById(R.id.button_card_make_payment);
         cardNameEditText = (EditText) findViewById(R.id.edit_text_name_on_card);
         cardNumberEditText = (EditText) findViewById(R.id.edit_text_card_number);
-        cardCvvEditText = (EditText) findViewById(R.id.edit_text_card_cvv);
+        //TODO
+        //cardCvvEditText = (EditText) findViewById(R.id.edit_text_card_cvv);
         cardExpiryMonthEditText = (EditText) findViewById(R.id.edit_text_expiry_month);
         cardExpiryYearEditText = (EditText) findViewById(R.id.edit_text_expiry_year);
-
-
 
         bundle = getIntent().getExtras();
         item = bundle.getParcelable("payitem");
@@ -96,7 +95,8 @@ public class CardActivity extends AppCompatActivity {//implements View.OnClickLi
                 cardName = cardNameEditText.getText().toString();
                 expiryMonth = cardExpiryMonthEditText.getText().toString();
                 expiryYear = cardExpiryYearEditText.getText().toString();
-                cvv = cardCvvEditText.getText().toString();
+                //TODO
+                //cvv = cardCvvEditText.getText().toString();
 
 //                Log.d("mytag", cardNumber);
 //                Log.d("mytag", cardName);
@@ -110,7 +110,8 @@ public class CardActivity extends AppCompatActivity {//implements View.OnClickLi
                 mPaymentParams.setNameOnCard(cardName);
                 mPaymentParams.setExpiryMonth(expiryMonth);
                 mPaymentParams.setExpiryYear(expiryYear);
-                mPaymentParams.setCvv(cvv);
+                    //TODO
+                    // mPaymentParams.setCvv(cvv);
                 try {
                     postData = new PaymentPostParams(mPaymentParams, PayuConstants.CC).getPaymentPostParams();
                 } catch (Exception e) {
@@ -120,10 +121,11 @@ public class CardActivity extends AppCompatActivity {//implements View.OnClickLi
                 long longCardNumber = Long.parseLong(cardNumber);
                 boolean cardNumberValid = isValid(longCardNumber);
                 boolean cardDateValid = validateExpiryDate(expiryMonth, expiryYear);
-                boolean cvvNumberValid = cvvValid(cvv);
+                    //TODO
+                //boolean cvvNumberValid = cvvValid(cvv);
 
 
-                  if (cardNumberValid && cardDateValid && cvvNumberValid) {
+                  if (cardNumberValid && cardDateValid) {//TODO && cvvNumberValid) {
                     String curname = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
                     String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     item.setBuyerId(id);
@@ -174,11 +176,13 @@ public class CardActivity extends AppCompatActivity {//implements View.OnClickLi
                         if(issuer.contentEquals(PayuConstants.SMAE)){ // hide cvv and expiry
                             cardExpiryMonthEditText.setVisibility(View.GONE);
                             cardExpiryYearEditText.setVisibility(View.GONE);
-                            cardCvvEditText.setVisibility(View.GONE);
+                            //TODO
+                            //cardCvvEditText.setVisibility(View.GONE);
                         }else{ //show cvv and expiry
                             cardExpiryMonthEditText.setVisibility(View.VISIBLE);
                             cardExpiryYearEditText.setVisibility(View.VISIBLE);
-                            cardCvvEditText.setVisibility(View.VISIBLE);
+                            //TODO
+                            //cardCvvEditText.setVisibility(View.VISIBLE);
                         }
                     }
                 }else{
@@ -211,11 +215,13 @@ public class CardActivity extends AppCompatActivity {//implements View.OnClickLi
         }else  if (TextUtils.isEmpty(cardExpiryYearEditText.getText().toString())) {
             cardExpiryYearEditText.setError("Required");
             result = false;
-        }else if(TextUtils.isEmpty(cardCvvEditText.getText().toString())) {
-            cardCvvEditText.setError("Required");
-            result = false;
-
         }
+        //TODO
+        // else if(TextUtils.isEmpty(cardCvvEditText.getText().toString())) {
+            //cardCvvEditText.setError("Required");
+            //result = false;
+
+        //}
 
         return result;
     }
