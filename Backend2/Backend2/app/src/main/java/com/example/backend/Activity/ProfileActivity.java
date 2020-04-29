@@ -54,6 +54,7 @@ public class ProfileActivity extends AppCompatActivity implements buttom_fragmen
         return true;
     }
 
+    //set the list item click listener
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();

@@ -120,7 +120,7 @@ public class ItemActivity extends AppCompatActivity {
 
                }
                 else if(sorttype.equals("Nearby Posts distance")){
-                   // to do  distance sor
+                   // to do  distance sort
                     GeolocationComparationImpl.sortItems(res,curLocation,gCoder);
 
                 }else if(sorttype.equals("Less Expensive Posts First")){
@@ -146,7 +146,7 @@ public class ItemActivity extends AppCompatActivity {
                 });
 
 
-                //   all  items of one tag with sorttype
+                //   all  items of one tag with sort type
                 adapter = new ItemAdapter(res, ItemActivity.this);
                 ListView listview = (ListView) findViewById(R.id.lv_items);
                 listview.setAdapter(adapter);

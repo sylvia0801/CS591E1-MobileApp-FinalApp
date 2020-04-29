@@ -53,6 +53,7 @@ public class ItemDetailActivity extends AppCompatActivity {
         descirption = (TextView) findViewById(R.id.Detail_Item_Description);
         btn_chat = (ImageView)findViewById(R.id.btn_chat);
         favorite.setOnClickListener(new favoriteListener());
+
         //set the components' information by the item object stored in the intent;
         Intent intent = getIntent();
          item = (Item) intent.getBundleExtra("clickitem").getParcelable("clickitem");
@@ -128,7 +129,7 @@ public class ItemDetailActivity extends AppCompatActivity {
 
         }
     }
-    // add item to my fav list
+    // add item to my favorite list
     private class favoriteListener implements  View.OnClickListener{
         @Override
         public void onClick(View v) {
