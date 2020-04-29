@@ -38,23 +38,22 @@ public class PriceRecommend {
             @Override
             public void onResponse(JSONObject response) {
                 try {
+                    //get the search result by json request
                     JSONObject keywordResponse = (JSONObject)(response.getJSONArray("findItemsByKeywordsResponse").get(0));
                     JSONObject searchResult = (JSONObject)(keywordResponse.getJSONArray("searchResult").get(0));
                     JSONArray items = searchResult.getJSONArray("item");
 
                     for (int i = 0;i < items.length();i++){
                         JSONObject item = (JSONObject)items.get(i);
-                        System.out.println(item.getJSONArray("condition").length());
-
                         JSONObject condition = (JSONObject)item.getJSONArray("condition").get(0);
-                        System.out.println(condition);
-                        System.out.println(condition.getString("conditionDisplayName").toString());
 
+                        //find the items in used codition
                         if(condition.get("conditionDisplayName").toString().equals("[\"Used\"]")){
 
                             JSONObject sellingStatus = (JSONObject)(item.getJSONArray("sellingStatus").get(0));
                             JSONObject currentPrice = (JSONObject)(sellingStatus.getJSONArray("currentPrice").get(0));
                             double price = Double.valueOf(currentPrice.get("__value__").toString());
+                            //find the max and min price
                             if(price > MaxPrice){
                                 MaxPrice = price;
                             }
@@ -74,7 +73,7 @@ public class PriceRecommend {
                     }
                     else{
                         pricetext.setText( df.format(average / count));
-                        //Compute Probability
+                        //get the difference between max and min price
                         double MaxMinDif = MaxPrice - MinPrice;
 
                         if(setProbability){
@@ -85,9 +84,10 @@ public class PriceRecommend {
                                 probability.setText("High");
                             }
 
+                            //compute the probability
                             double probablity = 1 - ((price - MinPrice) / MaxMinDif);
 
-
+                            //decide the probability is high or low
                             if(probablity > 0.8){
                                 probability.setText("High");
                             }
@@ -103,6 +103,7 @@ public class PriceRecommend {
 
 
                 } catch (JSONException e) {
+                    // if the api does not find anything, we want to set the price and probability not available
                     e.printStackTrace();
                     pricetext.setText("Not Available");
                     probability.setText("Not Available");
