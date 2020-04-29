@@ -19,6 +19,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button btn_register;
 
     private   boolean validateForm(){
+
+        // validate and sanitize inputs
         boolean result = true;
         if (TextUtils.isEmpty(et_email.getText().toString())) {
             et_email.setError("Required");
@@ -46,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-
+        // if log in info matches records in the database, successfully login and go to main page
         if (firebaseUser != null&&firebaseUser.isEmailVerified()) {
             Intent intent = new Intent(LoginActivity.this, MainPageActivity.class);
             startActivity(intent);
@@ -67,11 +69,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(validateForm())
+                    // check input validation
                 new UserRepoImpl().login(et_email.getText().toString(),et_password.getText().toString(),LoginActivity.this);
 
             }
         });
 
+
+        //
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

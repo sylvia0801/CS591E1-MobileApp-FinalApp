@@ -69,14 +69,12 @@ public class CardActivity extends AppCompatActivity {//implements View.OnClickLi
         payNowButton = (Button) findViewById(R.id.button_card_make_payment);
         cardNameEditText = (EditText) findViewById(R.id.edit_text_name_on_card);
         cardNumberEditText = (EditText) findViewById(R.id.edit_text_card_number);
-        //TODO
-        //cardCvvEditText = (EditText) findViewById(R.id.edit_text_card_cvv);
+        cardCvvEditText = (EditText) findViewById(R.id.edit_text_card_cvv);
         cardExpiryMonthEditText = (EditText) findViewById(R.id.edit_text_expiry_month);
         cardExpiryYearEditText = (EditText) findViewById(R.id.edit_text_expiry_year);
 
         bundle = getIntent().getExtras();
         item = bundle.getParcelable("payitem");
-
 
         payNowButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,13 +88,12 @@ public class CardActivity extends AppCompatActivity {//implements View.OnClickLi
                 // lets try to get the post params
 
                 postData = null;
-                // lets get the current card number;
+                // lets get the current card number, card name, expiration date, and card cvv
                 cardNumber = String.valueOf(cardNumberEditText.getText());
                 cardName = cardNameEditText.getText().toString();
                 expiryMonth = cardExpiryMonthEditText.getText().toString();
                 expiryYear = cardExpiryYearEditText.getText().toString();
-                //TODO
-                //cvv = cardCvvEditText.getText().toString();
+                cvv = cardCvvEditText.getText().toString();
 
 //                Log.d("mytag", cardNumber);
 //                Log.d("mytag", cardName);
@@ -104,14 +101,13 @@ public class CardActivity extends AppCompatActivity {//implements View.OnClickLi
 //                Log.d("mytag", expiryYear);
 //                Log.d("mytag", cvv);
 
-                // lets not worry about ui validations.
+                // put payment parameters into payU to be passed to the server later
                 mPaymentParams.setCardNumber(cardNumber);
                 mPaymentParams.setCardName(cardName);
                 mPaymentParams.setNameOnCard(cardName);
                 mPaymentParams.setExpiryMonth(expiryMonth);
                 mPaymentParams.setExpiryYear(expiryYear);
-                    //TODO
-                    // mPaymentParams.setCvv(cvv);
+                mPaymentParams.setCvv(cvv);
                 try {
                     postData = new PaymentPostParams(mPaymentParams, PayuConstants.CC).getPaymentPostParams();
                 } catch (Exception e) {
@@ -121,11 +117,11 @@ public class CardActivity extends AppCompatActivity {//implements View.OnClickLi
                 long longCardNumber = Long.parseLong(cardNumber);
                 boolean cardNumberValid = isValid(longCardNumber);
                 boolean cardDateValid = validateExpiryDate(expiryMonth, expiryYear);
-                    //TODO
-                //boolean cvvNumberValid = cvvValid(cvv);
+                boolean cvvNumberValid = cvvValid(cvv);
 
-
-                  if (cardNumberValid && cardDateValid) {//TODO && cvvNumberValid) {
+                // check if the card number, expiration data are valid
+                    // check if the cvv is a valid under the consideration of cvvs
+                  if (cardNumberValid && cardDateValid && cvvNumberValid) {
                     String curname = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
                     String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     item.setBuyerId(id);
@@ -133,6 +129,7 @@ public class CardActivity extends AppCompatActivity {//implements View.OnClickLi
                     item.setStatus("1");
                     itemservice.update(item, 1);
 
+                    // successful payment gets directed to the main page
                     Toast.makeText(getApplicationContext(), "Payment Successfully Made.", Toast.LENGTH_SHORT).show();
                     Intent in = new Intent(CardActivity.this, MainPageActivity.class);
                     startActivity(in);
@@ -176,13 +173,11 @@ public class CardActivity extends AppCompatActivity {//implements View.OnClickLi
                         if(issuer.contentEquals(PayuConstants.SMAE)){ // hide cvv and expiry
                             cardExpiryMonthEditText.setVisibility(View.GONE);
                             cardExpiryYearEditText.setVisibility(View.GONE);
-                            //TODO
-                            //cardCvvEditText.setVisibility(View.GONE);
+                            cardCvvEditText.setVisibility(View.GONE);
                         }else{ //show cvv and expiry
                             cardExpiryMonthEditText.setVisibility(View.VISIBLE);
                             cardExpiryYearEditText.setVisibility(View.VISIBLE);
-                            //TODO
-                            //cardCvvEditText.setVisibility(View.VISIBLE);
+                            cardCvvEditText.setVisibility(View.VISIBLE);
                         }
                     }
                 }else{
@@ -200,6 +195,7 @@ public class CardActivity extends AppCompatActivity {//implements View.OnClickLi
 
     }
 
+    // Validate and sanitize inputs
     private   boolean validateForm(){
         boolean result = true;
         if (TextUtils.isEmpty(cardNumberEditText.getText().toString())) {
@@ -216,12 +212,11 @@ public class CardActivity extends AppCompatActivity {//implements View.OnClickLi
             cardExpiryYearEditText.setError("Required");
             result = false;
         }
-        //TODO
-        // else if(TextUtils.isEmpty(cardCvvEditText.getText().toString())) {
-            //cardCvvEditText.setError("Required");
-            //result = false;
+        else if(TextUtils.isEmpty(cardCvvEditText.getText().toString())) {
+            cardCvvEditText.setError("Required");
+            result = false;
 
-        //}
+        }
 
         return result;
     }
@@ -284,6 +279,7 @@ public class CardActivity extends AppCompatActivity {//implements View.OnClickLi
         }
     }
 
+    // functions for credit card valifation checking
     public static boolean isValid(long number)
     {
         return (getSize(number) >= 13 &&
@@ -351,6 +347,8 @@ public class CardActivity extends AppCompatActivity {//implements View.OnClickLi
         return number;
     }
 
+
+    // check if the expiration date is valid for the current card
     public static boolean validateExpiryDate(String month, String year) {
         if (year.length() != 4 && year.length() != 2) {
             return false;
@@ -381,10 +379,14 @@ public class CardActivity extends AppCompatActivity {//implements View.OnClickLi
         return (curYear == year) ? curMonth <= month : curYear < year;
     }
 
+
+    // check if the cvv digit if valid
+    // because of security reasons we didn't check the validation of cvv to a specific card number
     public static boolean cvvValid(String cvv) {
         return ((cvv.length() == 3) || (cvv.length() == 4));
     }
 
+    // render card issuer's pictures based on the card number information
     private Drawable getIssuerDrawable(String issuer){
 
         if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {

@@ -73,6 +73,10 @@ public class MessageActivity extends AppCompatActivity {
         btn_send = findViewById(R.id.btn_send);
         text_send = findViewById(R.id.text_send);
 
+        /*
+        * after clicking chat button
+        * new intent will bring the userid of the user who user want to chat to this activity
+        * */
         intent = getIntent();
         final String userid = intent.getStringExtra("userid");
 
@@ -85,6 +89,7 @@ public class MessageActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                     username.setText(user.getUserName());
+                    // if user don't modify his/her profile, we just give he/she a default avatar
                     if (user.getImageurl().equals("default")){
                         profile_image.setImageResource(R.drawable.icon);
                     } else{
@@ -124,10 +129,19 @@ public class MessageActivity extends AppCompatActivity {
 
         databaseReference.child("Chats").push().setValue(hashMap);
 
+        /*
+        * add this user under current user's node
+        * which represents that this current user chatted with this user previously
+        * */
         final DatabaseReference senderChatRef = FirebaseDatabase.getInstance().getReference("Chatlist")
                 .child(firebaseUser.getUid())
                 .child(userid);
 
+        /*
+         * the current user is chatting with this user
+         * means this user is chatting with current user too
+         * so we also need to add current user under this user's node
+         * */
         final DatabaseReference receiverChatRef = FirebaseDatabase.getInstance().getReference("Chatlist")
                 .child(userid)
                 .child(firebaseUser.getUid());
@@ -164,11 +178,18 @@ public class MessageActivity extends AppCompatActivity {
     private void readMessage(final String myid, final String userid, final String imageURL){
         mChats = new ArrayList<>();
 
+        // first get the database reference of "Chats" node.
         databaseReference = FirebaseDatabase.getInstance().getReference("Chats");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // clear the chat list to make sure new data is correct
                 mChats.clear();
+                /*
+                * after getting children of "Chats"
+                * check the receiverID and senderID
+                * all chats fit the situation below should be add to the memory list
+                * */
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Chat chat = snapshot.getValue(Chat.class);
                     if (chat.getReceiver().equals(myid) && chat.getSender().equals(userid) ||

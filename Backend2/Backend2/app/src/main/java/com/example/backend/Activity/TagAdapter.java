@@ -17,6 +17,8 @@ public class TagAdapter extends BaseAdapter {
 
     public TagAdapter(Context aContext) {
         context = aContext;
+
+        // Create item list with names and pictures
         TextArray = context.getResources().getStringArray(R.array.ItemCategory);
         ImageList = new ArrayList<>();
         ImageList.add(R.drawable.clothes2);
@@ -51,6 +53,7 @@ public class TagAdapter extends BaseAdapter {
             row = convertView;
         }
 
+        // Assign images and tag names to different tags
         ImageView image = (ImageView) row.findViewById(R.id.imageView);
         TextView text = (TextView) row.findViewById(R.id.textView);
 

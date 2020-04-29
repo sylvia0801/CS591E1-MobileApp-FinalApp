@@ -121,8 +121,10 @@ public class PostActivity extends Activity {
         String[] tags = new String[]{"Clothes", "Books", "Electronics", "Furnitures"};
         ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tags);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // set up the spinner to choose between 4 tags we provided
         spinnerTag.setAdapter(adapter);
         Bundle bundle = intent.getExtras();
+        // if entered through the edit button in the account information page, render all of the information about current item
         if (bundle != null) {
             btn_post.setText("UPDATE");
             item = bundle.getParcelable("edititem");
@@ -154,6 +156,8 @@ public class PostActivity extends Activity {
         else {
             item = item;
         }
+
+        // choose between 4 tags
         spinnerTag.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -177,6 +181,8 @@ public class PostActivity extends Activity {
                 parent.setVisibility(View.VISIBLE);
             }
         });
+
+        // if the user choose to upload picture through system camera, ask for permission and allow the user to take photos
         ib_camera.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -193,6 +199,8 @@ public class PostActivity extends Activity {
                 }
             }
         });
+
+        //cancel current post action
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -219,6 +227,7 @@ public class PostActivity extends Activity {
             }
         });
 
+        // the user choose to upload picture through existed pictures in phone
         ib_album.setOnClickListener(new View.OnClickListener() {
             @Override
             // update image uri
@@ -227,7 +236,7 @@ public class PostActivity extends Activity {
             }
         });
 
-
+        // add and post item to the database
         btn_post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -284,6 +293,7 @@ public class PostActivity extends Activity {
             }
         });
 
+        // get the address of location of the current user
         btn_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -295,7 +305,8 @@ public class PostActivity extends Activity {
                  }
             }
         });
-// price recommendation
+
+        // get price recommendation and sell probablity for the current price(if entered)
         btn_recommendation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -314,6 +325,8 @@ public class PostActivity extends Activity {
             }
         });
     }
+
+    //get camera access
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
     {
@@ -348,6 +361,8 @@ public class PostActivity extends Activity {
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
+
+    // validate and sanitize inputs
     private   boolean validateForm(){
         boolean result = true;
         if (TextUtils.isEmpty(et_description.getText().toString())) {
@@ -377,7 +392,7 @@ public class PostActivity extends Activity {
 
 
 
-
+    //access the camera and get the picture
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -404,12 +419,14 @@ public class PostActivity extends Activity {
 
         }
     }
+    //insert the image to phone and get its URI
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
         return Uri.parse(path);
     }
+    //check if it has permission
     private static boolean hasPermissions(Context context, String... permissions) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
             for (String permission : permissions) {
@@ -421,12 +438,7 @@ public class PostActivity extends Activity {
         return true;
     }
 
-    public String getRealPathFromURI(Uri uri) {
-        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-        cursor.moveToFirst();
-        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-        return cursor.getString(idx);
-    }
+    //save the picture to database
     public void saveItemToDatabase(Uri url){
 
         if(edit){

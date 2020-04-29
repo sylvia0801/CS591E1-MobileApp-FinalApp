@@ -1,45 +1,24 @@
 package DAO.Impl;
-
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationManager;
-import android.os.Looper;
 import android.util.Log;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 
 import Model.Item;
-
+/*
+The class is for comparing the distance
+ */
 public class GeolocationComparationImpl {
     public static void sortItems(List<Item>res,Location location,Geocoder gCoder){
         Collections.sort(res,new SortPlaces(location,gCoder));
     }
 }
+//the comparator of distance
 class SortPlaces implements Comparator<Item> {
     Location currentLoc;
     Geocoder gCoder;
@@ -75,7 +54,7 @@ class SortPlaces implements Comparator<Item> {
         double distanceToPlace2 = distance(currentLoc.getLatitude(), currentLoc.getLongitude(), lat2, lon2);
         return (int) (distanceToPlace1 - distanceToPlace2);
     }
-
+    //calculate the distance between two locations using latitude and longitude
     public double distance(double fromLat, double fromLon, double toLat, double toLon) {
         double radius = 6378137;   // approximate Earth radius, *in meters*
         double deltaLat = toLat - fromLat;
